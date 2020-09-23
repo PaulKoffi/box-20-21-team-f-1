@@ -1,0 +1,3 @@
+[submodule "weatherService"]
+	path = weatherService
+	url = https://github.com/pns-si5-soa/blue-origin-x-20-21-soa-20-21-f-weatherRest.git
