@@ -4,3 +4,6 @@
 [submodule "rocketService"]
 	path = rocketService
 	url = https://github.com/pns-si5-soa/blue-origin-x-20-21-soa-20-21-f-rocketRest.git
+[submodule "pollCreator-rpc"]
+	path = pollCreator-rpc
+	url = https://github.com/pns-si5-soa/blue-origin-x-20-21-soa-20-21-f-pollCreator-rpc.git
