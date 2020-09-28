@@ -28,7 +28,7 @@
     
   L'architecture logicielle à développer dans ce projet s'appuiera sur la pile suivante :
   <p align="center">
-      <img src="./docs/archi.png"/>
+      <img src="./docs/archi_scope_1.png"/>
   </p>
   
   ## Comment utiliser ce repository
