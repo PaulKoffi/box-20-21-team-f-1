@@ -4,7 +4,7 @@
     * DJEKINOU Paul-Marie
     * KOFFI Paul
     * NABAGOU Djotiham
-* Version actuelle: en développement (MVP - Sprint 1)
+* Version actuelle : en développement (MVP - Sprint 1)
 * Releases :
     * À venir...
 * Statuts d'Intégration continue : 
