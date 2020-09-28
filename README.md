@@ -8,7 +8,7 @@
 * Releases :
     * À venir...
 * Statuts d'Intégration continue : 
-    * Weather service : 
+    * Weather service : [![Build Status](https://github.com/pns-si5-soa/blue-origin-x-20-21-soa-20-21-f-weatherRest/workflows/Rest projet actions/badge.svg)](https://github.com/pns-si5-soa/blue-origin-x-20-21-soa-20-21-f-weatherRest/actions)
     * Rocket service : [![Build Status](https://travis-ci.com/pns-si5-soa/blue-origin-x-20-21-soa-20-21-f-rocketRest.svg?token=A689phqWFprpuzVyuqDk&branch=develop)](https://travis-ci.com/pns-si5-soa/blue-origin-x-20-21-soa-20-21-f-rocketRest)
     * Poll Creator RPC :
     * Elon CLI :
