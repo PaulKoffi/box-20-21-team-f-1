@@ -38,11 +38,7 @@
   * La suite des fonctionnalités à implémenter peuvent être consultées dans le [backlog](https://github.com/pns-si5-soa/blue-origin-x-20-21-soa-20-21-f/milestone/2)
   
   ### Récupération du projet
-  Ce projet contient des sous-modules github et nécessite de ce fait de suivre les instructions suivantes pour effectuer une récupération complète du projet.
-  1. Effectuer un clone classique du projet en faisant ```git clone url_du_repo``` ou en récupérant le zip depuis cette page.
-  2. PS: Exécuter un seul fichier
-     - Pour une version en développement (branche develop, test, no-release, no-tag), lancer le script [gitUpdateAllSubmodules.sh](./gitUpdateAllSubmodules.sh) se trouvant dans à la racine de ce projet.
-     - Pour une version stable (branche master, release, tag spécifique), lancer le script [gitUpdateAllSubmodules(master).sh](./gitUpdateAllSubmodules(master).sh) se trouvant dans à la racine de ce projet.
+  Effectuer un clone classique du projet en faisant ```git clone url_du_repo``` ou en récupérant le zip depuis cette page.
     
   ### Compilation
   
