@@ -38,6 +38,12 @@ cd richardCli
 git checkout master
 git pull
 cd ..
+## toryCli
+echo "Checkout toryCli on branch Master"
+cd toryCli
+git checkout master
+git pull
+cd ..
 
 echo "Done"
 read -n 1 -s -r -p "Press any key to continue"
