@@ -4,10 +4,10 @@
     * DJEKINOU Paul-Marie
     * KOFFI Paul
     * NABAGOU Djotiham
-  * Version actuelle: en développement (MVP - Sprint 1)
-  * Releases :
+* Version actuelle: en développement (MVP - Sprint 1)
+* Releases :
     * À venir...
-  * Statuts d'Intégration continue : 
+* Statuts d'Intégration continue : 
     * Weather service : 
     * Rocket service : [![Build Status](https://travis-ci.com/pns-si5-soa/blue-origin-x-20-21-soa-20-21-f-rocketRest.svg?token=A689phqWFprpuzVyuqDk&branch=develop)](https://travis-ci.com/pns-si5-soa/blue-origin-x-20-21-soa-20-21-f-rocketRest)
     * Poll Creator RPC :
