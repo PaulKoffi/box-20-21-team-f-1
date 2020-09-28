@@ -2,8 +2,8 @@
 
 echo "Building the docker image"
 mkdir resources
-cp ../requirements.txt resources
-cp -R ../src/ resources
+cp ../../../services/rocket/requirements.txt resources
+cp -R ../../../services/rocket/src/ resources
 docker build -t djotiham/rocket_service .
 rm -R resources
 # to remove old images

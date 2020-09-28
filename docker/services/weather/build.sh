@@ -2,7 +2,7 @@
 
 echo "Building the docker image"
 mkdir resources
-cp -R ../../weather/. resources
+cp -R ../../../services/weather/. resources
 docker build -t djotiham/weather_service .
 rm -R resources
 # to remove old images
