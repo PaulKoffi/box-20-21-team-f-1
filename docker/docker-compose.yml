@@ -1,0 +1,84 @@
+version: '2.1'
+
+services:
+
+  ########## Services ##########
+  
+  # weather service (Node JS)
+  weather_service:
+    image: djotiham/weather_service
+    container_name: weather_service
+    expose:
+      - "3000"
+    ports:
+      - "3000:3000"
+
+  # rocket service (Python)
+  rocket_service:
+    image: djotiham/rocket_service
+    container_name: rocket_service
+    expose:
+        - "8000"
+    ports:
+      - "8000:8000"
+
+  ########## rpc ##########
+  
+  # poll creator (Python)
+  pollcreator_rpc:
+    image: djotiham/pollcreator_rpc
+    container_name: pollcreator_rpc
+    expose:
+      - "9000"
+    ports:
+      - "9000:9000"
+    depends_on:
+      - weather_service
+      - rocket_service
+
+  ########## CLIs ##########
+  
+  # elon CLI
+  eloncli:
+    image: djotiham/eloncli
+    container_name: eloncli
+    #command: "rocket_service 8000"
+    #command: "pollcreator_rpc 9000"
+    volumes:
+      - .:/host-elon
+    #depends_on:
+      #rocket_service:
+        #condition: service_healthy
+      #pollcreator_rpc:
+        #condition: service_healthy
+    stdin_open: true
+    tty: true
+    
+  # tory CLI
+  torycli:
+    image: djotiham/torycli
+    container_name: torycli
+    #command: "weather_service 3000"
+    #command: "pollcreator_rpc 9000"
+    volumes:
+      - .:/host-tory
+    #depends_on:
+      #weather_service:
+        #condition: service_healthy
+      #pollcreator_rpc:
+        #condition: service_healthy
+    stdin_open: true
+    tty: true
+    
+  # richard CLI
+  richardcli:
+    image: djotiham/richardcli
+    container_name: richardcli
+    #command: "pollcreator_rpc 9000"
+    volumes:
+      - .:/host-richard
+    #depends_on:
+      #pollcreator_rpc:
+        #condition: service_healthy
+    stdin_open: true
+    tty: true

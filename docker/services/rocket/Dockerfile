@@ -15,6 +15,9 @@ RUN pip install -r requirements.txt
 # copy the content of the local src directory to the working directory
 COPY resources/src/ .
 
+# Creating an health check verification to check rocket status
+HEALTHCHECK --interval=30s --timeout=30s CMD curl --fail http://localhost:8000/ || exit 1
+
 # port
 # EXPOSE 8000
 

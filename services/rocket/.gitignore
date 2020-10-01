@@ -1,0 +1,10 @@
+.idea
+
+.vscode
+
+src/__pycache__
+src/server/__pycache__
+src/server/controllers/__pycache__
+src/server/models/__pycache__
+src/server/resources/__pycache__
+src/server/services/__pycache__
