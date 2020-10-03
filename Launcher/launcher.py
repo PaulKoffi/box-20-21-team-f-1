@@ -10,16 +10,16 @@ from bson.json_util import dumps, loads
 HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
 PORT = 9090        # Port to listen on (non-privileged ports are > 1023)
 
-pollServer = SimpleXMLRPCServer(('localhost',8888 ),logRequests=True, allow_none=True)
+launcher = SimpleXMLRPCServer(('localhost',8888 ),logRequests=True, allow_none=True)
 
 client = pymongo.MongoClient("mongodb+srv://flo:Azerty123@cluster0.ibhol.mongodb.net/blueOrigin?retryWrites=true&w=majority")
 db = client.get_database('blueOrigin') 
 
 def sendRocketStates(siteName, rocketName):
-    someRocketStates = json.loads(dumps(db.rocketsStates.find_one( {"rocketName": "Paris"})))
+    someRocketStates = json.loads(dumps(db.rocketsStates.find_one( {"rocketName": rocketName}))) #, {"siteName" : siteName })))
     statesArray = someRocketStates["rocketStatesHe"]
     length = len(statesArray)
-    for index in range (0, length-1):
+    for index in range (0, length):
         time.sleep(5)
         # Create a client socket
         clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -30,14 +30,14 @@ def sendRocketStates(siteName, rocketName):
         clientSocket.send(data.encode())
 
     
-    return "{}".format()
+    #return "{}".format()
 
-pollServer.register_function(sendRocketStates)
+launcher.register_function(sendRocketStates)
 
 if __name__ == '__main__':
     try:
-        print('Poll serving ....')
-        pollServer.serve_forever()
+        print('Launcher serving ....')
+        launcher.serve_forever()
 
     except KeyboardInterrupt:
-        print('Poll exiting !!!')
+        print('Launcher exiting !!!')
