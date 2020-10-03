@@ -1,6 +1,8 @@
 import requests
+from xmlrpc.client import ServerProxy
 
 BASE_URL = "http://127.0.0.1:8000"
+serverLaucher = ServerProxy('http://localhost:8888')
 if __name__ == "__main__":
     while True:
         command = input().split(' ')
@@ -15,3 +17,5 @@ if __name__ == "__main__":
             print(response.json())
         if(command[0] == "poll"):
             print("The rocket: {} can {}".format(command[1], command[2]))
+        if(command[0] == "sendRocketStates"):
+            print(serverLaucher.sendRocketStates(command[1],command[2]))
