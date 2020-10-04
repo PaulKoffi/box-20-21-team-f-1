@@ -1,6 +1,7 @@
+language: generic
+
 jobs:
   include:
-      - language: python
       - stage: "Rocket Service"
         name: "Units tests of rocket service"
         install: 
