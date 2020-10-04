@@ -16,7 +16,7 @@ client = pymongo.MongoClient("mongodb+srv://flo:Azerty123@cluster0.ibhol.mongodb
 db = client.get_database('blueOrigin') 
 
 def sendRocketStates(siteName, rocketName):
-    someRocketStates = json.loads(dumps(db.rocketsStates.find_one({"rocketName": rocketName}))) #, {"siteName" : siteName })))
+    someRocketStates = json.loads(dumps(db.rocketsStates.find_one({"rocketName": rocketName} , {"siteName" : siteName })))
     statesArray = someRocketStates["rocketStatesHe"]
     length = len(statesArray)
     for index in range (0, length):
