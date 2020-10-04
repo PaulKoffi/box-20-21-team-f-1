@@ -18,4 +18,4 @@ if __name__ == "__main__":
         if(command[0] == "poll"):
             print("The rocket: {} can {}".format(command[1], command[2]))
         if(command[0] == "sendRocketStates"):
-            print(serverLaucher.sendRocketStates(command[1],command[2]))
+            serverLaucher.sendRocketStates(command[1],command[2])
