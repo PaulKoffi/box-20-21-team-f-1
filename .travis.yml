@@ -7,4 +7,4 @@ jobs:
         install: 
           - pip install -r requirements.txt 
         script: 
-          - python services/rocket/test/rocketApiTest.py
+          - python -c "print(sys.path)"
