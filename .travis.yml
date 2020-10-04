@@ -7,4 +7,5 @@ jobs:
         install: 
           - pip install -r requirements.txt 
         script: 
+          - python pythonconfiguration.py
           - python -m unittest services.rocket.test.rocketApiTest
