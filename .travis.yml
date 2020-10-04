@@ -6,6 +6,7 @@ jobs:
         name: "Units tests of rocket service"
         install: 
           - pip install -r requirements.txt 
+        before_script: export PYTHONPATH=$PYTHONPATH:$(pwd)
         script: 
           - cd services/rocket/test
           - python rocketApiTest.py
