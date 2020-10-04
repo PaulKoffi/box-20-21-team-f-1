@@ -1,0 +1,15 @@
+jobs:
+  include:
+      - language: python
+      - stage: "Rocket Service units tests"
+        name: "Units tests of rocket service"
+        install: 
+          - pip -r requirements.txt 
+        script:
+        - cd services/rocket/test
+        - python rocketApiTest.py
+
+      - stage: "Payload Service units tests"
+        name: "Units tests of payload service"
+        script:
+          - cd services/payload
