@@ -7,5 +7,5 @@ jobs:
         install: 
           - pip install -r requirements.txt 
         script: 
-          - python pythonconfiguration.py
-          - python services/rocket/test/rocketApiTest.py
+          - cd services/rocket/test
+          - python rocketApiTest.py
