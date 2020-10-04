@@ -5,9 +5,6 @@ jobs:
         name: "Units tests of rocket service"
         script:
           - cd services/rocket
-          - pip3 install -r requirements.txt 
-          - cd test
-          - python3 rocketApiTest.py
 
       - stage: "Payload Service units tests"
         name: "Units tests of payload service"
