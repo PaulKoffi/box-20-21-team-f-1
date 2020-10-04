@@ -3,6 +3,8 @@ jobs:
       - language: python
       - stage: "Rocket Service units tests"
         name: "Units tests of rocket service"
+        install: 
+          - pip3 -r requirements.txt 
         script:
           - cd services/rocket
 
