@@ -1,7 +1,7 @@
 # # rocketApiTest.py
 
 import sys, os
-sys.path.append(os.path.abspath(os.path.join('..', 'src')))
+sys.path.append(os.path.abspath(os.path.join('..', 'box-20-21-team-f/services/rocket/src')))
 
 from run import app
 import unittest
@@ -24,4 +24,5 @@ class RocketApiTest(unittest.TestCase):
         self.assertEqual(reponse_dict['status'],"it's risky")
 
 if __name__ == "__main__":
+    print(sys.path)
     unittest.main()
