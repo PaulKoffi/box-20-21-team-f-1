@@ -8,4 +8,4 @@ jobs:
           - pip install -r requirements.txt 
         script: 
           - python pythonconfiguration.py
-          - python -m unittest box-20-21-team-f.services.rocket.test.rocketApiTest
+          - python services/rocket/test/rocketApiTest
