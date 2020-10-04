@@ -1,8 +1,9 @@
 jobs:
   include:
       - language: python
-      - stage: "Rocket Service units tests"
+      - stage: "Rocket Service"
         name: "Units tests of rocket service"
         install: 
-          - pip3 -r requirements.txt 
-        script: python3 services/rocket/test/rocketApiTest.py
+          - pip -r requirements.txt 
+        script: 
+          - python services/rocket/test/rocketApiTest.py
