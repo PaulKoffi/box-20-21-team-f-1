@@ -16,5 +16,8 @@ RUN npm install
 # Bundle app source
 COPY resources/. .
 
+# Creating an health check verification to check weather status
+# HEALTHCHECK --interval=30s --timeout=30s CMD curl --fail http://localhost:3000/ || exit 1
+
 EXPOSE 3000
 CMD [ "node", "app.js" ]
