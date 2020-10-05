@@ -10,16 +10,16 @@ from bson.json_util import dumps, loads
 HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
 PORT = 9090  # Port to listen on (non-privileged ports are > 1023)
 
-launcher = SimpleXMLRPCServer(('localhost', 8888), logRequests=True, allow_none=True)
+rocket = SimpleXMLRPCServer(('localhost', 8888), logRequests=True, allow_none=True)
 
 client = pymongo.MongoClient(
     "mongodb+srv://flo:Azerty123@cluster0.ibhol.mongodb.net/blueOrigin?retryWrites=true&w=majority")
 db = client.get_database('blueOrigin')
 
 
-def sendRocketStates(siteName, rocketName):
-    someRocketStates = json.loads(dumps(db.rocketsStates.find({"rocketName": rocketName, "siteName": siteName})))
-    statesArray = someRocketStates[0]["rocketStatesHe"]
+def sendStates(siteName, rocketName):
+    someRocketStates = json.loads(dumps(db.rocketsStates.find_one({"rocketName": rocketName, "siteName": siteName})))
+    statesArray = someRocketStates["rocketStatesHe"]
 
     length = len(statesArray)
     for index in range(0, length):
@@ -35,12 +35,12 @@ def sendRocketStates(siteName, rocketName):
     # return "{}".format()
 
 
-launcher.register_function(sendRocketStates)
+rocket.register_function(sendStates)
 
 if __name__ == '__main__':
     try:
-        print('Launcher serving ....')
-        launcher.serve_forever()
+        print('rocket serving ....')
+        rocket.serve_forever()
 
     except KeyboardInterrupt:
-        print('Launcher exiting !!!')
+        print('rocket exiting !!!')
