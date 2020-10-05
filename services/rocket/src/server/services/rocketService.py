@@ -1,4 +1,4 @@
-from server.resources.rocketResource import RocketResource
+from services.rocket.src.server.resources.rocketResource import RocketResource
 
 
 class RocketService:

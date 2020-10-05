@@ -1,4 +1,4 @@
-from server.main import create_app
+from services.rocket.src.server.main import create_app
 
 app = create_app()
 

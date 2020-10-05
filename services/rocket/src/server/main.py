@@ -1,6 +1,6 @@
 from flask import Flask
 
-from server.controllers.rocketController import rocketControllerBlueprint
+from services.rocket.src.server.controllers.rocketController import rocketControllerBlueprint
 
 
 def create_app():

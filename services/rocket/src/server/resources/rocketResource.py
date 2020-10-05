@@ -6,6 +6,7 @@ rockets = {
     "himalaya": {"status": "aborted"},
 }
 
+
 class RocketResource():
     def getAllRockets(self):
         return jsonify(rockets)
