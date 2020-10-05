@@ -1,6 +1,6 @@
 from xmlrpc.client import ServerProxy
 
-s = ServerProxy('http://localhost:9000')
+s = ServerProxy('http://0.0.0.0:9000')
 
 if __name__ == "__main__":
     while True:

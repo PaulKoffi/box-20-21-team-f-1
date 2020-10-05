@@ -7,3 +7,6 @@ if [[ "$OSTYPE" == "linux-gnu"* || "$OSTYPE" == "darwin"* ]]; then
 else
 		winpty docker attach richardcli
 fi
+
+echo "Done"
+read -n 1 -s -r -p "Press any key to continue"

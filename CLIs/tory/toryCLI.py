@@ -1,6 +1,6 @@
 import requests
 
-BASE_URL = "http://localhost:3000"
+BASE_URL = "http://0.0.0.0:3000"
 if __name__ == "__main__":
     while True:
         command = input().split(' ')

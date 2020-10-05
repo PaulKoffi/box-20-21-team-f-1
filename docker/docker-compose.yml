@@ -28,6 +28,7 @@ services:
   pollcreator_rpc:
     image: djotiham/pollcreator_rpc
     container_name: pollcreator_rpc
+    network_mode: host
     expose:
       - "9000"
     ports:
@@ -42,15 +43,12 @@ services:
   eloncli:
     image: djotiham/eloncli
     container_name: eloncli
-    #command: "rocket_service 8000"
-    #command: "pollcreator_rpc 9000"
+    network_mode: host
     volumes:
       - .:/host-elon
-    #depends_on:
-      #rocket_service:
-        #condition: service_healthy
-      #pollcreator_rpc:
-        #condition: service_healthy
+    depends_on:
+      - rocket_service
+      - pollcreator_rpc
     stdin_open: true
     tty: true
     
@@ -58,15 +56,12 @@ services:
   torycli:
     image: djotiham/torycli
     container_name: torycli
-    #command: "weather_service 3000"
-    #command: "pollcreator_rpc 9000"
+    network_mode: host
     volumes:
       - .:/host-tory
-    #depends_on:
-      #weather_service:
-        #condition: service_healthy
-      #pollcreator_rpc:
-        #condition: service_healthy
+    depends_on:
+      - weather_service
+      - pollcreator_rpc
     stdin_open: true
     tty: true
     
@@ -74,11 +69,10 @@ services:
   richardcli:
     image: djotiham/richardcli
     container_name: richardcli
-    #command: "pollcreator_rpc 9000"
+    network_mode: host
     volumes:
       - .:/host-richard
-    #depends_on:
-      #pollcreator_rpc:
-        #condition: service_healthy
+    depends_on:
+      - pollcreator_rpc
     stdin_open: true
     tty: true
