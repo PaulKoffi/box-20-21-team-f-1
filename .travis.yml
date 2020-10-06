@@ -6,9 +6,9 @@ jobs:
         name: "Building all docker images"
         before_install:
           - chmod +x build.sh
-          - chmod +x docker/CLIS/elon/build.sh
-          - chmod +x docker/CLIS/tory/build.sh
-          - chmod +x docker/CLIS/richard/build.sh
+          - chmod +x docker/CLIs/elon/build.sh
+          - chmod +x docker/CLIs/tory/build.sh
+          - chmod +x docker/CLIs/richard/build.sh
           - chmod +x docker/rpc/pollCreator/build.sh
           - chmod +x docker/services/rocketInventory/build.sh
           - chmod +x docker/services/weather/build.sh
