@@ -2,8 +2,8 @@ language: generic
 
 jobs:
   include:
-      - stage: "Tests"
-        name: "Building all docker images"
+      - stage: "Building and Launching"
+        name: "Building all docker images and launching them"
         before_install:
           - chmod +x build.sh
           - chmod +x docker/CLIs/elon/build.sh
@@ -12,13 +12,17 @@ jobs:
           - chmod +x docker/rpc/pollCreator/build.sh
           - chmod +x docker/services/rocketInventory/build.sh
           - chmod +x docker/services/weather/build.sh
-          - chmod +x clean.sh
           - chmod +x run.sh
-          - chmod +x stop.sh
-        script: ./build.sh
-      - name: "Launch all docker containers"
-        script: ./run.sh
-      - name: "Units tests of rocket service"
+        script: 
+          - ./build.sh
+          - ./run.sh
+      # - stage: "Docker compose up"
+      #   name: "Launch all docker containers"
+      #   before_install:
+      #     - chmod +x run.sh
+      #   script: ./run.sh
+      - stage: "Rocket Service"
+        name: "Units tests of rocket service"
         before_install:
           - "pip install -U pip"
           - "export PYTHONPATH=$PYTHONPATH:$(pwd)"
@@ -26,7 +30,13 @@ jobs:
           - pip install -r requirements.txt
         script:
           - python services/rocketInventory/test/rocketApiTest.py
-      - name: "Stop all docker containers"
+      - stage: "Docker compose down"
+        name: "Stop all docker containers"
+        before_install:
+          - chmod +x stop.sh
         script: ./stop.sh
-      - name: "Remove all images"
+      - stage: "Clean up"
+        before_install:
+          - chmod +x clean.sh
+        name: "Remove all images"
         script: ./clean.sh
