@@ -36,8 +36,5 @@ cd richard
 sh build.sh
 cd ..
 
-echo "Done"
-read -n 1 -s -r -p "Press any key to continue"
-
-
-
+# echo "Done"
+# read -n 1 -s -r -p "Press any key to continue"

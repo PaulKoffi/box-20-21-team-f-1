@@ -2,6 +2,12 @@ language: generic
 
 jobs:
   include:
+      - stage: "Build all images"
+        name: "Building all docker images"
+        script: ./build.sh
+      - stage: "Docker compose up"
+        name: "Launch all docker containers"
+        script: ./run.sh
       - stage: "Rocket Service"
         name: "Units tests of rocket service"
         before_install:
@@ -10,4 +16,10 @@ jobs:
         install: 
           - pip install -r requirements.txt
         script:
-          - python -c "print('Hello world, i'll wait the merge to develop to launch docker compose to test rocketApi')"
+          - python services/rocketInventory/test/rocketApiTest.py
+      - stage: "Docker compose down"
+        name: "Stop all docker containers"
+        script: ./stop.sh
+      - stage: "Clean up"
+        name: "Remove all images"
+        script: ./clean.sh
