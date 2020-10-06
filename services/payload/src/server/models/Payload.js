@@ -23,6 +23,10 @@ PayloadSchema = new Schema({
         type: String,
         require: true
     },
+    success  : {
+        type: Boolean,
+        require: true
+    },
 });
 
 

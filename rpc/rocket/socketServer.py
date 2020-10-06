@@ -43,7 +43,7 @@ while (True):
         round += 1
         if round == 13:
             print("LAST DATA")
-            response = requests.get("{}/payloadByRocketName/{}".format(BASE_URL, rocketName))
+            response = requests.get("{}/payload/payloadByRocketName/{}".format(BASE_URL, rocketName))
             print(response.json())
             # print(response.json()["finalPosition"])
             if int(response.json()["finalPosition"]) == int(dataFromClient.decode()):

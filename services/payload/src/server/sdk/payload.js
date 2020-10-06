@@ -38,7 +38,8 @@ async function addPayload(customerName, customerMail, finalPosition, x, y, satel
             "rocketName": rocketsAvailable.rocketName,
             "finalPosition": finalPosition,
             "position": [String(x), String(y)],
-            "satellite": satellite
+            "satellite": satellite,
+            "success": false
         });
 
         // rendre indisponible la rocket
