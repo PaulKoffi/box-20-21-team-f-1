@@ -8,7 +8,7 @@ cd weather
 ./build.sh
 cd ..
 ## rocket
-cd rocket
+cd rocketInventory
 ./build.sh
 cd ..
 
