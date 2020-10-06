@@ -4,9 +4,13 @@ jobs:
   include:
       - stage: "Build all images"
         name: "Building all docker images"
+        before_install:
+          - chmod +x build.sh
         script: ./build.sh
       - stage: "Docker compose up"
         name: "Launch all docker containers"
+        before_install:
+          - chmod +x run.sh
         script: ./run.sh
       - stage: "Rocket Service"
         name: "Units tests of rocket service"
@@ -19,7 +23,11 @@ jobs:
           - python services/rocketInventory/test/rocketApiTest.py
       - stage: "Docker compose down"
         name: "Stop all docker containers"
+        before_install:
+          - chmod +x stop.sh
         script: ./stop.sh
       - stage: "Clean up"
+        before_install:
+          - chmod +x clean.sh
         name: "Remove all images"
         script: ./clean.sh
