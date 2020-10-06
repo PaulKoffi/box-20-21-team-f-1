@@ -1,5 +1,5 @@
 from flask import Blueprint
-from services.rocket.src.server.services.rocketService import RocketService
+from server.services.rocketService import RocketService
 
 rocketService = RocketService()
 rocketControllerBlueprint = Blueprint('rocketController', __name__, )
