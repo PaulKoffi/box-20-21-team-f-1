@@ -40,6 +40,7 @@ class RocketStatesResource():
         "mongodb+srv://flo:Azerty123@cluster0.ibhol.mongodb.net/blueOrigin?retryWrites=true&w=majority")
         db = client.get_database('blueOrigin')
         rocketAction=json.loads(dumps(db.rocketActions.find_one({"rocketName": rocketName, "siteName": siteName})))
+        print(str(rocketAction["launch"]))
         return str(rocketAction["launch"])
 
     def putSecondStepByNameAndSite(self,siteName,rocketName,newState):

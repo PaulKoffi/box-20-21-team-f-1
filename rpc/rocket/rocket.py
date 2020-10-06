@@ -9,7 +9,7 @@ from bson.json_util import dumps, loads
 
 HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
 PORT = 9090  # Port to listen on (non-privileged ports are > 1023)
-
+ROCKETS_STATES_BASE_URL = "http://0.0.0.0:5000"
 rocket = SimpleXMLRPCServer(('localhost', 8888), logRequests=True, allow_none=True)
 
 client = pymongo.MongoClient(
@@ -18,21 +18,30 @@ db = client.get_database('blueOrigin')
 
 
 def sendStates(siteName, rocketName):
-    someRocketStates = json.loads(dumps(db.rocketsStates.find_one({"rocketName": rocketName, "siteName": siteName})))
+    someRocketStates = json.loads(dumps(db.rockets.find_one({"rocketName": rocketName, "siteName": siteName})))
     statesArray = someRocketStates["rocketStatesHe"]
+    while True:
+        responseLaunching = requests.get("{}/rocketsStates/launching/{}/{}".format(ROCKETS_STATES_BASE_URL, siteName, rocketName))
+        if responseLaunching.text == "True":
+            print("Launching started")   
+            length = len(statesArray)
+            for index in range(0, length):
+                responseDestruction = requests.get("{}/rocketsStates/destruction/{}/{}".format(ROCKETS_STATES_BASE_URL, siteName, rocketName))
+                if responseDestruction.text == "True":
+                    print("Rocket destruction!!!!")
+                    break
+                time.sleep(5)
+                # Create a client socket
+                clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                # Connect to the server
+                clientSocket.connect((HOST, PORT))
+                # Send data to server
+                data = str(statesArray[index])
+                clientSocket.send(data.encode())
+            print("Rocket at the end of the launch")
+            break
 
-    length = len(statesArray)
-    for index in range(0, length):
-        time.sleep(5)
-        # Create a client socket
-        clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        # Connect to the server
-        clientSocket.connect((HOST, PORT))
-        # Send data to server
-        data = str(statesArray[index])
-        clientSocket.send(data.encode())
-
-    # return "{}".format()
+    return ""
 
 
 rocket.register_function(sendStates)
