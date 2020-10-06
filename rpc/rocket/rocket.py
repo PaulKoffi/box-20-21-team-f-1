@@ -20,6 +20,13 @@ db = client.get_database('blueOrigin')
 def sendStates(siteName, rocketName):
     someRocketStates = json.loads(dumps(db.rockets.find_one({"rocketName": rocketName, "siteName": siteName})))
     statesArray = someRocketStates["rocketStatesHe"]
+
+    # Envoi du code de la Rocket
+    clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    clientSocket.connect((HOST, PORT))
+    data = rocketName
+    clientSocket.send(data.encode())
+
     while True:
         responseLaunching = requests.get("{}/rocketsStates/launching/{}/{}".format(ROCKETS_STATES_BASE_URL, siteName, rocketName))
         if responseLaunching.text == "True":
