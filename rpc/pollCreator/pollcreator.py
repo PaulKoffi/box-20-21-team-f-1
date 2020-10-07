@@ -1,10 +1,10 @@
 from xmlrpc.server import SimpleXMLRPCServer
 import requests
 
-pollServer = SimpleXMLRPCServer(('0.0.0.0',9000),logRequests=True, allow_none=True)
+pollServer = SimpleXMLRPCServer(('localhost',9000),logRequests=True, allow_none=True)
 
-ELON_URL = "http://0.0.0.0:8000/"
-TORY_URL = "http://0.0.0.0:3000/"
+ELON_URL = "http://localhost:8000/"
+TORY_URL = "http://localhost:3000/"
 
 def getResponsesPoll(siteName, rocketName):
     responseElon = requests.get("{}rocket/{}".format(ELON_URL,rocketName))
