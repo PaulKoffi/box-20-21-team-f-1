@@ -15,8 +15,8 @@ services:
 
   # rocket service (Python)
   rocket_service:
-    image: djotiham/rocket_service
-    container_name: rocket_service
+    image: djotiham/rocket_inventory_service
+    container_name: rocket_inventory_service
     expose:
         - "8000"
     ports:
