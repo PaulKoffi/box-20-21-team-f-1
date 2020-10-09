@@ -9,7 +9,7 @@ from bson.json_util import dumps, loads
 
 HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
 PORT = 9090  # Port to listen on (non-privileged ports are > 1023)
-ROCKETS_STATES_BASE_URL = "http://0.0.0.0:5000"
+ROCKETS_STATES_BASE_URL = "http://localhost:5000"
 rocket = SimpleXMLRPCServer(('localhost', 8888), logRequests=True, allow_none=True)
 
 client = pymongo.MongoClient(
@@ -18,7 +18,8 @@ db = client.get_database('blueOrigin')
 
 
 def sendStates(siteName, rocketName):
-    someRocketStates = json.loads(dumps(db.rockets.find_one({"rocketName": rocketName, "siteName": siteName})))
+    someRocketStates = json.loads(dumps(db.rocketsStates.find_one({"rocketName": rocketName, "siteName": siteName})))
+    # print(someRocketStates)
     statesArray = someRocketStates["rocketStatesHe"]
 
     # Envoi du code de la Rocket
