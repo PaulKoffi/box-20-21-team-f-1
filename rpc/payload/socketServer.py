@@ -11,7 +11,7 @@ serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Bind and listen
 
-serverSocket.bind(("127.0.0.1", 9490))
+serverSocket.bind(("127.0.0.1", 9292))
 
 serverSocket.listen()
 
@@ -44,7 +44,7 @@ while (True):
         if round == 1:
             arrayLength = int(dataFromClient.decode())
         round += 1
-        if round == 20:
+        if round == 7:
             print("LAST DATA")
             response = requests.get("{}/payload/payloadByRocketName/{}".format(BASE_URL, rocketName))
             print(response.json())
