@@ -23,3 +23,13 @@
 
 # dnspython >= 2.0.0
 # pymongo >= 3.11.0
+
+# Scenario: a rocket at a site cannot be launched because of the site 
+#      Given we want to launch a rocket at a site
+#       When Richard starts the poll for rocket PGP-6000 at Toulouse
+#       Then He will receive Elon's response on cotonou is : GO\nTory's response on Toulouse is : NOGO
+
+#   Scenario: a rocket at a site cannot be launched because of the rocket 
+#      Given we want to launch a rocket at a site
+#       When Richard starts the poll to launch rocket VEGA-6000 at Paris
+#       Then He will receive Elon's response on cotonou is : NOGO\nTory's response on Paris is : GO
