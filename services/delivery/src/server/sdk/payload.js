@@ -17,7 +17,8 @@ async function getPayloadByRocketName(rocketName) {
 }
 
 async function setStatus(rocketName){
-    await PayloadModel.updateOne({'rocketName': rocketName},{"success": true});
+    currentStatus = await getPayloadByRocketName(rocketName).success;
+    await PayloadModel.updateOne({'rocketName': rocketName},{"success": !currentStatus});
 }
 
 async function addPayload(customerName, customerMail, finalPosition, x, y, satellite) {
