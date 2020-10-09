@@ -47,7 +47,12 @@ while (True):
             print(response.json())
             # print(response.json()["finalPosition"])
             if int(response.json()["finalPosition"]) == int(dataFromClient.decode()):
-                print("--------------< Satellite mis en Orbite avec succès >------------------")
+                myobj = {
+                    "rocketName": rocketName
+                }
+                x = requests.post("{}/payload/setStatus".format(BASE_URL), data=myobj)
+                if x.status_code != 403:
+                    print("--------------< Satellite mis en Orbite avec succès >------------------")
             else:
                 print("ECHEC DE LA MISSION")
             round = 0
