@@ -1,7 +1,7 @@
 from xmlrpc.client import ServerProxy
 import requests
 
-ROCKETS_STATES_BASE_URL = "http://0.0.0.0:5000"
+ROCKETS_STATES_BASE_URL = "http://localhost:5000"
 s = ServerProxy('http://0.0.0.0:9000')
 
 if __name__ == "__main__":
