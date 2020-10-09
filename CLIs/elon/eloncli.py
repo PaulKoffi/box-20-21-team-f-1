@@ -2,7 +2,7 @@ import requests
 from xmlrpc.client import ServerProxy
 
 BASE_URL = "http://localhost:8000"
-rocket = ServerProxy('http://0.0.0.0:8888')
+rocket = ServerProxy('http://localhost:8888')
 
 
 if __name__ == "__main__":

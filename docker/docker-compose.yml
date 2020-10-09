@@ -13,8 +13,8 @@ services:
     ports:
       - "3000:3000"
 
-  # rocket service (Python)
-  rocket_service:
+  # rocket inventory service (Python)
+  rocket_inventory_service:
     image: djotiham/rocket_inventory_service
     container_name: rocket_inventory_service
     expose:
@@ -35,7 +35,7 @@ services:
       - "9000:9000"
     depends_on:
       - weather_service
-      - rocket_service
+      - rocket_inventory_service
 
   ########## CLIs ##########
   
@@ -47,7 +47,7 @@ services:
     volumes:
       - .:/host-elon
     depends_on:
-      - rocket_service
+      - rocket_inventory_service
       - pollcreator_rpc
     stdin_open: true
     tty: true

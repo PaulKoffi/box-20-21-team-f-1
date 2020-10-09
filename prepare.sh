@@ -7,12 +7,12 @@ cd docker/services
 
 ## weather
 cd weather
-echo "Building weather service docker image"
+# echo "Building weather service docker image"
 ./build.sh
 cd ..
 ## rocket
 cd rocketInventory
-echo "Building rocketInventory service docker image"
+# echo "Building rocketInventory service docker image"
 ./build.sh
 cd ..
 
@@ -21,7 +21,7 @@ cd ../rpc
 
 ## pollcreator
 cd pollCreator
-echo "Building pollCreator docker image"
+# echo "Building pollCreator docker image"
 ./build.sh
 cd ..
 
@@ -30,17 +30,17 @@ cd ../CLIs
 
 ## elon
 cd elon
-echo "Building elon docker image"
+# echo "Building elon docker image"
 ./build.sh
 cd ..
 ## tory
 cd tory
-echo "Building tory docker image"
+# echo "Building tory docker image"
 ./build.sh
 cd ..
 ## richard
 cd richard
-echo "Building richard docker image"
+# echo "Building richard docker image"
 ./build.sh
 cd ..
 
@@ -48,5 +48,5 @@ cd ..
 ## >>>>> Running all servers
 docker-compose up -d
 
-# echo "Done"
-# read -n 1 -s -r -p "Press any key to continue"
+echo "Done"
+read -n 1 -s -r -p "Press any key to continue"
