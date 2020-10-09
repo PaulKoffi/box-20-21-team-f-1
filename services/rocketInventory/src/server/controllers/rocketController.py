@@ -13,3 +13,8 @@ def getAllRockets():
 @rocketControllerBlueprint.route('/rocket/<string:id>')
 def getRocketById(id):
     return rocketService.getRocketById(id)
+
+@rocketControllerBlueprint.route('/rocket/setStatus/<string:id>', methods=['POST'])
+def setRocketStatus(id):
+    return rocketService.setRocketStatus(id)
+
