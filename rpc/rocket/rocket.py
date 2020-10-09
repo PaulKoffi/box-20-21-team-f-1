@@ -18,8 +18,8 @@ db = client.get_database('blueOrigin')
 
 
 def sendStates(siteName, rocketName):
-    print("Hello")
     someRocketStates = json.loads(dumps(db.rocketsStates.find_one({"rocketName": rocketName, "siteName": siteName})))
+    # print(someRocketStates)
     statesArray = someRocketStates["rocketStatesHe"]
     print(statesArray)
 

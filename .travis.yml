@@ -12,22 +12,22 @@ jobs:
           - chmod +x docker/rpc/pollCreator/build.sh
           - chmod +x docker/services/rocketInventory/build.sh
           - chmod +x docker/services/weather/build.sh
-          - chmod +x run.sh
+          - chmod +x launch.sh
           - chmod +x clean.sh
           - chmod +x stop.sh
         install: 
           - pip install -r requirements.txt
         script: 
           - ./build.sh
-          - ./run.sh
+          - ./launch.sh
           - python services/rocketInventory/test/rocketApiTest.py
           - ./stop.sh
           - ./clean.sh
       # - stage: "Docker compose up"
       #   name: "Launch all docker containers"
       #   before_install:
-      #     - chmod +x run.sh
-      #   script: ./run.sh
+      #     - chmod +x launch.sh
+      #   script: ./launch.sh
       # - stage: "Rocket Service"
       #   name: "Units tests of rocket service"
       #   before_install:

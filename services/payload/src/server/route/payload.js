@@ -27,4 +27,13 @@ router.get('/payload/payloadByRocketName/:rocketName', async (ctx) => {
     }
 });
 
+router.post('/payload/setStatus', async (ctx) => {
+    try {
+        const result = await sdk.setStatus(ctx.request.body.rocketName);
+        f.success(ctx, result);
+    } catch {
+        f.failure(ctx, "failed");
+    }
+});
+
 module.exports = router;
