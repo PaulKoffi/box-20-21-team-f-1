@@ -23,7 +23,7 @@ def sendPayloadStates(siteName, rocketName):
     # print(someRocketStates)
     paylaodStatesArray = someRocketStates["payloadStatesHe"]
 
-        # Envoi du code de la Rocket
+    # Envoi du code de la Rocket
     clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     clientSocket.connect((HOST, PORT))
     data = requests.get("{}/payloadByRocketName/{}".format(BASE_URL, rocketName)).json()["satellite"]
@@ -35,25 +35,24 @@ def sendPayloadStates(siteName, rocketName):
     data = str(len(paylaodStatesArray))
     clientSocket.send(data.encode())
 
-    while True:
-        responseSecondStep = requests.get("{}/rocketsStates/secondStep/{}/{}".format(ROCKETS_STATES_BASE_URL, siteName, rocketName))
-        if responseSecondStep.text == "True":
-            print("SecondState started: payload telemetry")   
-            length = len(paylaodStatesArray)
-            for index in range(0, length):
-                time.sleep(2)
-                # Create a client socket
-                clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                # Connect to the server
-                clientSocket.connect((HOST, PORT))
-                # Send data to server
-                data = str(paylaodStatesArray[index])
-                clientSocket.send(data.encode())
-            print("Payload is stabilised")
-            break
+    # while True:
+    #     responseSecondStep = requests.get(
+    #         "{}/rocketsStates/secondStep/{}/{}".format(ROCKETS_STATES_BASE_URL, siteName, rocketName))
+    #     if responseSecondStep.text == "True":
+    print("SecondState started: payload telemetry")
+    l = len(paylaodStatesArray)
+    for index in range(0, l):
+        time.sleep(2)
+        # Create a client socket
+        clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        # Connect to the server
+        clientSocket.connect((HOST, PORT))
+        # Send data to server
+        data = str(paylaodStatesArray[index])
+        clientSocket.send(data.encode())
+    print("Payload is stabilised")
 
     return ""
-
 
 payload.register_function(sendPayloadStates)
 
