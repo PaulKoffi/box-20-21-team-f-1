@@ -24,5 +24,11 @@ Feature: scenario1
         Then On voit que la réponse de Tory est GO car les conditions atmosphériques de Paris sont bonnes
         Then et que la réponse de Richard est donc GO
 
+    Scenario: consultation details de la fusée avant le lancement
+        Given le GO de Richard
+        When  on consulte le statut du lancement de la fusée
+        Then  on voit qu'il est bien à True
+        Then  la fusée est toujours indisponible pour une autre mission pour le moment
+
 
 

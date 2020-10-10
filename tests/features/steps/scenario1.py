@@ -5,8 +5,9 @@ import requests
 
 s = ServerProxy('http://localhost:9000')
 s1 = ServerProxy('http://localhost:8888')
-ROCKETS_STATES_BASE_URL = "http://localhost:5000"
 DELIVERY_STATES_BASE_URL = "http://localhost:7000/payload"
+BASE_URL_ROCKET_INVENTORY = "http://localhost:8000"
+ROCKETS_STATES_BASE_URL = "http://localhost:5000"
 responsePoll = ""
 
 
@@ -51,7 +52,6 @@ def step_impl(context):
     assert response.json()['rocketName'] == "VEGA-4000"
 
 
-
 @given('Toulouse un site où la pression du vent actuellement est au dessus de notre seuil de sécurité')
 def step_impl(context):
     pass
@@ -76,6 +76,7 @@ def step_impl(context):
 def step_impl(context):
     assert context.responsePoll['toryResponse'] == "NOGO"
 
+
 @then("et que la réponse de Richard est donc NOGO")
 def step_impl(context):
     assert context.responsePoll['richardResponse'] == "NOGO"
@@ -84,6 +85,7 @@ def step_impl(context):
 @given('Paris un site où la pression du vent actuellement est au dessus de notre seuil de sécurité')
 def step_impl(context):
     pass
+
 
 @when("richard décide de démarrer le poll")
 def step_impl(context):
@@ -103,3 +105,25 @@ def step_impl(context):
 @then("et que la réponse de Richard est donc GO")
 def step_impl(context):
     assert context.responsePoll['richardResponse'] == "GO"
+
+
+@given('le GO de Richard')
+def step_impl(context):
+    pass
+
+
+@when("on consulte le statut du lancement de la fusée")
+def step_impl(context):
+    context.rocket = requests.get("{}/rocket/{}".format(BASE_URL_ROCKET_INVENTORY, "VEGA-4000"))
+    context.rocketLaunched = requests.get(
+        "{}/rocketsStates/launching/{}/{}".format(ROCKETS_STATES_BASE_URL, "Paris", "VEGA-4000"))
+
+
+@then("on voit qu'il est bien à True")
+def step_impl(context):
+    assert context.rocketLaunched.text == "True"
+
+
+@then("la fusée est toujours indisponible pour une autre mission pour le moment")
+def step_impl(context):
+    assert context.rocket.json()["available"] is False
