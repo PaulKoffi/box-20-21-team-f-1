@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## Removing all images
-docker rmi djotiham/richardcli djotiham/torycli djotiham/eloncli djotiham/pollcreator_rpc djotiham/rocket_inventory_service djotiham/weather_service
+docker rmi djotiham/richardcli djotiham/torycli djotiham/eloncli djotiham/pollcreator_rpc djotiham/rocket_inventory_service djotiham/weather_service djotiham/launcher_service
 ## Removing old/dandling images
 # docker rmi $(docker images -qa -f 'dangling=true')
 

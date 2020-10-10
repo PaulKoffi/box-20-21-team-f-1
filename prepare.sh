@@ -10,6 +10,11 @@ cd weather
 # echo "Building weather service docker image"
 ./build.sh
 cd ..
+## launcher
+cd launcher
+# echo "Building launcher service docker image"
+./build.sh
+cd ..
 ## rocket
 cd rocketInventory
 # echo "Building rocketInventory service docker image"

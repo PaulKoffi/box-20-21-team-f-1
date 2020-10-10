@@ -7,6 +7,10 @@ cd docker/services
 cd weather
 ./build.sh
 cd ..
+## launcher
+cd launcher
+./build.sh
+cd ..
 ## rocket
 cd rocketInventory
 ./build.sh

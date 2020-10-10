@@ -12,7 +12,7 @@ if __name__ == "__main__":
             break
         if(command[0] == "startpoll"):
             response = s.getResponsesPoll(command[1],command[2])
-            print(response.split(' '))
+            print(response)
         if(command[0] == "decide"):
             print("The rocket {} at {} : {}".format(command[3],command[2],command[1]))
         if(command[0] == "destroy"):
