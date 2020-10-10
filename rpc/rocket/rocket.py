@@ -12,6 +12,7 @@ HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
 PORT = 9490  # Port to listen on (non-privileged ports are > 1023)
 ROCKETS_STATES_BASE_URL = "http://localhost:5000"
 PAYLOAD_STATES_BASE_URL = "http://localhost:8282"
+BASE_URL_ROCKET_INVENTORY = "http://localhost:8000"
 
 rocket = SimpleXMLRPCServer(('localhost', 8888), logRequests=True, allow_none=True)
 
@@ -55,6 +56,14 @@ def sendStates(siteName, rocketName):
                 if index == int(length/2):
                     print("Rocket secondStep!!!!")
                     s.sendPayloadStates(siteName, rocketName)
+                
+                if index == int(3*length/4):
+                    print("Max Q making us reduce the speed to 9")
+                    response = requests.put("{}//rocket/setRocketSpeed/{}/{}".format(BASE_URL_ROCKET_INVENTORY, rocketName, 9))
+                    time.sleep(2)
+                    print("Returning to initial speed")
+                    result = requests.put("{}//rocket/setRocketSpeed/{}/{}".format(BASE_URL_ROCKET_INVENTORY, rocketName, response))
+                    
                 time.sleep(2)
         
                 # Create a client socket

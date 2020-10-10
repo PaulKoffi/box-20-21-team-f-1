@@ -12,3 +12,7 @@ class RocketService:
 
     def setRocketStatus(self, id):
         return self.rocketResource.setRocketStatus(id)
+
+    def setRocketSpeed(self, id, speed):
+        return self.rocketResource.setRocketSpeed(id, speed)
+    
