@@ -16,6 +16,10 @@ async function getPayloadByRocketName(rocketName) {
     return PayloadModel.findOne({'rocketName': rocketName});
 }
 
+async function getPayloadBySatelliteName(satelliteName) {
+    return PayloadModel.findOne({'satellite': satelliteName});
+}
+
 async function setStatus(rocketName){
     currentStatus = await getPayloadByRocketName(rocketName).success;
     await PayloadModel.updateOne({'rocketName': rocketName},{"success": !currentStatus});
@@ -59,5 +63,6 @@ async function addPayload(customerName, customerMail, finalPosition, x, y, satel
 module.exports = {
     addPayload,
     getPayloadByRocketName,
-    setStatus
+    setStatus,
+    getPayloadBySatelliteName
 };

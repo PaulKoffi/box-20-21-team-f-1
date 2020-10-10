@@ -10,6 +10,8 @@ const payloadSdk = require('./sdk/payload');
 const addPayload = payloadSdk.addPayload;
 const getPayloadByRocketName = payloadSdk.getPayloadByRocketName;
 const setStatus = payloadSdk.setStatus;
+const getPayloadBySatelliteName = payloadSdk.getPayloadBySatelliteName;
+
 
 
 
@@ -18,5 +20,6 @@ const setStatus = payloadSdk.setStatus;
 module.exports = {
     addPayload,
     getPayloadByRocketName,
-    setStatus
+    setStatus,
+    getPayloadBySatelliteName
 };

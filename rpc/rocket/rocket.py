@@ -45,6 +45,7 @@ def sendStates(siteName, rocketName):
             length = len(statesArray)
             for index in range(0, length):
                 responseDestruction = requests.get("{}/rocketsStates/destruction/{}/{}".format(ROCKETS_STATES_BASE_URL, siteName, rocketName))
+
                 if responseDestruction.text == "True":
                     print("Rocket destruction!!!!")
                     clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

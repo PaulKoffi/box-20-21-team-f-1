@@ -36,4 +36,18 @@ router.post('/payload/setStatus', async (ctx) => {
     }
 });
 
+
+router.get('/payload/payloadBySatelliteName/:satelliteName', async (ctx) => {
+    try {
+        const payload = await sdk.getPayloadBySatelliteName(ctx.params.satelliteName);
+        if(payload == null){
+            f.failure(ctx, "failed");
+        }else {
+            f.success(ctx, payload);
+        }
+    } catch {
+        f.failure(ctx, "failed");
+    }
+});
+
 module.exports = router;
