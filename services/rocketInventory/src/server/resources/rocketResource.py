@@ -23,3 +23,10 @@ class RocketResource():
         newvalues = {"$set": {"available": True}}
         db.rocketinventories.update_one(myquery, newvalues)
         return jsonify(json.loads(dumps(db.rocketinventories.find_one({"rocketName": id}))))
+
+    def setRocketSpeed(self, id, speed):
+        myquery = {"rocketName": id}
+        actuelSpeed = json.loads(dumps(db.rocketinventories.find_one(myquery)))["speed"]
+        newvalues = {"$set": {"speed": speed}}
+        db.rocketinventories.update_one(myquery, newvalues)
+        return str(actuelSpeed)

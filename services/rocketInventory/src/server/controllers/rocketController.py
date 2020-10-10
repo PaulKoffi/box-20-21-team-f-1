@@ -18,3 +18,7 @@ def getRocketById(id):
 def setRocketStatus(id):
     return rocketService.setRocketStatus(id)
 
+
+@rocketControllerBlueprint.route('/rocket/setRocketSpeed/<string:id>/<int:speed>', methods=['PUT'])
+def setRocketSpeed(id, speed):
+    return rocketService.setRocketSpeed(id,speed)
