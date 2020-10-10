@@ -65,6 +65,8 @@ def sendStates(siteName, rocketName):
                     break
                 if index == int(length / 2):
                     print("Rocket secondStep!!!!")
+                    requests.put(
+                        "{}/rocketsStates/secondStep/{}/{}/{}".format(ROCKETS_STATES_BASE_URL, siteName, rocketName, 1))
                     s.sendPayloadStates(siteName, rocketName)
 
                 if index == int(3 * length / 4):
