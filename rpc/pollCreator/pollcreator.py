@@ -1,7 +1,7 @@
 from xmlrpc.server import SimpleXMLRPCServer
 import requests
 
-pollServer = SimpleXMLRPCServer(('localhost',9000),logRequests=True, allow_none=True)
+pollServer = SimpleXMLRPCServer(('0.0.0.0',9000),logRequests=True, allow_none=True)
 ROCKETS_STATES_BASE_URL = "http://localhost:5000"
 ELON_URL = "http://localhost:8000/"
 TORY_URL = "http://localhost:3000/"

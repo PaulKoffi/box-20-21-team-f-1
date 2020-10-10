@@ -49,11 +49,21 @@
   
   ### Récupération du projet
   Effectuer un clone classique du projet en faisant ```git clone https://github.com/pns-si5-soa/box-20-21-team-f.git``` ou en récupérant le zip depuis cette page.
-    
-  ### Compilation
-  La compilation 
   
-  ### Exécution
+  ## Compilation & Exécution  
+  La compilation et l'exécution s'effectuent via des conteneurs *Docker* correspondants aux différents micro-services et autres acteurs du système.
+  Le lancement et démarrage de ces conteneurs est automatisé grace à l'exécution de scripts.
+  
+  Ainsi, il est possible d'exécuter les actions suivantes : 
+     
+  - *Compilation & Exécution :* Exécuter le fichier [prepare.sh](./prepare.sh) à la racine du projet afin de compiler et exécuter toutes les images docker.
+  - *Compilation :* Exécuter le fichier [build.sh](./build.sh) à la racine du projet afin de compiler toutes les images docker.
+  - *Exécution :* Exécuter le fichier [launch.sh](./launch.sh) à la racine du projet afin d'exécuter toutes les images docker grâce à un [docker-compose.yml](./docker/docker-compose.yml) configuré à cet effet.
+  - *Client Tory :* Exécuter le fichier [tory.sh](./tory.sh) à la racine du projet afin d'accéder à la cli dockerisée de Tory et exécuter les [commandes](./CLIs/tory/README.md) souhaitées.
+  - *Client Elon :* Exécuter le fichier [elon.sh](./elon.sh) à la racine du projet afin d'accéder à la cli dockerisée de Elon et exécuter les [commandes](./CLIs/elon/README.md) souhaitées.
+  - *Client Richard :* Exécuter le fichier [richard.sh](./richard.sh) à la racine du projet afin d'accéder à la cli dockerisée de Richard et exécuter les [commandes](./CLIs/richard/README.md) souhaitées.
+  - *Arrêt :* Exécuter le fichier [stop.sh](./stop.sh) à la racine du projet afin d'arrêter puis supprimer tous les conteneurs docker en cours d'exécution et ainsi stopper la simulation.
+  - *Suppression :* Exécuter le fichier [clean.sh](./clean.sh) à la racine du projet afin de supprimer toutes les images docker créées pendant l'exécution de la simulation.
   
   ## Pile technologique
   
