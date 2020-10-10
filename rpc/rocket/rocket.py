@@ -6,10 +6,14 @@ import socket
 import pymongo
 from pymongo import MongoClient
 from bson.json_util import dumps, loads
+from xmlrpc.client import ServerProxy
 
 HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
-PORT = 9090  # Port to listen on (non-privileged ports are > 1023)
+PORT = 9490  # Port to listen on (non-privileged ports are > 1023)
 ROCKETS_STATES_BASE_URL = "http://localhost:5000"
+PAYLOAD_STATES_BASE_URL = "http://localhost:8282"
+BASE_URL_ROCKET_INVENTORY = "http://localhost:8000"
+
 rocket = SimpleXMLRPCServer(('localhost', 8888), logRequests=True, allow_none=True)
 
 client = pymongo.MongoClient(
@@ -21,25 +25,48 @@ def sendStates(siteName, rocketName):
     someRocketStates = json.loads(dumps(db.rocketsStates.find_one({"rocketName": rocketName, "siteName": siteName})))
     # print(someRocketStates)
     statesArray = someRocketStates["rocketStatesHe"]
-    print(statesArray)
+    s = ServerProxy(PAYLOAD_STATES_BASE_URL)
 
-    # Envoi du code de la Rocket
+    # Envoi du code du payload
     clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     clientSocket.connect((HOST, PORT))
     data = rocketName
     clientSocket.send(data.encode())
 
+    # Envoi de la taille du tableau
+    clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    clientSocket.connect((HOST, PORT))
+    data = str(len(statesArray))
+    clientSocket.send(data.encode())
+
     while True:
         responseLaunching = requests.get("{}/rocketsStates/launching/{}/{}".format(ROCKETS_STATES_BASE_URL, siteName, rocketName))
         if responseLaunching.text == "True":
-            print("Launching started")   
+            print("Launching started")
             length = len(statesArray)
             for index in range(0, length):
                 responseDestruction = requests.get("{}/rocketsStates/destruction/{}/{}".format(ROCKETS_STATES_BASE_URL, siteName, rocketName))
+
                 if responseDestruction.text == "True":
                     print("Rocket destruction!!!!")
+                    clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                    clientSocket.connect((HOST, PORT))
+                    data = "STOP"
+                    clientSocket.send(data.encode())
                     break
-                time.sleep(5)
+                if index == int(length/2):
+                    print("Rocket secondStep!!!!")
+                    s.sendPayloadStates(siteName, rocketName)
+
+                if index == int(3*length/4):
+                    print("Max Q making us reduce the speed to 9")
+                    response = requests.put("{}//rocket/setRocketSpeed/{}/{}".format(BASE_URL_ROCKET_INVENTORY, rocketName, 9))
+                    time.sleep(2)
+                    print("Returning to initial speed")
+                    result = requests.put("{}//rocket/setRocketSpeed/{}/{}".format(BASE_URL_ROCKET_INVENTORY, rocketName, response))
+
+                time.sleep(2)
+
                 # Create a client socket
                 clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 # Connect to the server
