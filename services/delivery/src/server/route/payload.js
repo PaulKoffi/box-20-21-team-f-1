@@ -50,4 +50,17 @@ router.get('/payload/payloadBySatelliteName/:satelliteName', async (ctx) => {
     }
 });
 
+router.post('/payload/setPastMissionValue', async (ctx) => {
+    try {
+        const payload = await sdk.setPastMissionValue(ctx.request.body.rocketName);
+        if(payload == null){
+            f.failure(ctx, "failed");
+        }else {
+            f.success(ctx, payload);
+        }
+    } catch {
+        f.failure(ctx, "failed");
+    }
+});
+
 module.exports = router;

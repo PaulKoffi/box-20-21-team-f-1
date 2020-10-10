@@ -25,6 +25,10 @@ async function setStatus(rocketName){
     await PayloadModel.updateOne({'rocketName': rocketName},{"success": !currentStatus});
 }
 
+async function setPastMissionValue(rocketName){
+    await PayloadModel.updateOne({'rocketName': rocketName},{"past" : true});
+}
+
 async function addPayload(customerName, customerMail, finalPosition, x, y, satellite) {
 
     // Chercher une fusée Disponible
@@ -64,5 +68,6 @@ module.exports = {
     addPayload,
     getPayloadByRocketName,
     setStatus,
-    getPayloadBySatelliteName
+    getPayloadBySatelliteName,
+    setPastMissionValue
 };

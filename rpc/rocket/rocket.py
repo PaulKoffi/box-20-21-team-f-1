@@ -12,6 +12,7 @@ HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
 PORT = 9490  # Port to listen on (non-privileged ports are > 1023)
 ROCKETS_STATES_BASE_URL = "http://localhost:5000"
 PAYLOAD_STATES_BASE_URL = "http://localhost:8282"
+DELIVERY_STATES_BASE_URL = "http://localhost:7000/payload/setPastMissionValue"
 
 rocket = SimpleXMLRPCServer(('localhost', 8888), logRequests=True, allow_none=True)
 
@@ -21,12 +22,19 @@ db = client.get_database('blueOrigin')
 
 
 def sendStates(siteName, rocketName):
-    someRocketStates = json.loads(dumps(db.rocketsStates.find_one({"rocketName": rocketName, "siteName": siteName})))
+    someRocketStates = json.loads(
+        dumps(db.rocketsStates.find_one({"rocketName": rocketName, "siteName": siteName, "past": False})))
     # print(someRocketStates)
     statesArray = someRocketStates["rocketStatesHe"]
     s = ServerProxy(PAYLOAD_STATES_BASE_URL)
 
-    # Envoi du code du payload
+    # MAJ du statut de la mission (PAST)
+    myobj = {
+        "rocketName": rocketName
+    }
+    requests.post(DELIVERY_STATES_BASE_URL, data=myobj)
+
+    # Envoi du nom de la rocket
     clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     clientSocket.connect((HOST, PORT))
     data = rocketName
@@ -39,12 +47,14 @@ def sendStates(siteName, rocketName):
     clientSocket.send(data.encode())
 
     while True:
-        responseLaunching = requests.get("{}/rocketsStates/launching/{}/{}".format(ROCKETS_STATES_BASE_URL, siteName, rocketName))
+        responseLaunching = requests.get(
+            "{}/rocketsStates/launching/{}/{}".format(ROCKETS_STATES_BASE_URL, siteName, rocketName))
         if responseLaunching.text == "True":
-            print("Launching started")   
+            print("Launching started")
             length = len(statesArray)
             for index in range(0, length):
-                responseDestruction = requests.get("{}/rocketsStates/destruction/{}/{}".format(ROCKETS_STATES_BASE_URL, siteName, rocketName))
+                responseDestruction = requests.get(
+                    "{}/rocketsStates/destruction/{}/{}".format(ROCKETS_STATES_BASE_URL, siteName, rocketName))
 
                 if responseDestruction.text == "True":
                     print("Rocket destruction!!!!")
@@ -53,11 +63,11 @@ def sendStates(siteName, rocketName):
                     data = "STOP"
                     clientSocket.send(data.encode())
                     break
-                if index == int(length/2):
+                if index == int(length / 2):
                     print("Rocket secondStep!!!!")
                     s.sendPayloadStates(siteName, rocketName)
                 time.sleep(2)
-        
+
                 # Create a client socket
                 clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 # Connect to the server

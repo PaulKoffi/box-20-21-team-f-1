@@ -35,10 +35,6 @@ def sendPayloadStates(siteName, rocketName):
     data = str(len(paylaodStatesArray))
     clientSocket.send(data.encode())
 
-    # while True:
-    #     responseSecondStep = requests.get(
-    #         "{}/rocketsStates/secondStep/{}/{}".format(ROCKETS_STATES_BASE_URL, siteName, rocketName))
-    #     if responseSecondStep.text == "True":
     print("SecondState started: payload telemetry")
     l = len(paylaodStatesArray)
     for index in range(0, l):

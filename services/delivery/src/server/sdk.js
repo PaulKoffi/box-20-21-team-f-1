@@ -11,6 +11,8 @@ const addPayload = payloadSdk.addPayload;
 const getPayloadByRocketName = payloadSdk.getPayloadByRocketName;
 const setStatus = payloadSdk.setStatus;
 const getPayloadBySatelliteName = payloadSdk.getPayloadBySatelliteName;
+const setPastMissionValue = payloadSdk.setPastMissionValue;
+
 
 
 
@@ -21,5 +23,6 @@ module.exports = {
     addPayload,
     getPayloadByRocketName,
     setStatus,
-    getPayloadBySatelliteName
+    getPayloadBySatelliteName,
+    setPastMissionValue
 };
