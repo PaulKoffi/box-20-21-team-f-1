@@ -27,6 +27,10 @@ PayloadSchema = new Schema({
         type: Boolean,
         require: true
     },
+    past  : {
+        type: Boolean,
+        require: true
+    },
 });
 
 
