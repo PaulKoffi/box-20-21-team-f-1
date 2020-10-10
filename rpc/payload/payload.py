@@ -37,7 +37,19 @@ def sendPayloadStates(siteName, rocketName):
 
     print("SecondState started: payload telemetry")
     l = len(paylaodStatesArray)
+    stop = False
     for index in range(0, l):
+        responseDestruction = requests.get(
+            "{}/rocketsStates/destruction/{}/{}".format(ROCKETS_STATES_BASE_URL, siteName, rocketName))
+
+        if responseDestruction.text == "True":
+            print("Rocket destruction!!!!")
+            clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            clientSocket.connect((HOST, PORT))
+            data = "STOP"
+            stop = True
+            clientSocket.send(data.encode())
+            break
         time.sleep(2)
         # Create a client socket
         clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -46,9 +58,11 @@ def sendPayloadStates(siteName, rocketName):
         # Send data to server
         data = str(paylaodStatesArray[index])
         clientSocket.send(data.encode())
-    print("Payload is stabilised")
+    if stop is False:
+        print("Payload is stabilised")
 
     return ""
+
 
 payload.register_function(sendPayloadStates)
 

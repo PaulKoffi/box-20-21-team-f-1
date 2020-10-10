@@ -13,20 +13,20 @@ const CustomerModel = require('../models/Customer');
  *************************************************************************************************/
 
 async function getPayloadByRocketName(rocketName) {
-    return PayloadModel.findOne({'rocketName': rocketName});
+    return PayloadModel.findOne({'rocketName': rocketName, 'past': false});
 }
 
 async function getPayloadBySatelliteName(satelliteName) {
-    return PayloadModel.findOne({'satellite': satelliteName});
+    return PayloadModel.findOne({'satellite': satelliteName, 'past': false});
 }
 
-async function setStatus(rocketName){
+async function setStatus(rocketName) {
     currentStatus = await getPayloadByRocketName(rocketName).success;
-    await PayloadModel.updateOne({'rocketName': rocketName},{"success": !currentStatus});
+    await PayloadModel.updateOne({'rocketName': rocketName}, {"success": !currentStatus});
 }
 
-async function setPastMissionValue(rocketName){
-    await PayloadModel.updateOne({'rocketName': rocketName},{"past" : true});
+async function setPastMissionValue(rocketName) {
+    await PayloadModel.updateOne({'rocketName': rocketName}, {"past": true});
 }
 
 async function addPayload(customerName, customerMail, finalPosition, x, y, satellite) {
@@ -52,11 +52,12 @@ async function addPayload(customerName, customerMail, finalPosition, x, y, satel
             "finalPosition": finalPosition,
             "position": [String(x), String(y)],
             "satellite": satellite,
-            "success": false
+            "success": false,
+            "past" : false
         });
 
         // rendre indisponible la rocket
-        await RocketInventoryModel.updateOne({'rocketName': rocketsAvailable.rocketName},{"available" : false});
+        await RocketInventoryModel.updateOne({'rocketName': rocketsAvailable.rocketName}, {"available": false});
         return PayloadModel.findOne({'satellite': satellite});
     }
 
