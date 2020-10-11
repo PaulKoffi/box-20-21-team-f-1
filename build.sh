@@ -7,8 +7,16 @@ cd docker/services
 cd weather
 ./build.sh
 cd ..
-## rocket
-cd rocket
+## launcher
+cd launcher
+./build.sh
+cd ..
+## rocketInventory
+cd rocketInventory
+./build.sh
+cd ..
+## delivery
+cd delivery
 ./build.sh
 cd ..
 
@@ -36,8 +44,5 @@ cd richard
 sh build.sh
 cd ..
 
-echo "Done"
-read -n 1 -s -r -p "Press any key to continue"
-
-
-
+# echo "Done"
+# read -n 1 -s -r -p "Press any key to continue"

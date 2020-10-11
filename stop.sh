@@ -4,5 +4,5 @@
 cd docker
 docker-compose down
 
-echo "Done"
-read -n 1 -s -r -p "Press any key to continue"
+# echo "Done"
+# read -n 1 -s -r -p "Press any key to continue"

@@ -1,0 +1,33 @@
+language: generic
+
+jobs:
+  include:
+      - stage: "Building and Launching"
+        name: "Building all docker images and launching them"
+        before_install:
+          - chmod +x build.sh
+          - chmod +x docker/CLIs/elon/build.sh
+          - chmod +x docker/CLIs/tory/build.sh
+          - chmod +x docker/CLIs/richard/build.sh
+          - chmod +x docker/CLIs/gwynne/build.sh
+          - chmod +x docker/dashboards/gwynne/build.sh
+          - chmod +x docker/dashboards/jeff/build.sh
+          - chmod +x docker/rpc/pollCreator/build.sh
+          - chmod +x docker/rpc/rocket/build.sh
+          - chmod +x docker/rpc/payload/build.sh
+          - chmod +x docker/services/rocketInventory/build.sh
+          - chmod +x docker/services/weather/build.sh
+          - chmod +x docker/services/launcher/build.sh
+          - chmod +x docker/services/delivery/build.sh
+          - chmod +x docker/services/telemetries/payloadTelemetryServer/build.sh
+          - chmod +x docker/services/telemetries/rocketTelemetryServer/build.sh
+          - chmod +x clean.sh
+          - chmod +x stop.sh
+          - chmod +x prepare.sh
+        install: 
+          - pip install -r requirements.txt
+        script: 
+          - ./prepare.sh
+          - python services/rocketInventory/test/rocketApiTest.py
+          - ./stop.sh
+          # - ./clean.sh

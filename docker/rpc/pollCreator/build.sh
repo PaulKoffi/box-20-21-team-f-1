@@ -2,6 +2,7 @@
 
 echo "Building pollcreator_rpc docker image"
 mkdir resources
+cp ../../../requirements.txt resources
 cp ../../../rpc/pollCreator/pollcreator.py resources
 docker build -t djotiham/pollcreator_rpc .
 rm -R resources
