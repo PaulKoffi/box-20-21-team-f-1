@@ -50,7 +50,7 @@ def sendPayloadStates(siteName, rocketName):
             stop = True
             clientSocket.send(data.encode())
             break
-        time.sleep(0.1)
+        time.sleep(2)
         # Create a client socket
         clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         # Connect to the server

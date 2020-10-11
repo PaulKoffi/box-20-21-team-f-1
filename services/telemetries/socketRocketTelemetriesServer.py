@@ -14,7 +14,7 @@ serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Bind and listen
 
-serverSocket.bind(("127.0.0.1", 9490))
+serverSocket.bind(("localhost", 9490))
 
 serverSocket.listen()
 
@@ -33,7 +33,7 @@ def saveTelemetriesData():
         "projectionTelemetriesData": [int(i) for i in telemetriesData[2:]]
     }
     db.projectionTelemetriesData.insert_one(values)
-    return "";
+    return ""
 
 
 # Accept connections
@@ -63,6 +63,10 @@ while (True):
         if dataFromClient.decode() == "STOP":
             round = 0
             telemetriesData = []
+            myobj = {
+                "rocketName": rocketName
+            }
+            x = requests.post("{}/payload/setStatus".format(BASE_URL), data=myobj)
 
         if round == 21:
             # Enregistrement des données telemetriques

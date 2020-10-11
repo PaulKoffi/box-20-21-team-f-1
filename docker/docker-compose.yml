@@ -13,14 +13,17 @@ services:
     ports:
       - "3000:3000"
 
-  # launcher service (Node JS)
+  # launcher service (Python)
   launcher_service:
     image: djotiham/launcher_service
     container_name: launcher_service
+    network_mode: host
     expose:
       - "5000"
     ports:
       - "5000:5000"
+    depends_on:
+      - delivery_service
 
   # rocket inventory service (Python)
   rocket_inventory_service:
@@ -30,6 +33,15 @@ services:
         - "8000"
     ports:
       - "8000:8000"
+
+  # delivery service (NodeJs)
+  delivery_service:
+    image: djotiham/delivery_service
+    container_name: delivery_service
+    expose:
+        - "7000"
+    ports:
+      - "7000:7000"
 
   ########## rpc ##########
   
@@ -47,6 +59,86 @@ services:
       - launcher_service
       - rocket_inventory_service
 
+  # rocket (Python)
+  rocket_rpc:
+    image: djotiham/rocket_rpc
+    container_name: rocket_rpc
+    network_mode: host
+    expose:
+      - "8888"
+    ports:
+      - "8888:8888"
+    depends_on:
+      - launcher_service
+      - delivery_service
+
+  # payload (Python)
+  payload_rpc:
+    image: djotiham/payload_rpc
+    container_name: payload_rpc
+    network_mode: host
+    expose:
+      - "8282"
+    ports:
+      - "8282:8282"
+    depends_on:
+      - launcher_service
+      - delivery_service
+
+  ########## Servers Socket ########## 
+  
+  # payload telemetry socket (Python)
+  payload_telemetry_server:
+    image: djotiham/payload_telemetry_server
+    container_name: payload_telemetry_server
+    network_mode: host
+    expose:
+      - "9292"
+    ports:
+      - "9292:9292"
+    depends_on:
+      - delivery_service
+      - launcher_service
+
+  # rocket telemetry socket (Python)
+  rocket_telemetry_server:
+    image: djotiham/rocket_telemetry_server
+    container_name: rocket_telemetry_server
+    network_mode: host
+    expose:
+      - "9490"
+    ports:
+      - "9490:9490"
+    depends_on:
+      - delivery_service
+      - launcher_service
+
+  ########## Dashboards ##########
+  
+  # gwynne dashboard
+  gwynne_dashboard:
+    image: djotiham/gwynne_dashboard
+    container_name: gwynne_dashboard
+    network_mode: host
+    volumes:
+      - .:/host-gwynnedashboard
+    depends_on:
+      - payload_telemetry_server
+    stdin_open: true
+    tty: true
+
+  # jeff dashboard
+  jeff_dashboard:
+    image: djotiham/jeff_dashboard
+    container_name: jeff_dashboard
+    network_mode: host
+    volumes:
+      - .:/host-jeffdashboard
+    depends_on:
+      - rocket_telemetry_server
+    stdin_open: true
+    tty: true
+      
   ########## CLIs ##########
   
   # elon CLI
@@ -84,5 +176,39 @@ services:
       - .:/host-richard
     depends_on:
       - pollcreator_rpc
+    stdin_open: true
+    tty: true
+  
+  # gwynne CLI
+  gwynnecli:
+    image: djotiham/gwynne_cli
+    container_name: gwynne_cli
+    network_mode: host
+    volumes:
+      - .:/host-gwynne
+    depends_on:
+      - delivery_service
+    stdin_open: true
+    tty: true
+
+  ########## Tests ##########
+  
+  # test scénario 1
+  tests1:
+    image: djotiham/tests
+    container_name: tests
+    network_mode: host
+    volumes:
+      - .:/host-tests
+    depends_on:
+      - rocket_inventory_service
+      - pollcreator_rpc
+      - rocket_rpc
+      - payload_rpc
+      - payload_telemetry_server
+      - rocket_telemetry_server
+      - delivery_service
+      - launcher_service 
+      - weather_service
     stdin_open: true
     tty: true

@@ -155,8 +155,8 @@ def step_impl(context):
 
 @when("Elon donne l'ordre de lancement de la fusée")
 def step_impl(context):
-    os.chdir('steps/utils')
-    subprocess.Popen(["python.exe", "elonOrder.py"])
+    os.chdir('utils')
+    subprocess.Popen(["python", "elonOrder.py"])
 
 
 @when("on consulte le statut success du Payload auquel est affectée la fusée VEGA-4000")
@@ -189,13 +189,14 @@ def step_impl(context):
 
 @when("Après 27 secondes on consulte le statut qui indique le detachement en 2 de la fusées")
 def step_impl(context):
-    time.sleep(25)
+    time.sleep(50)
     context.rocketSecondStep = requests.get(
         "{}/rocketsStates/secondStep/{}/{}".format(ROCKETS_STATES_BASE_URL, "Paris", "VEGA-4000"))
 
 
 @then("il est maintenant à True et donc le satellite sera bientôt en Orbite")
 def step_impl(context):
+    # print(context.rocketSecondStep.text)
     assert context.rocketSecondStep.text == "True"
 
 
@@ -225,7 +226,7 @@ def step_impl(context):
 
 @when("On consulte après 20s à nouveau le statut Past et la disponibilité de la rocket VEGA-4000")
 def step_impl(context):
-    time.sleep(20)
+    time.sleep(50)
     context.payload = requests.get("{}/payloadBySatelliteName/{}".format(DELIVERY_STATES_BASE_URL, "CORSAIRE"))
     context.rocket = requests.get("{}/rocket/{}".format(BASE_URL_ROCKET_INVENTORY, "VEGA-4000"))
 

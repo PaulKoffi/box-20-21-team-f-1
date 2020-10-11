@@ -17,11 +17,8 @@ client = pymongo.MongoClient(
 db = client.get_database('blueOrigin')
 
 
-def elonOrder():
-    s1.sendStates("Paris", "VEGA-4000")
-
-
-@given('un client ayant comme Nom Francis et adresse mail francis@gmail.com')
+@given(
+    'un client Francis et son adresse mail francis@gmail.com et une nouvelle fusée SOUL-9000 enrégistré dans notre BD')
 def step_impl(context):
     pass
 
@@ -31,12 +28,12 @@ def step_impl(context):
     pass
 
 
-@given('la position finale de ce satellite ayant comme valeur 12')
+@given('la position finale de ce satellite ayant est 12')
 def step_impl(context):
     pass
 
 
-@when('Gwynne enregistre cette nouvelle mission')
+@when('Gwynne enregistre cette nouvelle mission dans sa CLI')
 def step_impl(context):
     # Ajout Rocket disponible SOUL-9000
     db.rocketinventories.insert_one({
@@ -58,9 +55,9 @@ def step_impl(context):
     requests.post(DELIVERY_STATES_BASE_URL, data=myobj)
 
 
-@then("On voit qu'une fusée disponible a été affecté à la mission et qu'elle a été bien crée")
+@then("On voit qu'une fusée disponible a été affecté à la mission")
 def step_impl(context):
-    response = requests.get("{}/payloadBySatelliteName/{}".format(DELIVERY_STATES_BASE_URL, "CORSAIRE"))
+    response = requests.get("{}/payloadBySatelliteName/{}".format(DELIVERY_STATES_BASE_URL, "PERSEUS"))
     assert response.json()['satellite'] == "PERSEUS"
     assert response.json()['rocketName'] != "SOUL-9000"
 
@@ -71,69 +68,71 @@ def step_impl(context):
     assert response.json()['rocketName'] == "SOUL-9000"
 
 
-@given('Paris un site où la pression du vent actuellement est au dessus de notre seuil de sécurité')
+@given('Paris un site où la pression du vent actuellement est normale')
 def step_impl(context):
     pass
 
 
-@when("richard décide de démarrer le poll")
+@when("richard décide de démarrer son poll")
 def step_impl(context):
     context.responsePoll = s.getResponsesPoll("Paris", "SOUL-9000")
 
 
-@then("On voit que Elon donne son GO car la fusée est en état de décoller")
+@then("On voit que Elon donne son GO car la fusée est dans un bon état")
 def step_impl(context):
     assert context.responsePoll['elonResponse'] == "GO"
 
 
-@then("On voit que la réponse de Tory est GO car les conditions atmosphériques de Paris sont bonnes")
+@then("On voit que la réponse de Tory est GO car les conditions atmosphériques de Paris sont aussi bonnes")
 def step_impl(context):
     assert context.responsePoll['toryResponse'] == "GO"
 
 
-@then("et que la réponse de Richard est donc GO")
+@then("et que la réponse de Richard est alors GO")
 def step_impl(context):
     assert context.responsePoll['richardResponse'] == "GO"
 
 
-@given('le GO de Richard')
+@given('le GO accordé par Richard')
 def step_impl(context):
     pass
 
 
-@when("on consulte le statut du lancement de la fusée")
+@when("on consulte le statut du lancement de la fusée SOUL-9000")
 def step_impl(context):
     context.rocket = requests.get("{}/rocket/{}".format(BASE_URL_ROCKET_INVENTORY, "SOUL-9000"))
     context.rocketLaunched = requests.get(
         "{}/rocketsStates/launching/{}/{}".format(ROCKETS_STATES_BASE_URL, "Paris", "SOUL-9000"))
 
 
-@then("on voit qu'il est bien à True")
+@then("on voit qu'il est bien à True donc la fusée a ordre de décoller")
 def step_impl(context):
     assert context.rocketLaunched.text == "True"
 
 
-@then("la fusée est toujours indisponible pour une autre mission pour le moment")
+@then("la fusée est toujours indisponible pour une autre mission pour le moment quand on consulte son statut")
 def step_impl(context):
     assert context.rocket.json()["available"] is False
 
 
-@given('le GO de Richard accordé à Elon')
+@given('le GO de Richard accordé à Elon pour lancer la fusée')
 def step_impl(context):
     pass
 
 
-@when("Elon donne l'ordre de lancement de la fusée")
+@when("Elon donne l'ordre de lancement de la fusée SOUL-9000")
 def step_impl(context):
     os.chdir('steps/utils')
-    subprocess.Popen(["python", "elonOrder.py"])
+    subprocess.Popen(["python", "elonOrder2.py"])
+
 
 @when("on consulte le statut success du Payload auquel est affectée la fusée SOUL-9000")
 def step_impl(context):
     context.payload = requests.get("{}/payloadByRocketName/{}".format(DELIVERY_STATES_BASE_URL, "SOUL-9000"))
 
 
-@then("on voit qu'il est à False et que l'attribut Past qui indique que la mission est terminée est aussi à False")
+@then(
+    "on voit qu'il est à False et que l'attribut Past qui indique que la mission est terminée est toujours aussi à False")
 def step_impl(context):
     assert context.payload.json()["success"] is False
     assert context.payload.json()["past"] is False
@@ -144,61 +143,26 @@ def step_impl(context):
     requests.put("{}/rocketsStates/destruction/{}/{}/{}".format(ROCKETS_STATES_BASE_URL, "Paris", "SOUL-9000", 1))
 
 
-
-
-
-
-@then("il est maintenant à True et donc le satellite sera bientôt en Orbite")
-def step_impl(context):
-    assert context.rocketSecondStep.text == "True"
-
-
-@when("On consulte maintenant les détails du Payload après 20s")
-def step_impl(context):
-    time.sleep(20)
-    context.payload = requests.get("{}/payloadByRocketName/{}".format(DELIVERY_STATES_BASE_URL, "VEGA-4000"))
-
-
 @then(
-    "On voit que Success est à True et Past toujours à False : L'orbite est en place mais la fusée n'a pas encore atteri sur terre")
+    "On voit que Success est à False et Past aussi : La mission est passé et ça a été un échec")
 def step_impl(context):
-    assert context.payload.json()["success"] is True
+    context.payload = requests.get("{}/payloadByRocketName/{}".format(DELIVERY_STATES_BASE_URL, "SOUL-9000"))
+    assert context.payload.json()["success"] is False
     assert context.payload.json()["past"] is False
 
 
-@when("On consulte la vitesse actuelle de la fusée après 10s")
+@when("On consulte le statut disponible de la fusée SOUL-9000")
 def step_impl(context):
-    time.sleep(10)
-    context.rocketSpeed = requests.get("{}/rocket/{}".format(BASE_URL_ROCKET_INVENTORY, "VEGA-4000"))
+    context.rocket = requests.get("{}/rocket/{}".format(BASE_URL_ROCKET_INVENTORY, "SOUL-9000"))
 
 
-@then("Elle est à 9 et donc la fusée est au MaxQ")
+@then("Elle est indisponible car elle a été détruite")
 def step_impl(context):
-    assert context.rocketSpeed.json()["speed"] == 9
-
-
-@when("On consulte après 20s à nouveau le statut Past et la disponibilité de la rocket VEGA-4000")
-def step_impl(context):
-    time.sleep(20)
-    context.payload = requests.get("{}/payloadBySatelliteName/{}".format(DELIVERY_STATES_BASE_URL, "CORSAIRE"))
-    context.rocket = requests.get("{}/rocket/{}".format(BASE_URL_ROCKET_INVENTORY, "VEGA-4000"))
-
-
-@then("La fusée est à nouveau disponible et Past à True indique que la mission est terminée")
-def step_impl(context):
-    assert context.payload.json()["past"] is True
-    assert context.rocket.json()["available"] is True
+    assert context.rocket.json()["available"] is False
 
     # MAJ de la BD pour le prochain scénario
-    myquery = {"rocketName": "VEGA-4000"}
+    myquery = {"rocketName": "SOUL-9000"}
     newvalues = {"$set": {"launch": False, "secondStep": False}}
     db.rocketActions.update_one(myquery, newvalues)
-    db.payloads.delete_one({"satellite": "CORSAIRE"})
-    db.rocketinventories.delete_one({"rocketName": "VEGA-4000"})
-    db.rocketinventories.insert_one({
-        "rocketName": "VEGA-4000",
-        "available": True,
-        "fuel": "5000",
-        "status": "ready to go",
-        "speed": 10
-    })
+    db.payloads.delete_one({"satellite": "PERSEUS"})
+    db.rocketinventories.delete_one({"rocketName": "SOUL-9000"})

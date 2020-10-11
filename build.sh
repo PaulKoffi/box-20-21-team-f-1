@@ -11,8 +11,12 @@ cd ..
 cd launcher
 ./build.sh
 cd ..
-## rocket
+## rocketInventory
 cd rocketInventory
+./build.sh
+cd ..
+## delivery
+cd delivery
 ./build.sh
 cd ..
 

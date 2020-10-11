@@ -20,13 +20,51 @@ cd rocketInventory
 # echo "Building rocketInventory service docker image"
 ./build.sh
 cd ..
+cd delivery
+# echo "Building delivery service docker image"
+./build.sh
+cd ..
 
-cd ../rpc
+cd telemetries
+## >>>>> Building servers socket <<<<<
+
+cd payloadTelemetryServer
+# echo "Building delivery service docker image"
+./build.sh
+cd ..
+cd rocketTelemetryServer
+# echo "Building delivery service docker image"
+./build.sh
+cd ..
+
+cd ../../rpc
 ## >>>>> Building rpc <<<<<
 
 ## pollcreator
 cd pollCreator
 # echo "Building pollCreator docker image"
+./build.sh
+cd ..
+cd rocket
+# echo "Building rocket docker image"
+./build.sh
+cd ..
+cd payload
+# echo "Building payload docker image"
+./build.sh
+cd ..
+
+cd ../dashboards
+## >>>>> Building dashboards <<<<<
+
+## jeff dashboard
+cd jeff
+# echo "Building elon docker image"
+./build.sh
+cd ..
+## gwynne dashboard
+cd gwynne
+# echo "Building tory docker image"
 ./build.sh
 cd ..
 
@@ -48,10 +86,21 @@ cd richard
 # echo "Building richard docker image"
 ./build.sh
 cd ..
-
+## gwynne
+cd gwynne
+# echo "Building richard docker image"
+./build.sh
 cd ..
+
+cd ../tests
+## >>>>> Building Tests <<<<<
+
+# echo "Building tests docker image"
+./build.sh
+cd ..
+
 ## >>>>> Running all servers
 docker-compose up -d
 
 echo "Done"
-read -n 1 -s -r -p "Press any key to continue"
+# read -n 1 -s -r -p "Press any key to continue"

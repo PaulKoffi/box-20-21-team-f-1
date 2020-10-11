@@ -2,7 +2,6 @@ import socket
 import requests
 import pymongo
 
-
 # Create a stream based socket(i.e, a TCP socket)
 
 # operating on IPv4 addressing scheme
@@ -15,7 +14,7 @@ serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Bind and listen
 
-serverSocket.bind(("127.0.0.1", 9292))
+serverSocket.bind(("localhost", 9292))
 
 serverSocket.listen()
 
@@ -26,6 +25,7 @@ satelliteName = ""
 arrayLength = 0
 round = 0
 
+
 def saveTelemetriesData():
     values = {
         "machine": satelliteName,
@@ -33,7 +33,8 @@ def saveTelemetriesData():
         "projectionTelemetriesData": [int(i) for i in telemetriesData[2:]]
     }
     db.projectionTelemetriesData.insert_one(values)
-    return "";
+    return ""
+
 
 # Accept connections
 while (True):
@@ -62,6 +63,11 @@ while (True):
         if dataFromClient.decode() == "STOP":
             round = 0
             telemetriesData = []
+            response = requests.get("{}/payload/payloadBySatelliteName/{}".format(BASE_URL, satelliteName))
+            myobj = {
+                "rocketName": str(response.json()["rocketName"])
+            }
+            x = requests.post("{}/payload/setStatus".format(BASE_URL), data=myobj)
 
         if round == 9:
             # Enregistrement des données telemetriques
