@@ -56,6 +56,20 @@ services:
       - launcher_service
       - rocket_inventory_service
 
+  ########## Servers Socket ##########  
+      # payload telemetry socket (Python)
+  payload_telemetry_server:
+    image: djotiham/payload_telemetry_server
+    container_name: payload_telemetry_server
+    network_mode: host
+    expose:
+      - "9292"
+    ports:
+      - "9292:9292"
+    depends_on:
+      - delivery_service
+      - launcher_service
+
   ########## CLIs ##########
   
   # elon CLI

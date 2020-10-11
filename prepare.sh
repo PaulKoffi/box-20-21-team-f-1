@@ -25,7 +25,15 @@ cd delivery
 ./build.sh
 cd ..
 
-cd ../rpc
+cd telemetries
+## >>>>> Building servers socket <<<<<
+
+cd payloadTelemetryServer
+# echo "Building delivery service docker image"
+./build.sh
+cd ..
+
+cd ../../rpc
 ## >>>>> Building rpc <<<<<
 
 ## pollcreator

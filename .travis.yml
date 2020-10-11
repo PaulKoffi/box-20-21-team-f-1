@@ -14,6 +14,7 @@ jobs:
           - chmod +x docker/services/weather/build.sh
           - chmod +x docker/services/launcher/build.sh
           - chmod +x docker/services/delivery/build.sh
+          - chmod +x docker/services/telemetries/payloadTelemetryServer/build.sh
           - chmod +x launch.sh
           - chmod +x clean.sh
           - chmod +x stop.sh
