@@ -59,7 +59,7 @@ def step_impl(context):
 def step_impl(context):
     response = requests.get("{}/payloadBySatelliteName/{}".format(DELIVERY_STATES_BASE_URL, "PERSEUS"))
     assert response.json()['satellite'] == "PERSEUS"
-    assert response.json()['rocketName'] != "SOUL-9000"
+    assert response.json()['rocketName'] == "SOUL-9000"
 
 
 @then("la fusée disponible est SOUL-9000")
@@ -122,7 +122,7 @@ def step_impl(context):
 
 @when("Elon donne l'ordre de lancement de la fusée SOUL-9000")
 def step_impl(context):
-    os.chdir('steps/utils')
+    os.chdir('utils')
     subprocess.Popen(["python", "elonOrder2.py"])
 
 
@@ -134,6 +134,7 @@ def step_impl(context):
 @then(
     "on voit qu'il est à False et que l'attribut Past qui indique que la mission est terminée est toujours aussi à False")
 def step_impl(context):
+    # print("ici {}".format(context.payload.json()))
     assert context.payload.json()["success"] is False
     assert context.payload.json()["past"] is False
 
@@ -144,11 +145,12 @@ def step_impl(context):
 
 
 @then(
-    "On voit que Success est à False et Past aussi : La mission est passé et ça a été un échec")
+    "On voit que Success est à False et Past à True : La mission est passé et ça a été un échec")
 def step_impl(context):
-    context.payload = requests.get("{}/payloadByRocketName/{}".format(DELIVERY_STATES_BASE_URL, "SOUL-9000"))
+    time.sleep(10)
+    context.payload = requests.get("{}/payloadBySatelliteName/{}".format(DELIVERY_STATES_BASE_URL, "PERSEUS"))
     assert context.payload.json()["success"] is False
-    assert context.payload.json()["past"] is False
+    assert context.payload.json()["past"] is True
 
 
 @when("On consulte le statut disponible de la fusée SOUL-9000")

@@ -28,7 +28,7 @@ Feature: scenario2
     When  on consulte le statut success du Payload auquel est affectée la fusée SOUL-9000
     Then  on voit qu'il est à False et que l'attribut Past qui indique que la mission est terminée est toujours aussi à False
     When  Richard décide de stopper la mission
-    Then  On voit que Success est à False et Past aussi : La mission est passé et ça a été un échec
+    Then  On voit que Success est à False et Past à True : La mission est passé et ça a été un échec
     When  On consulte le statut disponible de la fusée SOUL-9000
     Then  Elle est indisponible car elle a été détruite
 
