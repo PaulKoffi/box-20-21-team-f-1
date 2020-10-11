@@ -14,16 +14,16 @@ def getCurrentSatelliteName(rocketName):
     DELIVERY_STATES_BASE_URL = "http://localhost:7000"
     # Recuperation de la mission actuelle de la Rocket (PAST == FALSE)
     currentPayload = requests.get("{}/payload/payloadByRocketName/{}".format(DELIVERY_STATES_BASE_URL, rocketName))
+    print("\n-----------------\n")
+    print(currentPayload)
+    print("\n-----------------\n")
     return currentPayload.json()["satellite"]
 
 
 class RocketStatesResource():
 
     def getSecondStepByNameAndSite(self, siteName, rocketName):
-        HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
-        PORT = 5353  # Port to listen on (non-privileged ports are > 1023)
         satellite = getCurrentSatelliteName(rocketName)
-
         rocketAction = json.loads(dumps(db.rocketActions.find_one(
             {"rocketName": rocketName, "siteName": siteName, "satelliteName": satellite})))
         return str(rocketAction["secondStep"])

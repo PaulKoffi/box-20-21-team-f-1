@@ -15,7 +15,7 @@ serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Bind and listen
 
-serverSocket.bind(("127.0.0.1", 9292))
+serverSocket.bind(("localhost", 9292))
 
 serverSocket.listen()
 

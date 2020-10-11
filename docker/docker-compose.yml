@@ -13,14 +13,17 @@ services:
     ports:
       - "3000:3000"
 
-  # launcher service (Node JS)
+  # launcher service (Python)
   launcher_service:
     image: djotiham/launcher_service
     container_name: launcher_service
+    network_mode: host
     expose:
       - "5000"
     ports:
       - "5000:5000"
+    depends_on:
+      - delivery_service
 
   # rocket inventory service (Python)
   rocket_inventory_service:
@@ -120,7 +123,7 @@ services:
     volumes:
       - .:/host-gwynnedashboard
     depends_on:
-      - rocket_telemetry_server
+      - payload_telemetry_server
     stdin_open: true
     tty: true
 
@@ -132,7 +135,7 @@ services:
     volumes:
       - .:/host-jeffdashboard
     depends_on:
-      - payload_telemetry_server
+      - rocket_telemetry_server
     stdin_open: true
     tty: true
       
@@ -185,5 +188,27 @@ services:
       - .:/host-gwynne
     depends_on:
       - delivery_service
+    stdin_open: true
+    tty: true
+
+  ########## Tests ##########
+  
+  # test scénario 1
+  tests1:
+    image: djotiham/tests
+    container_name: tests
+    network_mode: host
+    volumes:
+      - .:/host-tests
+    depends_on:
+      - rocket_inventory_service
+      - pollcreator_rpc
+      - rocket_rpc
+      - payload_rpc
+      - payload_telemetry_server
+      - rocket_telemetry_server
+      - delivery_service
+      - launcher_service 
+      - weather_service
     stdin_open: true
     tty: true

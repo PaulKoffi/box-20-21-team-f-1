@@ -92,7 +92,13 @@ cd gwynne
 ./build.sh
 cd ..
 
+cd ../tests
+## >>>>> Building Tests <<<<<
+
+# echo "Building tests docker image"
+./build.sh
 cd ..
+
 ## >>>>> Running all servers
 docker-compose up -d
 

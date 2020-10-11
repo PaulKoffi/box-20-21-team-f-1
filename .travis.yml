@@ -30,4 +30,4 @@ jobs:
           - ./prepare.sh
           - python services/rocketInventory/test/rocketApiTest.py
           - ./stop.sh
-          - ./clean.sh
+          # - ./clean.sh
