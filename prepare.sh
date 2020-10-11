@@ -104,15 +104,15 @@ docker-compose up -d
 
 cd ..
 ## Displaying dashboards
-echo "Displaying dashboards"
-if [[ "$OSTYPE" == "linux-gnu"* || "$OSTYPE" == "darwin"* ]]; then
-        sudo apt install gnome-terminal
-        gnome-terminal -- ./jeff.sh
-        gnome-terminal -- ./gwynne.sh
-else
-		echo "Go to docker desktop to see appropriate logs."
-fi
+#echo "Displaying dashboards"
+#if [[ "$OSTYPE" == "linux-gnu"* || "$OSTYPE" == "darwin"* ]]; then
+#        sudo apt install gnome-terminal
+#        gnome-terminal -- ./jeff.sh
+#        gnome-terminal -- ./gwynne.sh
+#else
+#		echo "Go to docker desktop to see appropriate logs."
+#fi
 
 
 echo "Done"
-read -n 1 -s -r -p "Press any key to continue"
+#read -n 1 -s -r -p "Press any key to continue"
