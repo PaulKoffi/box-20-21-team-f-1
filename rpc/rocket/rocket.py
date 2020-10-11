@@ -76,7 +76,7 @@ def sendStates(siteName, rocketName):
                     time.sleep(4)
                     print("Returning to initial speed")
                     result = requests.put(
-                        "{}//rocket/setRocketSpeed/{}/{}".format(BASE_URL_ROCKET_INVENTORY, rocketName, response))
+                        "{}//rocket/setRocketSpeed/{}/{}".format(BASE_URL_ROCKET_INVENTORY, rocketName, 10))
 
                 time.sleep(0.1)
 

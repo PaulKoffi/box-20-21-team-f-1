@@ -37,5 +37,3 @@ def step_impl(context):
     response = requests.get("{}/payloadByRocketName/Columbia-176".format(BASE_URL))
     # assert response.json()['success'] == False
     pass
-
-    

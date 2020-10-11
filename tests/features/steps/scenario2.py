@@ -26,7 +26,7 @@ def step_impl(context):
     pass
 
 
-@given('un satellite au nom de CORSAIRE')
+@given('un satellite au nom de PERSEUS')
 def step_impl(context):
     pass
 
@@ -38,9 +38,9 @@ def step_impl(context):
 
 @when('Gwynne enregistre cette nouvelle mission')
 def step_impl(context):
-    # Ajout Rocket disponible VEGA-4000
+    # Ajout Rocket disponible SOUL-9000
     db.rocketinventories.insert_one({
-        "rocketName": "VEGA-4000",
+        "rocketName": "SOUL-9000",
         "available": True,
         "fuel": "5000",
         "status": "ready to go",
@@ -53,7 +53,7 @@ def step_impl(context):
         "finalPosition": 12,
         "x": 5,
         "y": 5,
-        "satellite": "CORSAIRE"
+        "satellite": "PERSEUS"
     }
     requests.post(DELIVERY_STATES_BASE_URL, data=myobj)
 
@@ -61,44 +61,14 @@ def step_impl(context):
 @then("On voit qu'une fusée disponible a été affecté à la mission et qu'elle a été bien crée")
 def step_impl(context):
     response = requests.get("{}/payloadBySatelliteName/{}".format(DELIVERY_STATES_BASE_URL, "CORSAIRE"))
-    assert response.json()['satellite'] == "CORSAIRE"
-    assert response.json()['rocketName'] != ""
+    assert response.json()['satellite'] == "PERSEUS"
+    assert response.json()['rocketName'] != "SOUL-9000"
 
 
-@then("la fusée disponible est VEGA-4000")
+@then("la fusée disponible est SOUL-9000")
 def step_impl(context):
-    response = requests.get("{}/payloadBySatelliteName/{}".format(DELIVERY_STATES_BASE_URL, "CORSAIRE"))
-    assert response.json()['rocketName'] == "VEGA-4000"
-
-
-@given('Toulouse un site où la pression du vent actuellement est au dessus de notre seuil de sécurité')
-def step_impl(context):
-    pass
-
-
-@given('la fusée VEGA-4000 qui est affecté à la mise en orbite du satellite CORSAIRE')
-def step_impl(context):
-    pass
-
-
-@when("richard décide de démarrer le poll pour l'envoi de la fusée")
-def step_impl(context):
-    context.responsePoll = s.getResponsesPoll("Toulouse", "VEGA-4000")
-
-
-@then("On voit que Elon donne son GO car la fusée est en état")
-def step_impl(context):
-    assert context.responsePoll['elonResponse'] == "GO"
-
-
-@then("On voit que la réponse de Tory est NOGO car Toulouse est une zone à risque")
-def step_impl(context):
-    assert context.responsePoll['toryResponse'] == "NOGO"
-
-
-@then("et que la réponse de Richard est donc NOGO")
-def step_impl(context):
-    assert context.responsePoll['richardResponse'] == "NOGO"
+    response = requests.get("{}/payloadBySatelliteName/{}".format(DELIVERY_STATES_BASE_URL, "PERSEUS"))
+    assert response.json()['rocketName'] == "SOUL-9000"
 
 
 @given('Paris un site où la pression du vent actuellement est au dessus de notre seuil de sécurité')
@@ -108,7 +78,7 @@ def step_impl(context):
 
 @when("richard décide de démarrer le poll")
 def step_impl(context):
-    context.responsePoll = s.getResponsesPoll("Paris", "VEGA-4000")
+    context.responsePoll = s.getResponsesPoll("Paris", "SOUL-9000")
 
 
 @then("On voit que Elon donne son GO car la fusée est en état de décoller")
@@ -133,9 +103,9 @@ def step_impl(context):
 
 @when("on consulte le statut du lancement de la fusée")
 def step_impl(context):
-    context.rocket = requests.get("{}/rocket/{}".format(BASE_URL_ROCKET_INVENTORY, "VEGA-4000"))
+    context.rocket = requests.get("{}/rocket/{}".format(BASE_URL_ROCKET_INVENTORY, "SOUL-9000"))
     context.rocketLaunched = requests.get(
-        "{}/rocketsStates/launching/{}/{}".format(ROCKETS_STATES_BASE_URL, "Paris", "VEGA-4000"))
+        "{}/rocketsStates/launching/{}/{}".format(ROCKETS_STATES_BASE_URL, "Paris", "SOUL-9000"))
 
 
 @then("on voit qu'il est bien à True")
@@ -156,12 +126,11 @@ def step_impl(context):
 @when("Elon donne l'ordre de lancement de la fusée")
 def step_impl(context):
     os.chdir('steps/utils')
-    subprocess.Popen(["python.exe", "elonOrder.py"])
+    subprocess.Popen(["python", "elonOrder.py"])
 
-
-@when("on consulte le statut success du Payload auquel est affectée la fusée VEGA-4000")
+@when("on consulte le statut success du Payload auquel est affectée la fusée SOUL-9000")
 def step_impl(context):
-    context.payload = requests.get("{}/payloadByRocketName/{}".format(DELIVERY_STATES_BASE_URL, "VEGA-4000"))
+    context.payload = requests.get("{}/payloadByRocketName/{}".format(DELIVERY_STATES_BASE_URL, "SOUL-9000"))
 
 
 @then("on voit qu'il est à False et que l'attribut Past qui indique que la mission est terminée est aussi à False")
@@ -170,28 +139,13 @@ def step_impl(context):
     assert context.payload.json()["past"] is False
 
 
-@then("le statut pour passer au detachement de la fusée est à False")
+@when("Richard décide de stopper la mission")
 def step_impl(context):
-    context.rocketSecondStep = requests.get(
-        "{}/rocketsStates/secondStep/{}/{}".format(ROCKETS_STATES_BASE_URL, "Paris", "VEGA-4000"))
-    assert context.rocketSecondStep.text == "False"
+    requests.put("{}/rocketsStates/destruction/{}/{}/{}".format(ROCKETS_STATES_BASE_URL, "Paris", "SOUL-9000", 1))
 
 
-@when("On consulte la vitesse de la fusée actuellement")
-def step_impl(context):
-    context.rocketSpeed = requests.get("{}/rocket/{}".format(BASE_URL_ROCKET_INVENTORY, "VEGA-4000"))
 
 
-@then("Sa vitesse est 10")
-def step_impl(context):
-    assert context.rocketSpeed.json()["speed"] == 10
-
-
-@when("Après 27 secondes on consulte le statut qui indique le detachement en 2 de la fusées")
-def step_impl(context):
-    time.sleep(25)
-    context.rocketSecondStep = requests.get(
-        "{}/rocketsStates/secondStep/{}/{}".format(ROCKETS_STATES_BASE_URL, "Paris", "VEGA-4000"))
 
 
 @then("il est maintenant à True et donc le satellite sera bientôt en Orbite")
@@ -241,10 +195,10 @@ def step_impl(context):
     db.rocketActions.update_one(myquery, newvalues)
     db.payloads.delete_one({"satellite": "CORSAIRE"})
     db.rocketinventories.delete_one({"rocketName": "VEGA-4000"})
-    # db.rocketinventories.insert_one({
-    #     "rocketName": "VEGA-4000",
-    #     "available": True,
-    #     "fuel": "5000",
-    #     "status": "ready to go",
-    #     "speed": 10
-    # })
+    db.rocketinventories.insert_one({
+        "rocketName": "VEGA-4000",
+        "available": True,
+        "fuel": "5000",
+        "status": "ready to go",
+        "speed": 10
+    })
