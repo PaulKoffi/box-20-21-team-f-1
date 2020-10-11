@@ -20,6 +20,10 @@ cd rocketInventory
 # echo "Building rocketInventory service docker image"
 ./build.sh
 cd ..
+cd delivery
+# echo "Building delivery service docker image"
+./build.sh
+cd ..
 
 cd ../rpc
 ## >>>>> Building rpc <<<<<

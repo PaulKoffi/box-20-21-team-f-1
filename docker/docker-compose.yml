@@ -31,6 +31,15 @@ services:
     ports:
       - "8000:8000"
 
+  # delivery service (NodeJs)
+  delivery_service:
+    image: djotiham/delivery_service
+    container_name: delivery_service
+    expose:
+        - "7000"
+    ports:
+      - "7000:7000"
+
   ########## rpc ##########
   
   # poll creator (Python)

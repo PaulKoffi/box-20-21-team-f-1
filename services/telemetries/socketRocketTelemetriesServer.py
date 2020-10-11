@@ -33,7 +33,7 @@ def saveTelemetriesData():
         "projectionTelemetriesData": [int(i) for i in telemetriesData[2:]]
     }
     db.projectionTelemetriesData.insert_one(values)
-    return "";
+    return ""
 
 
 # Accept connections
