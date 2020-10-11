@@ -17,7 +17,6 @@
    * Langage d'implémentation Javascript : Node JS v12.14.1
    * Langage d'implémentation Python : Python 3
    
-   * ##### PS : Exclusivement pour les systèmes linux ou Unix : GNOME Terminal 3.36.2 using VTE 0.60.3 +BIDI +GNUTLS +ICU +SYSTEMD
    
   ## Vision du produit
   Le produit à mettre en oeuvre évolue itérativement sur plusieurs semaines :   
