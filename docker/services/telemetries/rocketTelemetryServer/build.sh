@@ -1,10 +1,10 @@
 #!/bin/bash
 
-echo "Building socket payload telemetry server docker image"
+echo "Building socket rocket telemetry server docker image"
 mkdir resources
 cp ../../../../requirements.txt resources
-cp -R ../../../../services/telemetries/socketPayloadTelemetriesServer.py resources
-docker build -t djotiham/payload_telemetry_server .
+cp -R ../../../../services/telemetries/socketRocketTelemetriesServer.py resources
+docker build -t djotiham/rocket_telemetry_server .
 rm -R resources
 # to remove old images
 # docker rmi $(docker images -qa -f 'dangling=true')

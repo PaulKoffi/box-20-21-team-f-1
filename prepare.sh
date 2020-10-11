@@ -32,6 +32,10 @@ cd payloadTelemetryServer
 # echo "Building delivery service docker image"
 ./build.sh
 cd ..
+cd rocketTelemetryServer
+# echo "Building delivery service docker image"
+./build.sh
+cd ..
 
 cd ../../rpc
 ## >>>>> Building rpc <<<<<
