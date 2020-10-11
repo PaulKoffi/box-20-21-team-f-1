@@ -63,6 +63,10 @@ while (True):
         if dataFromClient.decode() == "STOP":
             round = 0
             telemetriesData = []
+            myobj = {
+                "rocketName": rocketName
+            }
+            x = requests.post("{}/payload/setStatus".format(BASE_URL), data=myobj)
 
         if round == 21:
             # Enregistrement des données telemetriques

@@ -38,6 +38,15 @@ def step_impl(context):
 
 @when('Gwynne enregistre cette nouvelle mission')
 def step_impl(context):
+    # Ajout Rocket disponible VEGA-4000
+    db.rocketinventories.insert_one({
+        "rocketName": "VEGA-4000",
+        "available": True,
+        "fuel": "5000",
+        "status": "ready to go",
+        "speed": 10
+    })
+
     myobj = {
         "customerName": "Francis",
         "customerMail": "francis@gmail.com",
@@ -233,10 +242,10 @@ def step_impl(context):
     db.rocketActions.update_one(myquery, newvalues)
     db.payloads.delete_one({"satellite": "CORSAIRE"})
     db.rocketinventories.delete_one({"rocketName": "VEGA-4000"})
-    db.rocketinventories.insert_one({
-        "rocketName": "VEGA-4000",
-        "available": True,
-        "fuel": "5000",
-        "status": "ready to go",
-        "speed": 10
-    })
+    # db.rocketinventories.insert_one({
+    #     "rocketName": "VEGA-4000",
+    #     "available": True,
+    #     "fuel": "5000",
+    #     "status": "ready to go",
+    #     "speed": 10
+    # })
