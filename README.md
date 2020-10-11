@@ -41,6 +41,9 @@
     <p align="center">
         <img src="./docs/archi_scope_3.png"/>
     </p>
+    
+ ## Rapport
+ Le rapport du projet se trouve 👉 [ici](Rapport%20Box-20-21-team-f.pdf)   
   
   ## Comment utiliser ce repository
   * La branche `master` (la branche par défaut) représente la dernière version stable du système.
