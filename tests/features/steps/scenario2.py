@@ -122,7 +122,7 @@ def step_impl(context):
 
 @when("Elon donne l'ordre de lancement de la fusée SOUL-9000")
 def step_impl(context):
-    os.chdir('steps/utils')
+    os.chdir('utils')
     subprocess.Popen(["python", "elonOrder2.py"])
 
 
