@@ -7,8 +7,7 @@
 * Version actuelle : en développement (MVP - Sprint 1)
 * Releases :
     * [Sprint 1](https://github.com/pns-si5-soa/box-20-21-team-f/releases/tag/sprint1) : Semaine 1 de dev
-* Statuts d'Intégration continue : 
-    * À venir...
+* Statuts d'Intégration continue : [![Build Status](https://travis-ci.com/pns-si5-soa/box-20-21-team-f.svg?token=A689phqWFprpuzVyuqDk&branch=master)](https://travis-ci.com/pns-si5-soa/box-20-21-team-f)
   
 # Vue d'ensemble
  Cette étude de cas est utilisée pour illustrer les différentes technologies impliquées dans le cours d'Architecture Orienté Services (SOA) donné à Polytech Nice - Sophia Antipolis en 5e année. Ce code de démonstration nécessite les logiciels suivants pour fonctionner correctement :
@@ -17,6 +16,8 @@
    * Environnement de déploiement : Docker 2.2.0.5 (Stable)
    * Langage d'implémentation Javascript : Node JS v12.14.1
    * Langage d'implémentation Python : Python 3
+   
+   * ##### PS : Exclusivement pour les systèmes linux ou Unix : GNOME Terminal 3.36.2 using VTE 0.60.3 +BIDI +GNUTLS +ICU +SYSTEMD
    
   ## Vision du produit
   Le produit à mettre en oeuvre évolue itérativement sur plusieurs semaines :   
@@ -64,6 +65,13 @@
   - *Client Richard :* Exécuter le fichier [richard.sh](./richard.sh) à la racine du projet afin d'accéder à la cli dockerisée de Richard et exécuter les [commandes](./CLIs/richard/README.md) souhaitées.
   - *Arrêt :* Exécuter le fichier [stop.sh](./stop.sh) à la racine du projet afin d'arrêter puis supprimer tous les conteneurs docker en cours d'exécution et ainsi stopper la simulation.
   - *Suppression :* Exécuter le fichier [clean.sh](./clean.sh) à la racine du projet afin de supprimer toutes les images docker créées pendant l'exécution de la simulation.
+  
+  PS : 
+  - La première fois, la compilation et exécution peut prendre un peu de temps à terminer.
+  - Sur linux, l'exécution du prepare.sh se termine en ouvrant deux fenêtres qui sont des dashboards de logs nécessaires à la compréhension du scénario.
+  - Sur windows, l'exécution du prepare.sh se termine sans ouvrir de fenêtres car tous les logs sont consultables depuis docker desktop en choisissant le conteneur approprié.
+  - Une fois l'exécution du prepare.sh terminé, il faut exécuter de suite le run.sh pour visionner les logs. 
+  
   
   ## Pile technologique
   
