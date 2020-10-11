@@ -1,10 +1,10 @@
 #!/bin/bash
 
-echo "Building pollcreator_rpc docker image"
+echo "Building payload_rpc docker image"
 mkdir resources
 cp ../../../requirements.txt resources
-cp ../../../rpc/pollCreator/pollcreator.py resources
-docker build -t djotiham/pollcreator_rpc .
+cp ../../../rpc/payload/payload.py resources
+docker build -t djotiham/payload_rpc .
 rm -R resources
 # to remove old images
 # docker rmi $(docker images -qa -f 'dangling=true')

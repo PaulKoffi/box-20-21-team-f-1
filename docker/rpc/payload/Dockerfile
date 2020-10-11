@@ -13,13 +13,13 @@ COPY resources/requirements.txt .
 RUN pip install -r requirements.txt
 
 # copy the content of the local src directory to the working directory
-COPY resources/pollcreator.py .
+COPY resources/payload.py .
 
 # Creating an health check verification to check pollcreator status
-# HEALTHCHECK --interval=30s --timeout=30s CMD curl --fail http://localhost:9000/ || exit 1
+# HEALTHCHECK --interval=30s --timeout=30s CMD curl --fail http://localhost:8282/ || exit 1
 
 # port
-EXPOSE 9000
+EXPOSE 8282
 
 # command to run on container start
-CMD [ "python", "./pollcreator.py" ]
+CMD [ "python", "./payload.py" ]

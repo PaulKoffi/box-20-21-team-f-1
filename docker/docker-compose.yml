@@ -56,7 +56,33 @@ services:
       - launcher_service
       - rocket_inventory_service
 
-  ########## Servers Socket ##########  9490
+  # rocket (Python)
+  rocket_rpc:
+    image: djotiham/rocket_rpc
+    container_name: rocket_rpc
+    network_mode: host
+    expose:
+      - "8888"
+    ports:
+      - "8888:8888"
+    depends_on:
+      - launcher_service
+      - delivery_service
+
+  # payload (Python)
+  payload_rpc:
+    image: djotiham/payload_rpc
+    container_name: payload_rpc
+    network_mode: host
+    expose:
+      - "8282"
+    ports:
+      - "8282:8282"
+    depends_on:
+      - launcher_service
+      - delivery_service
+
+  ########## Servers Socket ########## 
   
   # payload telemetry socket (Python)
   payload_telemetry_server:

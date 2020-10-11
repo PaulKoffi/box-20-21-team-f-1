@@ -45,6 +45,14 @@ cd pollCreator
 # echo "Building pollCreator docker image"
 ./build.sh
 cd ..
+cd rocket
+# echo "Building rocket docker image"
+./build.sh
+cd ..
+cd payload
+# echo "Building payload docker image"
+./build.sh
+cd ..
 
 cd ../CLIs
 ## >>>>> Building CLIs <<<<<

@@ -10,6 +10,8 @@ jobs:
           - chmod +x docker/CLIs/tory/build.sh
           - chmod +x docker/CLIs/richard/build.sh
           - chmod +x docker/rpc/pollCreator/build.sh
+          - chmod +x docker/rpc/rocket/build.sh
+          - chmod +x docker/rpc/payload/build.sh
           - chmod +x docker/services/rocketInventory/build.sh
           - chmod +x docker/services/weather/build.sh
           - chmod +x docker/services/launcher/build.sh
