@@ -9,6 +9,9 @@ jobs:
           - chmod +x docker/CLIs/elon/build.sh
           - chmod +x docker/CLIs/tory/build.sh
           - chmod +x docker/CLIs/richard/build.sh
+          - chmod +x docker/CLIs/gwynne/build.sh
+          - chmod +x docker/dashboards/gwynne/build.sh
+          - chmod +x docker/dashboards/jeff/build.sh
           - chmod +x docker/rpc/pollCreator/build.sh
           - chmod +x docker/rpc/rocket/build.sh
           - chmod +x docker/rpc/payload/build.sh

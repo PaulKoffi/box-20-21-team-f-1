@@ -109,6 +109,32 @@ services:
     depends_on:
       - delivery_service
       - launcher_service
+
+  ########## Dashboards ##########
+  
+  # gwynne dashboard
+  gwynne_dashboard:
+    image: djotiham/gwynne_dashboard
+    container_name: gwynne_dashboard
+    network_mode: host
+    volumes:
+      - .:/host-gwynnedashboard
+    depends_on:
+      - rocket_telemetry_server
+    stdin_open: true
+    tty: true
+
+  # jeff dashboard
+  jeff_dashboard:
+    image: djotiham/jeff_dashboard
+    container_name: jeff_dashboard
+    network_mode: host
+    volumes:
+      - .:/host-jeffdashboard
+    depends_on:
+      - payload_telemetry_server
+    stdin_open: true
+    tty: true
       
   ########## CLIs ##########
   
@@ -147,5 +173,17 @@ services:
       - .:/host-richard
     depends_on:
       - pollcreator_rpc
+    stdin_open: true
+    tty: true
+  
+  # gwynne CLI
+  gwynnecli:
+    image: djotiham/gwynne_cli
+    container_name: gwynne_cli
+    network_mode: host
+    volumes:
+      - .:/host-gwynne
+    depends_on:
+      - delivery_service
     stdin_open: true
     tty: true

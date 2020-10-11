@@ -54,6 +54,20 @@ cd payload
 ./build.sh
 cd ..
 
+cd ../dashboards
+## >>>>> Building dashboards <<<<<
+
+## jeff dashboard
+cd jeff
+# echo "Building elon docker image"
+./build.sh
+cd ..
+## gwynne dashboard
+cd gwynne
+# echo "Building tory docker image"
+./build.sh
+cd ..
+
 cd ../CLIs
 ## >>>>> Building CLIs <<<<<
 
@@ -69,6 +83,11 @@ cd tory
 cd ..
 ## richard
 cd richard
+# echo "Building richard docker image"
+./build.sh
+cd ..
+## gwynne
+cd gwynne
 # echo "Building richard docker image"
 ./build.sh
 cd ..
