@@ -65,18 +65,20 @@ def sendStates(siteName, rocketName):
                     break
                 if index == int(length / 2):
                     print("Rocket secondStep!!!!")
+                    requests.put(
+                        "{}/rocketsStates/secondStep/{}/{}/{}".format(ROCKETS_STATES_BASE_URL, siteName, rocketName, 1))
                     s.sendPayloadStates(siteName, rocketName)
 
                 if index == int(3 * length / 4):
                     print("Max Q making us reduce the speed to 9")
                     response = requests.put(
                         "{}//rocket/setRocketSpeed/{}/{}".format(BASE_URL_ROCKET_INVENTORY, rocketName, 9))
-                    time.sleep(2)
+                    time.sleep(4)
                     print("Returning to initial speed")
                     result = requests.put(
                         "{}//rocket/setRocketSpeed/{}/{}".format(BASE_URL_ROCKET_INVENTORY, rocketName, response))
 
-                time.sleep(2)
+                time.sleep(0.1)
 
                 # Create a client socket
                 clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

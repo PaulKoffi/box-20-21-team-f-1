@@ -17,7 +17,7 @@ async function getPayloadByRocketName(rocketName) {
 }
 
 async function getPayloadBySatelliteName(satelliteName) {
-    return PayloadModel.findOne({'satellite': satelliteName, 'past': false});
+    return PayloadModel.findOne({'satellite': satelliteName});
 }
 
 async function setStatus(rocketName) {
