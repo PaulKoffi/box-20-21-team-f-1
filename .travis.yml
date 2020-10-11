@@ -15,11 +15,11 @@ jobs:
           - chmod +x launch.sh
           - chmod +x clean.sh
           - chmod +x stop.sh
+          - chmod +x prepare.sh
         install: 
           - pip install -r requirements.txt
         script: 
-          - ./build.sh
-          - ./launch.sh
+          - ./prepare.sh
           - python services/rocketInventory/test/rocketApiTest.py
           - ./stop.sh
           - ./clean.sh
