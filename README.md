@@ -17,7 +17,6 @@
    * Langage d'implémentation Javascript : Node JS v12.14.1
    * Langage d'implémentation Python : Python 3
    
-   * ##### PS : Exclusivement pour les systèmes linux ou Unix : GNOME Terminal 3.36.2 using VTE 0.60.3 +BIDI +GNUTLS +ICU +SYSTEMD
    
   ## Vision du produit
   Le produit à mettre en oeuvre évolue itérativement sur plusieurs semaines :   
@@ -41,6 +40,9 @@
     <p align="center">
         <img src="./docs/archi_scope_3.png"/>
     </p>
+    
+ ## Rapport
+ Le rapport du projet se trouve 👉 [ici](Rapport%20Box-20-21-team-f.pdf)   
   
   ## Comment utiliser ce repository
   * La branche `master` (la branche par défaut) représente la dernière version stable du système.
@@ -51,6 +53,11 @@
   ### Récupération du projet
   Effectuer un clone classique du projet en faisant ```git clone https://github.com/pns-si5-soa/box-20-21-team-f.git``` ou en récupérant le zip depuis cette page.
   
+  ### PS : Si vous êtes sur Linux ou Unix
+  Après la récupération du projet, effectuer la commande suivante à la racine du projet pour avoir les permissions d'exécution sur le projet :
+  `chmod -R 777 .`
+  (Le sudo peut être requis)
+  
   ## Compilation & Exécution  
   La compilation et l'exécution s'effectuent via des conteneurs *Docker* correspondants aux différents micro-services et autres acteurs du système.
   Le lancement et démarrage de ces conteneurs est automatisé grace à l'exécution de scripts.
@@ -58,6 +65,17 @@
   Ainsi, il est possible d'exécuter les actions suivantes : 
      
   - *Compilation & Exécution :* Exécuter le fichier [prepare.sh](./prepare.sh) à la racine du projet afin de compiler et exécuter toutes les images docker.
+  PS : 
+    - La première fois, la compilation et exécution (prepare.sh) peut prendre un peu de temps à terminer.
+  - *Exécution du scénario :*
+  1 - Une fois le prepare.sh terminé, veuillez ouvrir trois terminaux depuis la racine du projet.
+  2 - Dans le premier, exécuter le fichier [jeffdashboard.sh](./jeffdashboard.sh) pour consulter les données télémétriques de la fusée.
+  3 - Dans le deuxième, exécuter le fichier [gwynnedashboard.sh](./gwynnedashboard.sh) pour consulter les données télémétriques du satellite.
+  4 - Dans le dernier, exécuter le fichier [run.sh](./run.sh) qui vous ouvrira le terminal interne du conteneur docker `tests` (conteneur du scénario), à l'intérieur de ce terminal, exécuter encore une fois le fichier run.sh (en faisant `./run.sh`) pour lancer le scénario.
+  
+  - *Dans le cas où les scénarios de tests se passent mal ou dans le mauvais ordre d'exécution de commandes, il est impératif d'exécuter le script [cleanTestBD](./tests/features/steps/utils/cleanTestBD.py) pour réinitialiser les données de test*
+  
+  Autres commandes :
   - *Compilation :* Exécuter le fichier [build.sh](./build.sh) à la racine du projet afin de compiler toutes les images docker.
   - *Exécution :* Exécuter le fichier [launch.sh](./launch.sh) à la racine du projet afin d'exécuter toutes les images docker grâce à un [docker-compose.yml](./docker/docker-compose.yml) configuré à cet effet.
   - *Client Tory :* Exécuter le fichier [tory.sh](./tory.sh) à la racine du projet afin d'accéder à la cli dockerisée de Tory et exécuter les [commandes](./CLIs/tory/README.md) souhaitées.
@@ -65,12 +83,7 @@
   - *Client Richard :* Exécuter le fichier [richard.sh](./richard.sh) à la racine du projet afin d'accéder à la cli dockerisée de Richard et exécuter les [commandes](./CLIs/richard/README.md) souhaitées.
   - *Arrêt :* Exécuter le fichier [stop.sh](./stop.sh) à la racine du projet afin d'arrêter puis supprimer tous les conteneurs docker en cours d'exécution et ainsi stopper la simulation.
   - *Suppression :* Exécuter le fichier [clean.sh](./clean.sh) à la racine du projet afin de supprimer toutes les images docker créées pendant l'exécution de la simulation.
-  
-  PS : 
-  - La première fois, la compilation et exécution peut prendre un peu de temps à terminer.
-  - Sur linux, l'exécution du prepare.sh se termine en ouvrant deux fenêtres qui sont des dashboards de logs nécessaires à la compréhension du scénario.
-  - Sur windows, l'exécution du prepare.sh se termine sans ouvrir de fenêtres car tous les logs sont consultables depuis docker desktop en choisissant le conteneur approprié.
-  - Une fois l'exécution du prepare.sh terminé, il faut exécuter de suite le run.sh pour visionner les logs. 
+
   
   
   ## Pile technologique
