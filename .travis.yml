@@ -11,5 +11,5 @@ jobs:
         script: 
           - ./prepare.sh
           - python services/rocketInventory/test/rocketApiTest.py
-          - ./stop.sh
+          # - ./stop.sh
           # - ./clean.sh
