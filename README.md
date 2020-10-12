@@ -5,8 +5,9 @@
     * KOFFI Paul
     * NABAGOU Djotiham
 * Version actuelle : en développement (MVP - Sprint 1)
-* Releases :
+* [Releases](https://github.com/pns-si5-soa/box-20-21-team-f/releases) & [Tags](https://github.com/pns-si5-soa/box-20-21-team-f/tags) :
     * [Sprint 1](https://github.com/pns-si5-soa/box-20-21-team-f/releases/tag/sprint1) : Semaine 1 de dev
+    * [delivery-first](https://github.com/pns-si5-soa/box-20-21-team-f/releases/tag/delivery-first) : Première livraison
 * Statuts d'Intégration continue : [![Build Status](https://travis-ci.com/pns-si5-soa/box-20-21-team-f.svg?token=A689phqWFprpuzVyuqDk&branch=master)](https://travis-ci.com/pns-si5-soa/box-20-21-team-f)
   
 # Vue d'ensemble
@@ -68,10 +69,10 @@
   PS : 
     - La première fois, la compilation et exécution (prepare.sh) peut prendre un peu de temps à terminer.
   - *Exécution du scénario :*
-  1 - Une fois le prepare.sh terminé, veuillez ouvrir trois terminaux depuis la racine du projet.
-  2 - Dans le premier, exécuter le fichier [jeffdashboard.sh](./jeffdashboard.sh) pour consulter les données télémétriques de la fusée.
-  3 - Dans le deuxième, exécuter le fichier [gwynnedashboard.sh](./gwynnedashboard.sh) pour consulter les données télémétriques du satellite.
-  4 - Dans le dernier, exécuter le fichier [run.sh](./run.sh) qui vous ouvrira le terminal interne du conteneur docker `tests` (conteneur du scénario), à l'intérieur de ce terminal, exécuter encore une fois le fichier run.sh (en faisant `./run.sh`) pour lancer le scénario.
+  1. Une fois le prepare.sh terminé, veuillez ouvrir trois terminaux depuis la racine du projet.
+  2. Dans le premier, exécuter le fichier [jeffdashboard.sh](./jeffdashboard.sh) pour consulter les données télémétriques de la fusée.
+  3. Dans le deuxième, exécuter le fichier [gwynnedashboard.sh](./gwynnedashboard.sh) pour consulter les données télémétriques du satellite.
+  4. Dans le dernier, exécuter le fichier [run.sh](./run.sh) qui vous ouvrira le terminal interne du conteneur docker `tests` (conteneur du scénario), à l'intérieur de ce terminal, exécuter encore une fois le fichier run.sh (en faisant `./run.sh`) pour lancer le scénario.
   
   - *Dans le cas où les scénarios de tests se passent mal ou dans le mauvais ordre d'exécution de commandes, il est impératif d'exécuter le script [cleanTestBD](./tests/features/steps/utils/cleanTestBD.py) pour réinitialiser les données de test*
   

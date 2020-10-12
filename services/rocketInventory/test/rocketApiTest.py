@@ -16,7 +16,7 @@ class RocketApiTest(unittest.TestCase):
     def test_1_get_all_rockets(self):
         response = requests.get(RocketApiTest.ROCKETS_URL)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.json()), 7)
+        self.assertEqual(len(response.json()), 6)
     # def test_get_all_rockets(self):
     #     tester = app.test_client()
     #     response_bytes = tester.get("/rockets")
