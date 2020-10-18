@@ -58,6 +58,7 @@ def step_impl(context):
 @then("On voit qu'une fusée disponible a été affecté à la mission")
 def step_impl(context):
     response = requests.get("{}/payloadBySatelliteName/{}".format(DELIVERY_STATES_BASE_URL, "PERSEUS"))
+    print(response.json()['rocketName'])
     assert response.json()['satellite'] == "PERSEUS"
     assert response.json()['rocketName'] == "SOUL-9000"
 
@@ -122,7 +123,7 @@ def step_impl(context):
 
 @when("Elon donne l'ordre de lancement de la fusée SOUL-9000")
 def step_impl(context):
-    os.chdir('utils')
+    # os.chdir('utils')
     subprocess.Popen(["python", "elonOrder2.py"])
 
 
