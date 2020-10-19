@@ -68,6 +68,15 @@ cd gwynne
 ./build.sh
 cd ..
 
+cd kafka
+cd consumer1
+./build.sh
+cd ..
+cd producer
+./build.sh
+
+cd ../..
+
 cd ../CLIs
 ## >>>>> Building CLIs <<<<<
 

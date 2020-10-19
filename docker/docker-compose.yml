@@ -232,3 +232,45 @@ services:
       - weather_service
     stdin_open: true
     tty: true
+
+      # gwynne dashboard
+  # admin:
+  #   image: djotiham/admin
+  #   container_name: admin
+  #   network_mode: host
+  #   volumes:
+  #     - .:/host-admin
+  #   depends_on:
+  #     - zookeeper
+  #     - kafka
+  #   stdin_open: true
+  #   tty: true
+
+    # gwynne dashboard
+  producer:
+    image: djotiham/producer
+    container_name: producer
+    network_mode: host
+    volumes:
+      - .:/host-producer
+    depends_on:
+      # - admin
+      - zookeeper
+      - kafka
+    stdin_open: true
+    tty: true
+
+  # jeff dashboard
+  consumer1:
+    image: djotiham/consumer1
+    container_name: consumer1
+    network_mode: host
+    volumes:
+      - .:/host-consumer1
+    depends_on:
+      # - admin
+      - zookeeper
+      - kafka
+      - producer
+    stdin_open: true
+    tty: true
