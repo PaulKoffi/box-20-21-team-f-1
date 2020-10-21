@@ -68,6 +68,20 @@ services:
     stdin_open: true
     tty: true
 
+  # rocket inventory service (Python)
+  pollsystem_service:
+    image: djotiham/pollsystem_service
+    container_name: pollsystem_service
+    network_mode: host
+    volumes:
+      - .:/host-pollsystem_service
+    depends_on: 
+      - zookeeper
+      - kafka
+      - pollcreator_rpc
+    stdin_open: true
+    tty: true
+
   # delivery service (NodeJs)
   delivery_service:
     image: djotiham/delivery_service

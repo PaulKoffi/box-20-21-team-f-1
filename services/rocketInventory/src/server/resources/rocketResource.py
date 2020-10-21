@@ -1,4 +1,3 @@
-from flask import jsonify
 import pymongo
 import json
 from pymongo import MongoClient
@@ -13,16 +12,16 @@ class RocketResource():
     def getAllRockets(self):
         response = json.loads(dumps(db.rocketinventories.find()))
         # print(response)
-        return jsonify(response)
+        return response
 
     def getRocketById(self, id):
-        return jsonify(json.loads(dumps(db.rocketinventories.find_one({"rocketName": id}))))
+        return json.loads(dumps(db.rocketinventories.find_one({"rocketName": id})))
 
     def setRocketStatus(self, id):
         myquery = {"rocketName": id}
         newvalues = {"$set": {"available": True}}
         db.rocketinventories.update_one(myquery, newvalues)
-        return jsonify(json.loads(dumps(db.rocketinventories.find_one({"rocketName": id}))))
+        return json.loads(dumps(db.rocketinventories.find_one({"rocketName": id})))
 
     def setRocketSpeed(self, id, speed):
         myquery = {"rocketName": id}

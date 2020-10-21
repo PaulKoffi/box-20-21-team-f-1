@@ -25,6 +25,10 @@ cd delivery
 ./build.sh
 cd ..
 
+cd pollSystem
+./build.sh
+cd ..
+
 cd telemetries
 ## >>>>> Building servers socket <<<<<
 
@@ -126,4 +130,5 @@ cd ..
 echo "Done"
 docker exec -it -d pollcreator_rpc python pollcreator.py
 docker exec -it -d rocket_inventory_service python run.py
+docker exec -it pollsystem_service python pollsystem.py
 #read -n 1 -s -r -p "Press any key to continue"

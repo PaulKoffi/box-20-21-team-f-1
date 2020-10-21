@@ -58,15 +58,16 @@ const run = async () => {
             if (message.value.toString() === "sites") {
                 const weather = await sdk.getSite();
                 await producer.send({
-                    topic: 'pollresponsetopic',
+                    topic: 'polltoryresponsetopic',
                     messages: [
                         { value: JSON.stringify(weather) },
                     ],
                 });
             } else {
-                const weather = await sdk.getSiteByName(message.value.toString());
+                siteName = JSON.parse(message.value.toString())['siteName'];
+                const weather = await sdk.getSiteByName(siteName);
                 await producer.send({
-                    topic: 'pollresponsetopic',
+                    topic: 'polltoryresponsetopic',
                     messages: [
                         { value: JSON.stringify(weather) },
                     ],
