@@ -1,7 +1,17 @@
-from server.main import create_app
+from kafka import KafkaConsumer
+from json import loads
 
-app = create_app()
+# from server.services.rocketService import RocketService
 
-if __name__ == '__main__':
-    print("Rocket API serving ...")
-    app.run(host="0.0.0.0", port=8000, debug=True)
+consumer = KafkaConsumer(
+    'Pollrequesttopic',
+     bootstrap_servers=['localhost:9092'],
+     auto_offset_reset='earliest',
+     enable_auto_commit=True,
+     group_id='rocketInventory-group',
+     value_deserializer=lambda x: loads(x.decode('utf-8')))
+
+for msg in consumer:
+    message = msg.value
+    topic_retrieve = msg.topic
+    print('{} added to {}'.format(message, topic_retrieve))

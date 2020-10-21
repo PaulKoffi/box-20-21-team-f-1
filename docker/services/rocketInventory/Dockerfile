@@ -1,7 +1,7 @@
 # set base image (host OS)
 FROM python:3.8
 
-MAINTAINER djotiham (SOA 2020)
+LABEL djotiham (SOA 2020)
 
 # set the working directory in the container
 WORKDIR /code
@@ -19,8 +19,8 @@ COPY resources/src/ .
 # HEALTHCHECK --interval=30s --timeout=30s CMD curl --fail http://localhost:8000/ || exit 1
 
 # port
-EXPOSE 8000
+# EXPOSE 8000
 
 # command to run on container start
-CMD [ "python", "./run.py" ]
+CMD [ "/bin/bash" ]
 # ENTRYPOINT [ "python", "./run.py" ]

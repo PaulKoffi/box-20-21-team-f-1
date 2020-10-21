@@ -10,6 +10,8 @@ services:
     container_name: zookeeper
     ports: 
       - "2181:2181"
+    expose:
+      - "2181"
   
   #kafka
   kafka:
@@ -17,6 +19,8 @@ services:
     container_name: kafka
     ports:
       - "9092:9092"
+    expose:
+      - "9092"
     environment: 
       KAFKA_ADVERTISED_HOST_NAME: localhost
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
@@ -28,10 +32,15 @@ services:
   weather_service:
     image: djotiham/weather_service
     container_name: weather_service
+    network_mode: host
     expose:
       - "3000"
     ports:
       - "3000:3000"
+    depends_on:
+    - zookeeper
+    - kafka
+    - pollcreator_rpc
 
   # launcher service (Python)
   launcher_service:
@@ -49,10 +58,15 @@ services:
   rocket_inventory_service:
     image: djotiham/rocket_inventory_service
     container_name: rocket_inventory_service
-    expose:
-        - "8000"
-    ports:
-      - "8000:8000"
+    network_mode: host
+    volumes:
+      - .:/host-rocket_inventory_service
+    depends_on: 
+      - zookeeper
+      - kafka
+      - pollcreator_rpc
+    stdin_open: true
+    tty: true
 
   # delivery service (NodeJs)
   delivery_service:
@@ -75,9 +89,11 @@ services:
     ports:
       - "9000:9000"
     depends_on:
-      - weather_service
-      - launcher_service
-      - rocket_inventory_service
+      - zookeeper
+      - kafka
+    stdin_open: true
+    tty: true
+
 
   # rocket (Python)
   rocket_rpc:

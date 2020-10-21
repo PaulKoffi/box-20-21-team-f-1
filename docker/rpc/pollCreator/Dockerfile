@@ -22,4 +22,4 @@ COPY resources/pollcreator.py .
 EXPOSE 9000
 
 # command to run on container start
-CMD [ "python", "./pollcreator.py" ]
+CMD [ "/bin/bash" ]

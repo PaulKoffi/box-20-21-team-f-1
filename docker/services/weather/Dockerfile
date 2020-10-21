@@ -1,5 +1,5 @@
 FROM node:10
-MAINTAINER djotiham (SOA 2020)
+LABEL djotiham (SOA 2020)
 
 # Create app directory
 WORKDIR /usr/src/app
