@@ -124,4 +124,6 @@ cd ..
 
 
 echo "Done"
+docker exec -it -d pollcreator_rpc python pollcreator.py
+docker exec -it -d rocket_inventory_service python run.py
 #read -n 1 -s -r -p "Press any key to continue"
