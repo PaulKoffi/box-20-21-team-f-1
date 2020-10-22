@@ -60,7 +60,7 @@ const run = async () => {
                 await producer.send({
                     topic: 'polltoryresponsetopic',
                     messages: [
-                        { value: JSON.stringify(weather) },
+                        { value:JSON.stringify(weather)}
                     ],
                 });
             } else {
@@ -69,7 +69,7 @@ const run = async () => {
                 await producer.send({
                     topic: 'polltoryresponsetopic',
                     messages: [
-                        { value: JSON.stringify(weather) },
+                        { value: JSON.stringify({'response': JSON.stringify(weather), 'request': message.value.toString() }) },
                     ],
                 });
             }
