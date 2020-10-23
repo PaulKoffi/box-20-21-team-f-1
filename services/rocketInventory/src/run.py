@@ -23,6 +23,6 @@ for msg in consumer:
     topic_retrieve = msg.topic
     print(message)
     print (message['rocketName'])
-    rocket_request = {'reponse': rocketService.getRocketById(message['rocketName']), 'request': message}
+    rocket_request = {'response': rocketService.getRocketById(message['rocketName']), 'request': message}
     print(rocket_request)
     producer.send('pollelonresponsetopic',value=rocket_request)
