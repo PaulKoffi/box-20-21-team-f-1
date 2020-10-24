@@ -39,7 +39,7 @@ for msg in consumer:
     message = msg.value
     topic_retrieve = msg.topic
     if(topic_retrieve == 'pollelonresponsetopic'):
-        if(message['response']['status'] == "it's risky"):
+        if(message['response']['status'] != "it's risky"):
             data = {'elonResponse' : 'GO', 'request': message['request']}
             rocketName = message['request']['rocketName']
             siteName = message['request']['siteName']

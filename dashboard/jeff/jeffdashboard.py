@@ -1,11 +1,17 @@
-import socket
+from bson.json_util import dumps, loads
+from xmlrpc.client import ServerProxy
+from kafka import KafkaConsumer
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect(("127.0.0.1", 9490))
+consumer = KafkaConsumer(
+                        bootstrap_servers=['localhost:9092'],
+                        auto_offset_reset='earliest',
+                        enable_auto_commit=True,
+                        group_id='jeff-group',
+                        value_deserializer=lambda x: loads(x.decode('utf-8')))
+    
+consumer.subscribe(['rocketTopic'])
 
-
-while True:
-    msg = s.recv(1024)
-    if msg:
-        print("Données telemetriques ==========> ", end='')
-        print(msg.decode("utf-8"))
+for msg in consumer:
+    message = msg.value
+    if(message['action'] == "running"):
+        print(message['rocketName'] + " at position " + message['state'] )

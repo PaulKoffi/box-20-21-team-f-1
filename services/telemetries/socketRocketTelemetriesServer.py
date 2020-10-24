@@ -1,88 +1,81 @@
 import socket
 import requests
 import pymongo
-
-# Create a stream based socket(i.e, a TCP socket)
-
-# operating on IPv4 addressing scheme
+from kafka import KafkaConsumer
+import json
+from bson.json_util import dumps, loads
 
 BASE_URL = "http://localhost:8000"
-client = pymongo.MongoClient(
-    "mongodb+srv://flo:Azerty123@cluster0.ibhol.mongodb.net/blueOrigin?retryWrites=true&w=majority")
+client = pymongo.MongoClient("mongodb+srv://flo:Azerty123@cluster0.ibhol.mongodb.net/blueOrigin?retryWrites=true&w=majority")
 db = client.get_database('blueOrigin')
-serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-# Bind and listen
-
-serverSocket.bind(("127.0.0.1", 9490))
-
-serverSocket.listen()
-
-tab = []
-telemetriesData = []
-val = False
-rocketName = ""
-arrayLength = 0
-round = 0
+rocketName =""
 
 
-def saveTelemetriesData():
+
+consumer = KafkaConsumer(
+                        bootstrap_servers=['localhost:9092'],
+                        auto_offset_reset='earliest',
+                        enable_auto_commit=True,
+                        group_id='rocket-telemetry-group',
+                        value_deserializer=lambda x: loads(x.decode('utf-8')))
+    
+consumer.subscribe(['rocketTopic'])
+
+def getCurrentSatelliteName(rocketName):
+    DELIVERY_STATES_BASE_URL = "http://localhost:7000"
+    # Recuperation de la mission actuelle de la Rocket (PAST == FALSE)
+    currentPayload = requests.get("{}/payload/payloadByRocketName/{}".format(DELIVERY_STATES_BASE_URL, rocketName))
+    return currentPayload.json()["satellite"]
+
+def saveTelemetriesData(rocketName):
     values = {
         "machine": rocketName,
         "type": "ROCKET",
-        "projectionTelemetriesData": [int(i) for i in telemetriesData[2:]]
+        "projectionTelemetriesData": [],
+        "satellite" : getCurrentSatelliteName(rocketName)
     }
     db.projectionTelemetriesData.insert_one(values)
-    return ""
 
 
-# Accept connections
-while (True):
 
-    (clientConnected, clientAddress) = serverSocket.accept()
-    print("Accepted a connection request from %s:%s" % (clientAddress[0], clientAddress[1]))
+index = 0
+for msg in consumer:
+    message = msg.value
+    if(message['action'] == "running"):
+        rocketName = message['rocketName']
+        if index == 0:
+            saveTelemetriesData(rocketName)
 
-    if val is False:
-        tab.append(clientConnected)
-        val = True
-    else:
-        dataFromClient = clientConnected.recv(1024)
-        print(dataFromClient.decode())
+        myquery = {"satellite": getCurrentSatelliteName(rocketName)}
+        projectioValues = json.loads(dumps(db.projectionTelemetriesData.find_one(myquery)))['projectionTelemetriesData']
+        projectioValues.append(int(message['state']))
+        
+        newvalues = {"$set": {"projectionTelemetriesData": projectioValues}}
+        db.projectionTelemetriesData.update_one(myquery, newvalues)
+        index += 1
 
-        # send data to jeff
-        tab[0].send(bytes(dataFromClient.decode(), "utf-8"))
+    # if destruction
+    if message['action']  == "destroy":
+        rocketName = message['rocketName']
+        index = 0
+        myobj = {
+            "rocketName": rocketName
+        }
+        x = requests.post("{}/payload/setStatus".format(BASE_URL), data=myobj)
 
-        if round == 0:
-            rocketName = dataFromClient.decode()
-        # if round == 1:
-        #     arrayLength = int(dataFromClient.decode())
-        round += 1
-        telemetriesData.append(dataFromClient.decode())
-
-        # if destruction
-        if dataFromClient.decode() == "STOP":
-            round = 0
-            telemetriesData = []
-            myobj = {
-                "rocketName": rocketName
-            }
-            x = requests.post("{}/payload/setStatus".format(BASE_URL), data=myobj)
-
-        if round == 21:
-            # Enregistrement des données telemetriques
-            saveTelemetriesData()
-
-            print("LAST DATA")
-            if 0 == int(dataFromClient.decode()):
-                print("--------------< La rocket a atteri avec succès  >------------------")
-                # Rendre la rocket à nouveau disponible
-                response = requests.post("{}/rocket/setStatus/{}".format(BASE_URL, rocketName))
-                if response.status_code == 403:
-                    print(" ERREUR !")
-                else:
-                    print(" La rocket {} est de nouveau disponible pour une mission !".format(rocketName))
+    if message['action']  == "end":
+        rocketName = message['rocketName']
+        print("LAST DATA")
+        if 0 == message['state']:
+            print("--------------< La rocket a atteri avec succès  >------------------")
+            # Rendre la rocket à nouveau disponible
+            response = requests.post("{}/rocket/setStatus/{}".format(BASE_URL, rocketName))
+            if response.status_code == 403:
+                print(" ERREUR !")
             else:
-                print("La rocket est endommagée !!")
-            round = 0
-            telemetriesData = []
+                print(" La rocket {} est de nouveau disponible pour une mission !".format(rocketName))
+        else:
+            print("La rocket est endommagée !!")
+        index = 0
+        
 

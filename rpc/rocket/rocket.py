@@ -118,12 +118,12 @@ for msg in consumer:
             if index == int(length / 2):
                 printAndSendMessages(LAUNCHER_TOPIC, ROCKET_MAX_Q, siteName, rocketName)
                 print("Max Q making us reduce the speed to 9")
-                # response = requests.put(
-                #     "{}//rocket/setRocketSpeed/{}/{}".format(BASE_URL_ROCKET_INVENTORY, rocketName, 9))
+                response = requests.put(
+                    "{}//rocket/setRocketSpeed/{}/{}".format(BASE_URL_ROCKET_INVENTORY, rocketName, 9))
                 time.sleep(5)
                 print("Returning to initial speed")
-                # result = requests.put(
-                #     "{}//rocket/setRocketSpeed/{}/{}".format(BASE_URL_ROCKET_INVENTORY, rocketName, 10))
+                result = requests.put(
+                    "{}//rocket/setRocketSpeed/{}/{}".format(BASE_URL_ROCKET_INVENTORY, rocketName, 10))
                 printAndSendMessages(LAUNCHER_TOPIC, ROCKET_MAIN_ENGIE_CUT_OFF, siteName, rocketName)
 
 
@@ -140,7 +140,15 @@ for msg in consumer:
                     'siteName' : siteName,
                     'rocketName' : rocketName, 
                     'state': str(statesArray[index])}
-            producer.send('payloadTopic', value=data)
+            producer.send('rocketTopic', value=data)
+
+            if index == length - 1:
+                data = { 'action' : "end",
+                    'siteName' : siteName,
+                    'rocketName' : rocketName,
+                    'state': str(statesArray[index])}
+            producer.send('rocketTopic', value=data)
+            
 
         if stop is False:
             print("Rocket at the end of the launch")
@@ -148,7 +156,7 @@ for msg in consumer:
         myobj = {
             "rocketName": rocketName
         }
-        # requests.post("{}/payload/setPastMissionValue".format(DELIVERY_STATES_BASE_URL), data=myobj)
+        requests.post("{}/payload/setPastMissionValue".format(DELIVERY_STATES_BASE_URL), data=myobj)
 
     if(msg.topic == LAUNCHER_TOPIC and message['action'] == ROCKET_DESTRUCTION):
         destroy = True
