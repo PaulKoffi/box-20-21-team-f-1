@@ -2,6 +2,7 @@
 
 echo "Building weather_service docker image"
 mkdir resources
+cp ../../../requirements.txt resources
 cp -R ../../../services/weather/. resources
 docker build -t djotiham/weather_service .
 rm -R resources

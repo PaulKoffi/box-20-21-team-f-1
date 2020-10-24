@@ -1,23 +1,26 @@
-FROM node:10
+# set base image (host OS)
+FROM python:3.8
+
 LABEL djotiham (SOA 2020)
 
-# Create app directory
-WORKDIR /usr/src/app
+# set the working directory in the container
+WORKDIR /code
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
-COPY resources/package*.json ./
+# copy the dependencies file to the working directory
+COPY resources/requirements.txt .
 
-RUN npm install
-# If you are building your code for production
-# RUN npm ci --only=production
+# install dependencies
+RUN pip install -r requirements.txt
 
-# Bundle app source
-COPY resources/. .
+# copy the content of the local src directory to the working directory
+COPY resources/src/ .
 
-# Creating an health check verification to check weather status
-# HEALTHCHECK --interval=30s --timeout=30s CMD curl --fail http://localhost:3000/ || exit 1
+# Creating an health check verification to check rocket status
+# HEALTHCHECK --interval=30s --timeout=30s CMD curl --fail http://localhost:8000/ || exit 1
 
-EXPOSE 3000
-CMD [ "node", "app.js" ]
+# port
+# EXPOSE 8000
+
+# command to run on container start
+CMD [ "/bin/bash" ]
+# ENTRYPOINT [ "python", "./run.py" ]
