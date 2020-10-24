@@ -33,14 +33,14 @@ services:
     image: djotiham/weather_service
     container_name: weather_service
     network_mode: host
-    expose:
-      - "3000"
-    ports:
-      - "3000:3000"
-    depends_on:
-    - zookeeper
-    - kafka
-    - pollcreator_rpc
+    volumes:
+      - .:/host-weather_service
+    depends_on: 
+      - zookeeper
+      - kafka
+      - pollcreator_rpc
+    stdin_open: true
+    tty: true
 
   # launcher service (Python)
   launcher_service:

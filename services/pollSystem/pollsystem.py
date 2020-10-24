@@ -19,7 +19,7 @@ for msg in consumer:
     topic_retrieve = msg.topic
     if(topic_retrieve == 'pollelonresponsetopic'):
         if(message['response']['status'] != "it's risky"):
-            data = {'elonResponse' : 'GO', 'request': message['response']['request']}
+            data = {'elonResponse' : 'GO', 'request': message['request']}
             if(queueresponse.empty()):
                 queueresponse.put(data)
             else:
@@ -30,10 +30,10 @@ for msg in consumer:
             print("the rocket cannot be launched")
 
     else:
-        responseTory = loads(message['response'])
-        print(responseTory)
-        if(responseTory[0]['wind'] < 10):
-            print(message['request'])
+        responseTory = message['response']
+        # print(responseTory)
+        if(responseTory['wind'] < 10):
+            # print(message['request'])
             data = {'toryResponse' : 'GO', 'request': message['request']}
             if(queueresponse.empty()):
                 queueresponse.put(data)
