@@ -6,7 +6,7 @@ from json import dumps
 from kafka import KafkaProducer
 
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
-                         value_serializer=lambda x: 
+                         value_serializer=lambda x:
                          dumps(x).encode('utf-8'))
 
 # for e in range(1000):
@@ -15,6 +15,8 @@ producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
 #     sleep(5)
 
 pollServer = SimpleXMLRPCServer(('0.0.0.0', 9000), logRequests=True, allow_none=True)
+
+
 # ROCKETS_STATES_BASE_URL = "http://localhost:5000"
 # ELON_URL = "http://localhost:8000/"
 # TORY_URL = "http://localhost:3000/"
@@ -22,9 +24,11 @@ pollServer = SimpleXMLRPCServer(('0.0.0.0', 9000), logRequests=True, allow_none=
 
 def getResponsesPoll(siteName, rocketName):
     print(siteName + "\n" + rocketName)
-    data = { 'siteName' : siteName,
-             'rocketName' : rocketName }
+    data = {'siteName': siteName,
+            'rocketName': rocketName}
     producer.send('Pollrequesttopic', value=data)
+
+
 #     # responseElon = requests.get("{}rocket/{}".format(ELON_URL, rocketName))
 #     # responseTory = requests.get("{}siteByName/{}".format(TORY_URL, siteName))
 #     # wind = responseTory.json()[0]['wind']

@@ -22,7 +22,7 @@ for msg in consumer:
     message = msg.value
     topic_retrieve = msg.topic
     print(message)
-    print (message['siteName'])
+    print(message['siteName'])
     weather_request = {'response': weatherService.getSiteByName(message['siteName']), 'request': message}
     print(weather_request)
     producer.send('polltoryresponsetopic',value=weather_request)
