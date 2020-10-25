@@ -137,17 +137,28 @@ for msg in consumer:
                     printAndSendMessages(LAUNCHER_TOPIC, ROCKET_MAIN_ENGIE_CUT_OFF, rocketName, siteName)
 
 
-            if index == int(3 * length / 4):
+            if index == int(7 * length / 12):
                 print("Stage Seperation")
                 printAndSendMessages(LAUNCHER_TOPIC, STAGE_SEPARATION, rocketName, siteName)
                 printAndSendMessages(LAUNCHER_TOPIC, ROCKET_SECOND_ENGINE_START, rocketName, siteName)
             
-            if index == int(10 * length / 12):
+            if index == int(8 * length / 12):
                 printAndSendMessages(LAUNCHER_TOPIC, ROCKET_FAIRING_SEPARATION, rocketName, siteName)
 
-            if index == int(11 * length / 12):
+            if index == int(9 * length / 12):
                 printAndSendMessages(LAUNCHER_TOPIC, ROCKET_SECOND_ENGINE_CUT_OFF, rocketName, siteName)
                 printAndSendMessages(LAUNCHER_TOPIC, PAYLOAD_SEPARATION, rocketName, siteName)
+
+            if index == int(10 * length / 12):
+                printAndSendMessages(LAUNCHER_TOPIC, FIRST_STAGE_FLIP_MANEUVER, rocketName, siteName)
+                printAndSendMessages(LAUNCHER_TOPIC, FIRST_STAGE_ENTRY_BURN, rocketName, siteName)
+                printAndSendMessages(LAUNCHER_TOPIC, FIRST_STAGE_GUIDANCE, rocketName, siteName)
+
+            if index == int(11 * length / 12):
+                printAndSendMessages(LAUNCHER_TOPIC, FIRST_STAGE_LANDING_BURN, rocketName, siteName)
+                printAndSendMessages(LAUNCHER_TOPIC, FIRST_STAGE_LANDING_LEGS_DEPLOYED, rocketName, siteName)
+                printAndSendMessages(LAUNCHER_TOPIC, FIRST_STAGE_LANDING, rocketName, siteName)
+            
 
             time.sleep(4)
 
