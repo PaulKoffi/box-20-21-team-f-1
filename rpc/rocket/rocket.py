@@ -10,7 +10,6 @@ from xmlrpc.client import ServerProxy
 from kafka import KafkaConsumer
 from kafka import KafkaProducer
 
-
 HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
 PORT = 9490  # Port to listen on (non-privileged ports are > 1023)
 ROCKETS_STATES_BASE_URL = "http://localhost:5000"
@@ -44,7 +43,6 @@ FIRST_STAGE_LANDING = "Landing"
 destroy = False
 stop = False
 
-
 rocket = SimpleXMLRPCServer(('localhost', 8888), logRequests=True, allow_none=True)
 
 client = pymongo.MongoClient(
@@ -61,7 +59,6 @@ consumer = KafkaConsumer(
     enable_auto_commit=True,
     group_id='rocket-simulation-group',
     value_deserializer=lambda x: loads(x.decode('utf-8')))
-
 
 consumerDestruction = KafkaConsumer(
     bootstrap_servers=['localhost:9092'],
@@ -94,7 +91,8 @@ for msg in consumer:
         # Recuperation de la mission actuelle de la Rocket (PAST == FALSE)
         currentPayload = requests.get("{}/payload/payloadByRocketName/{}".format(DELIVERY_STATES_BASE_URL, rocketName))
         print(currentPayload)
-        someRocketStates = json.loads(dumps(db.rocketsStates.find_one({"rocketName": rocketName, "siteName": siteName, "satelliteName": currentPayload.json()["satellite"]})))
+        someRocketStates = json.loads(dumps(db.rocketsStates.find_one(
+            {"rocketName": rocketName, "siteName": siteName, "satelliteName": currentPayload.json()["satellite"]})))
         statesArray = someRocketStates["rocketStatesHe"]
         # s = ServerProxy(PAYLOAD_STATES_BASE_URL)
 
@@ -136,12 +134,11 @@ for msg in consumer:
                         "{}//rocket/setRocketSpeed/{}/{}".format(BASE_URL_ROCKET_INVENTORY, rocketName, 10))
                     printAndSendMessages(LAUNCHER_TOPIC, ROCKET_MAIN_ENGIE_CUT_OFF, rocketName, siteName)
 
-
             if index == int(7 * length / 12):
                 print("Stage Seperation")
                 printAndSendMessages(LAUNCHER_TOPIC, STAGE_SEPARATION, rocketName, siteName)
                 printAndSendMessages(LAUNCHER_TOPIC, ROCKET_SECOND_ENGINE_START, rocketName, siteName)
-            
+
             if index == int(8 * length / 12):
                 printAndSendMessages(LAUNCHER_TOPIC, ROCKET_FAIRING_SEPARATION, rocketName, siteName)
 
@@ -158,7 +155,6 @@ for msg in consumer:
                 printAndSendMessages(LAUNCHER_TOPIC, FIRST_STAGE_LANDING_BURN, rocketName, siteName)
                 printAndSendMessages(LAUNCHER_TOPIC, FIRST_STAGE_LANDING_LEGS_DEPLOYED, rocketName, siteName)
                 printAndSendMessages(LAUNCHER_TOPIC, FIRST_STAGE_LANDING, rocketName, siteName)
-            
 
             time.sleep(4)
 
@@ -169,25 +165,25 @@ for msg in consumer:
             producer.send('rocketTopic', value=data)
 
             if index == length - 1:
-                data = { 'action' : "end",
-                    'siteName' : siteName,
-                    'rocketName' : rocketName,
-                    'state': str(statesArray[index])}
+                data = {'action': "end",
+                        'siteName': siteName,
+                        'rocketName': rocketName,
+                        'state': str(statesArray[index])}
                 producer.send('rocketTopic', value=data)
-            
-
 
         if stop is False:
             print("Rocket at the end of the launch")
 
+        stop = False
+        destroy = False
         # MAJ du statut de la mission (PAST)
         myobj = {
             "rocketName": rocketName
         }
         requests.post("{}/payload/setPastMissionValue".format(DELIVERY_STATES_BASE_URL), data=myobj)
 
-    if (msg.topic == LAUNCHER_TOPIC and message['action'] == ROCKET_DESTRUCTION):
-        destroy = True
+    # if (msg.topic == LAUNCHER_TOPIC and message['action'] == ROCKET_DESTRUCTION):
+    #     destroy = True
 
 for msg in consumerDestruction:
     message = msg.value

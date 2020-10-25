@@ -21,6 +21,7 @@ def getCurrentSatelliteName(rocketName):
 
 EVENT_REGISTRATION_BASE_URL = "http://localhost:2000/eventRegistration"
 queueresponse = queue.Queue()
+ROCKET_DESTRUCTION = "destroy"
 
 consumer = KafkaConsumer(
     bootstrap_servers=['localhost:9092'],
@@ -30,7 +31,8 @@ consumer = KafkaConsumer(
     value_deserializer=lambda x: loads(x.decode('utf-8')))
 
 consumer.subscribe(
-    ['launcherTopic', 'pollelonresponsetopic', 'polltoryresponsetopic', 'Pollrequesttopic', 'rocketTopic'])
+    ['launcherTopic', 'pollelonresponsetopic', 'polltoryresponsetopic', 'Pollrequesttopic', 'rocketTopic',
+     'payloadTopic'])
 
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
                          value_serializer=lambda x:
@@ -61,8 +63,17 @@ for msg in consumer:
     elif topic_retrieve == 'polltoryresponsetopic':
         logEventAndSendMessage(message['request']['rocketName'], message['request']['siteName'],
                                "TORY response POLL : " + str(message['response']['wind'] < 10))
+    elif msg.topic == 'launcherTopic' and message['action'] == ROCKET_DESTRUCTION:
+        logEventAndSendMessage(message['rocketName'], message['siteName'],
+                               "DESTRUCTION ACTIVATE")
     elif topic_retrieve == 'launcherTopic':
         logEventAndSendMessage(message['rocketName'], message['siteName'], message['action'])
     elif topic_retrieve == 'rocketTopic' and message['action'] == "running":
         logEventAndSendMessage(message['rocketName'], message['siteName'],
                                message['rocketName'] + " at position " + message['state'])
+    elif topic_retrieve == 'payloadTopic' and message['action'] == "running":
+        logEventAndSendMessage(message['rocketName'], message['siteName'],
+                               message['payloadName'] + " at position " + message['state'])
+    elif msg.topic == 'payloadTopic' and message['action'] == ROCKET_DESTRUCTION:
+        logEventAndSendMessage(message['rocketName'], message['siteName'],
+                               "DESTRUCTION DU SATELLITE")

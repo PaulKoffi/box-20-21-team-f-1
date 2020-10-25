@@ -13,6 +13,9 @@ consumer.subscribe(['payloadTopic'])
 
 for msg in consumer:
     message = msg.value
-    if (message['action'] == "running"):
+    if message['action'] == "running":
         print("Données telemetriques ==========> ", end='')
         print(message['payloadName'] + " at position " + message['state'])
+
+    if message['action'] == "destroy":
+        print("### DESTRUCTION DE LA ROCKET IMMINENTE , ECHEC DE LA MISSION  ###", end='')

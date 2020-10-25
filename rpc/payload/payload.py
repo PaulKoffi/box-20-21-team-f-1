@@ -17,7 +17,10 @@ ROCKET_DESTRUCTION = "destroy"
 STAGE_SEPARATION = "Stage separation"
 PAYLOAD_TOPIC = "payloadTopic"
 RUNNING = "running"
-destroy= False
+destroy = False
+isStarted = False
+rocketN = ""
+siteN = ""
 # payload = SimpleXMLRPCServer(('localhost', 8282), logRequests=True, allow_none=True)
 
 client = pymongo.MongoClient(
@@ -25,17 +28,26 @@ client = pymongo.MongoClient(
 db = client.get_database('blueOrigin')
 
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
-                         value_serializer=lambda x: 
+                         value_serializer=lambda x:
                          dumps(x).encode('utf-8'))
 
 consumer = KafkaConsumer(
-                        bootstrap_servers=['localhost:9092'],
-                        auto_offset_reset='earliest',
-                        enable_auto_commit=True,
-                        group_id='payload-simulation-group',
-                        value_deserializer=lambda x: loads(x.decode('utf-8')))
+    bootstrap_servers=['localhost:9092'],
+    auto_offset_reset='earliest',
+    enable_auto_commit=True,
+    group_id='payload-simulation-group',
+    value_deserializer=lambda x: loads(x.decode('utf-8')))
+
+consumerDestruction = KafkaConsumer(
+    bootstrap_servers=['localhost:9092'],
+    auto_offset_reset='earliest',
+    enable_auto_commit=True,
+    group_id='payload-destruction-group',
+    value_deserializer=lambda x: loads(x.decode('utf-8')))
 
 consumer.subscribe(['launcherTopic'])
+consumerDestruction.subscribe(['launcherTopic'])
+
 
 def getCurrentSatelliteName(rocketName):
     DELIVERY_STATES_BASE_URL = "http://localhost:7000"
@@ -46,14 +58,27 @@ def getCurrentSatelliteName(rocketName):
     print("\n-----------------\n")
     return currentPayload.json()["satellite"]
 
+
 for msg in consumer:
     message = msg.value
-    
-    if(msg.topic == 'launcherTopic' and message['action'] == STAGE_SEPARATION):
+
+    if destroy and not isStarted:
+        print("destruction possible")
+        data = {'action': ROCKET_DESTRUCTION,
+                'siteName': siteN,
+                'rocketName': rocketN
+                # 'payloadName': getCurrentSatelliteName(rocketName),
+                }
+        producer.send(PAYLOAD_TOPIC, value=data)
+        destroy = False
+
+    if msg.topic == 'launcherTopic' and message['action'] == STAGE_SEPARATION:
         print(message['action'])
+        isStarted = True
         siteName = message['siteName']
         rocketName = message['rocketName']
-        someRocketStates = json.loads(dumps(db.rocketsStates.find_one({"rocketName": rocketName, "siteName": siteName})))
+        someRocketStates = json.loads(
+            dumps(db.rocketsStates.find_one({"rocketName": rocketName, "siteName": siteName})))
         paylaodStatesArray = someRocketStates["payloadStatesHe"]
         print("SecondState started: payload telemetry")
         l = len(paylaodStatesArray)
@@ -63,12 +88,24 @@ for msg in consumer:
             data = {'action': RUNNING,
                     'siteName': siteName,
                     'payloadName': getCurrentSatelliteName(rocketName),
+                    'rocketName': rocketName,
                     'state': str(paylaodStatesArray[index])}
             producer.send(PAYLOAD_TOPIC, value=data)
 
             if index == l - 1:
-                data = { 'action' : "end",
-                    'siteName' : siteName,
-                    'payloadName' : getCurrentSatelliteName(rocketName),
-                    'state': str(paylaodStatesArray[index])}
+                data = {'action': "end",
+                        'siteName': siteName,
+                        'payloadName': getCurrentSatelliteName(rocketName),
+                        'rocketName': rocketName,
+                        'state': str(paylaodStatesArray[index])}
                 producer.send(PAYLOAD_TOPIC, value=data)
+
+        isStarted = False
+        destroy = False
+
+for msg in consumerDestruction:
+    message = msg.value
+    if msg.topic == 'launcherTopic' and message['action'] == ROCKET_DESTRUCTION:
+        siteN = message['siteName']
+        rocketN = message['rocketName']
+        destroy = True

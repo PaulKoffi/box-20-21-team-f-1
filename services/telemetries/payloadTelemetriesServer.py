@@ -19,6 +19,7 @@ consumer = KafkaConsumer(
 
 consumer.subscribe(['payloadTopic'])
 
+
 def saveTelemetriesData(satelliteName):
     values = {
         "machine": satelliteName,
@@ -34,14 +35,12 @@ index = 0
 for msg in consumer:
     message = msg.value
 
-
-    if (message['action'] == "running"):
+    if message['action'] == "running":
         satelliteName = message['payloadName']
-
 
         if index == 0:
             saveTelemetriesData(satelliteName)
-        
+
         myquery = {"satellite": satelliteName}
         projectioValues = json.loads(dumps(db.projectionTelemetriesData.find_one(myquery)))['projectionTelemetriesData']
         projectioValues.append(int(message['state']))
@@ -64,3 +63,6 @@ for msg in consumer:
         else:
             print("ECHEC DE LA MISSION")
         round = 0
+
+    if message['action'] == "destroy":
+        print("ECHEC DE LA MISSION")
