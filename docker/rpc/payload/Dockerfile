@@ -22,4 +22,4 @@ COPY resources/payload.py .
 EXPOSE 8282
 
 # command to run on container start
-CMD [ "python", "./payload.py" ]
+CMD [ "/bin/bash" ]

@@ -10,6 +10,7 @@ from xmlrpc.client import ServerProxy
 from kafka import KafkaConsumer
 from kafka import KafkaProducer
 
+
 HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
 PORT = 9490  # Port to listen on (non-privileged ports are > 1023)
 ROCKETS_STATES_BASE_URL = "http://localhost:5000"
@@ -42,6 +43,7 @@ FIRST_STAGE_LANDING = "Landing"
 
 destroy = False
 stop = False
+
 
 rocket = SimpleXMLRPCServer(('localhost', 8888), logRequests=True, allow_none=True)
 
