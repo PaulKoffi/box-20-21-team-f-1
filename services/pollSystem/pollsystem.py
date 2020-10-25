@@ -7,47 +7,47 @@ import queue
 
 
 def launch(rocket, site):
-    print("Launching "+ rocket + " from " + site)
-    data = {'action'     : "launch",
-            'siteName'   : site,
-            'rocketName' : rocket }
+    print("Launching " + rocket + " from " + site)
+    data = {'action': "launch",
+            'siteName': site,
+            'rocketName': rocket}
     producer.send('launcherTopic', value=data)
+
 
 launchElon = True
 launchTory = True
-siteName =""
-rocketName =""
+siteName = ""
+rocketName = ""
 queueresponse = queue.Queue()
 
 # 'localhost:9092' is where producer is running
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
-                         value_serializer=lambda x: 
+                         value_serializer=lambda x:
                          dumps(x).encode('utf-8'))
 
-
 consumer = KafkaConsumer(
-     bootstrap_servers=['localhost:9092'],
-     auto_offset_reset='earliest',
-     enable_auto_commit=True,
-     group_id='pollsystem-group',
-     value_deserializer=lambda x: loads(x.decode('utf-8')))
+    bootstrap_servers=['localhost:9092'],
+    auto_offset_reset='earliest',
+    enable_auto_commit=True,
+    group_id='pollsystem-group',
+    value_deserializer=lambda x: loads(x.decode('utf-8')))
 
 consumer.subscribe(
-    ['pollelonresponsetopic','polltoryresponsetopic'])
+    ['pollelonresponsetopic', 'polltoryresponsetopic'])
 
 for msg in consumer:
     message = msg.value
     topic_retrieve = msg.topic
-    if(topic_retrieve == 'pollelonresponsetopic'):
-        if(message['response']['status'] != "it's risky"):
-            data = {'elonResponse' : 'GO', 'request': message['request']}
+    if (topic_retrieve == 'pollelonresponsetopic'):
+        if (message['response']['status'] != "it's risky"):
+            data = {'elonResponse': 'GO', 'request': message['request']}
             rocketName = message['request']['rocketName']
             siteName = message['request']['siteName']
-            if(queueresponse.empty()):
+            if (queueresponse.empty()):
                 queueresponse.put(data)
             else:
                 responseTory = queueresponse.get()
-                if(responseTory['toryResponse'] == 'GO'):
+                if (responseTory['toryResponse'] == 'GO'):
                     print("The rocket can be launched")
                     launch(rocketName, siteName)
         else:
@@ -55,22 +55,21 @@ for msg in consumer:
 
     else:
         responseTory = message['response']
-        print(responseTory)
+        # print(responseTory)
         if(responseTory['wind'] < 10):
-            print(message['request'])
+            # print(message['request'])
             data = {'toryResponse' : 'GO', 'request': message['request']}
             rocketName = message['request']['rocketName']
             siteName = message['request']['siteName']
-            if(queueresponse.empty()):
+            if (queueresponse.empty()):
                 queueresponse.put(data)
             else:
                 elonResponse = queueresponse.get()
                 print(elonResponse)
                 
-                if(elonResponse['elonRespnse'] == 'GO'):
+                if(elonResponse['elonResponse'] == 'GO'):
                     print("The rocket can be launched")
                     launch(rocketName, siteName)
-        
+
         else:
             print("the rocket cannot be launched")
-

@@ -22,4 +22,4 @@ COPY resources/rocket.py .
 EXPOSE 8888
 
 # command to run on container start
-CMD [ "python", "./rocket.py" ]
+CMD [ "/bin/bash" ]

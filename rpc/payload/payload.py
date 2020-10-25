@@ -6,70 +6,94 @@ import socket
 import pymongo
 from pymongo import MongoClient
 from bson.json_util import dumps, loads
+from kafka import KafkaConsumer
+from kafka import KafkaProducer
 
-HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
-PORT = 9292  # Port to listen on (non-privileged ports are > 1023)
+# HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
+# PORT = 9292  # Port to listen on (non-privileged ports are > 1023)
 ROCKETS_STATES_BASE_URL = "http://localhost:5000"
 BASE_URL = "http://localhost:7000/payload"
-payload = SimpleXMLRPCServer(('localhost', 8282), logRequests=True, allow_none=True)
+# payload = SimpleXMLRPCServer(('localhost', 8282), logRequests=True, allow_none=True)
 
 client = pymongo.MongoClient(
     "mongodb+srv://flo:Azerty123@cluster0.ibhol.mongodb.net/blueOrigin?retryWrites=true&w=majority")
 db = client.get_database('blueOrigin')
 
+producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
+                         value_serializer=lambda x: 
+                         dumps(x).encode('utf-8'))
 
-def sendPayloadStates(siteName, rocketName):
-    someRocketStates = json.loads(dumps(db.rocketsStates.find_one({"rocketName": rocketName, "siteName": siteName})))
-    # print(someRocketStates)
-    paylaodStatesArray = someRocketStates["payloadStatesHe"]
+consumer = KafkaConsumer(
+                        bootstrap_servers=['localhost:9092'],
+                        auto_offset_reset='earliest',
+                        enable_auto_commit=True,
+                        group_id='payload-simulation-group',
+                        value_deserializer=lambda x: loads(x.decode('utf-8')))
+    
+consumer.subscribe(['launcherTopic'])
 
-    # Envoi du code de la Rocket
-    clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    clientSocket.connect((HOST, PORT))
-    data = requests.get("{}/payloadByRocketName/{}".format(BASE_URL, rocketName)).json()["satellite"]
-    clientSocket.send(data.encode())
+# def sendPayloadStates(siteName, rocketName):
+#     someRocketStates = json.loads(dumps(db.rocketsStates.find_one({"rocketName": rocketName, "siteName": siteName})))
+#     # print(someRocketStates)
+#     paylaodStatesArray = someRocketStates["payloadStatesHe"]
 
-    # Envoi de la taille du tableau
-    clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    clientSocket.connect((HOST, PORT))
-    data = str(len(paylaodStatesArray))
-    clientSocket.send(data.encode())
+#     # Envoi du code de la Rocket
+#     clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+#     clientSocket.connect((HOST, PORT))
+#     data = requests.get("{}/payloadByRocketName/{}".format(BASE_URL, rocketName)).json()["satellite"]
+#     clientSocket.send(data.encode())
 
-    print("SecondState started: payload telemetry")
-    l = len(paylaodStatesArray)
-    stop = False
-    for index in range(0, l):
-        responseDestruction = requests.get(
-            "{}/rocketsStates/destruction/{}/{}".format(ROCKETS_STATES_BASE_URL, siteName, rocketName))
+#     # Envoi de la taille du tableau
+#     clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+#     clientSocket.connect((HOST, PORT))
+#     data = str(len(paylaodStatesArray))
+#     clientSocket.send(data.encode())
 
-        if responseDestruction.text == "True":
-            print("Rocket destruction!!!!")
-            clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            clientSocket.connect((HOST, PORT))
-            data = "STOP"
-            stop = True
-            clientSocket.send(data.encode())
-            break
-        time.sleep(2)
-        # Create a client socket
-        clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        # Connect to the server
-        clientSocket.connect((HOST, PORT))
-        # Send data to server
-        data = str(paylaodStatesArray[index])
-        clientSocket.send(data.encode())
-    if stop is False:
-        print("Payload is stabilised")
+#     print("SecondState started: payload telemetry")
+#     l = len(paylaodStatesArray)
+#     stop = False
+#     for index in range(0, l):
+#         responseDestruction = requests.get(
+#             "{}/rocketsStates/destruction/{}/{}".format(ROCKETS_STATES_BASE_URL, siteName, rocketName))
 
-    return ""
+#         if responseDestruction.text == "True":
+#             print("Rocket destruction!!!!")
+#             clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+#             clientSocket.connect((HOST, PORT))
+#             data = "STOP"
+#             stop = True
+#             clientSocket.send(data.encode())
+#             break
+#         time.sleep(2)
+#         # Create a client socket
+#         clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+#         # Connect to the server
+#         clientSocket.connect((HOST, PORT))
+#         # Send data to server
+#         data = str(paylaodStatesArray[index])
+#         clientSocket.send(data.encode())
+#     if stop is False:
+#         print("Payload is stabilised")
+
+#     return ""
 
 
-payload.register_function(sendPayloadStates)
+# payload.register_function(sendPayloadStates)
 
-if __name__ == '__main__':
-    try:
-        print('payload serving ....')
-        payload.serve_forever()
+# if __name__ == '__main__':
+#     try:
+#         print('payload serving ....')
+#         payload.serve_forever()
 
-    except KeyboardInterrupt:
-        print('payload exiting !!!')
+#     except KeyboardInterrupt:
+#         print('payload exiting !!!')
+
+STAGE_SEPARATION = "Stage separation"
+
+for msg in consumer:
+    message = msg.value
+    
+    if(msg.topic == 'launcherTopic' and message['action'] == STAGE_SEPARATION):
+        print(message['action'])
+        siteName = message['siteName']
+        rocketName = message['rocketName']
