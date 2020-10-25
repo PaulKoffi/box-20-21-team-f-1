@@ -73,6 +73,7 @@ consumerDestruction = KafkaConsumer(
 consumer.subscribe(['launcherTopic'])
 
 consumerDestruction.subscribe(['launcherTopic'])
+print("ok")
 
 
 def printAndSendMessages(TOPIC, MESSAGE, rocketNameToSend, siteNameToSend):
@@ -82,7 +83,7 @@ def printAndSendMessages(TOPIC, MESSAGE, rocketNameToSend, siteNameToSend):
             'rocketName': rocketNameToSend
             }
     producer.send(TOPIC, value=data)
-    time.sleep(3)
+    time.sleep(1)
 
 
 for msg in consumer:
@@ -92,8 +93,10 @@ for msg in consumer:
         rocketName = message['rocketName']
         # Recuperation de la mission actuelle de la Rocket (PAST == FALSE)
         currentPayload = requests.get("{}/payload/payloadByRocketName/{}".format(DELIVERY_STATES_BASE_URL, rocketName))
+        print(currentPayload)
         someRocketStates = json.loads(dumps(db.rocketsStates.find_one({"rocketName": rocketName, "siteName": siteName, "satelliteName": currentPayload.json()["satellite"]})))
         statesArray = someRocketStates["rocketStatesHe"]
+        # s = ServerProxy(PAYLOAD_STATES_BASE_URL)
 
         # Envoi des étapes de lancement de la fusée 
         printAndSendMessages(ROCKET_TOPIC, LAUNCH, rocketName, siteName)
@@ -121,7 +124,7 @@ for msg in consumer:
                 stop = True
                 break
 
-            if index == int(length / 4):
+            if index == int(length / 2):
                 if destroy is False:
                     printAndSendMessages(LAUNCHER_TOPIC, ROCKET_MAX_Q, rocketName, siteName)
                     print("Max Q making us reduce the speed to 9")
@@ -134,19 +137,19 @@ for msg in consumer:
                     printAndSendMessages(LAUNCHER_TOPIC, ROCKET_MAIN_ENGIE_CUT_OFF, rocketName, siteName)
 
 
-            if index == int(length / 2):
+            if index == int(3 * length / 4):
                 print("Stage Seperation")
                 printAndSendMessages(LAUNCHER_TOPIC, STAGE_SEPARATION, rocketName, siteName)
                 printAndSendMessages(LAUNCHER_TOPIC, ROCKET_SECOND_ENGINE_START, rocketName, siteName)
             
-            if index == int(6 * length / 10):
+            if index == int(10 * length / 12):
                 printAndSendMessages(LAUNCHER_TOPIC, ROCKET_FAIRING_SEPARATION, rocketName, siteName)
 
-            if index == int(7 * length / 10):
+            if index == int(11 * length / 12):
                 printAndSendMessages(LAUNCHER_TOPIC, ROCKET_SECOND_ENGINE_CUT_OFF, rocketName, siteName)
                 printAndSendMessages(LAUNCHER_TOPIC, PAYLOAD_SEPARATION, rocketName, siteName)
 
-            time.sleep(5)
+            time.sleep(4)
 
             data = {'action': RUNNING,
                     'siteName': siteName,
