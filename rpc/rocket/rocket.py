@@ -73,7 +73,6 @@ consumerDestruction = KafkaConsumer(
 consumer.subscribe(['launcherTopic'])
 
 consumerDestruction.subscribe(['launcherTopic'])
-print("ok")
 
 
 def printAndSendMessages(TOPIC, MESSAGE, rocketNameToSend, siteNameToSend):
@@ -83,7 +82,7 @@ def printAndSendMessages(TOPIC, MESSAGE, rocketNameToSend, siteNameToSend):
             'rocketName': rocketNameToSend
             }
     producer.send(TOPIC, value=data)
-    time.sleep(1)
+    time.sleep(3)
 
 
 for msg in consumer:
@@ -93,10 +92,8 @@ for msg in consumer:
         rocketName = message['rocketName']
         # Recuperation de la mission actuelle de la Rocket (PAST == FALSE)
         currentPayload = requests.get("{}/payload/payloadByRocketName/{}".format(DELIVERY_STATES_BASE_URL, rocketName))
-        print(currentPayload)
         someRocketStates = json.loads(dumps(db.rocketsStates.find_one({"rocketName": rocketName, "siteName": siteName, "satelliteName": currentPayload.json()["satellite"]})))
         statesArray = someRocketStates["rocketStatesHe"]
-        # s = ServerProxy(PAYLOAD_STATES_BASE_URL)
 
         # Envoi des étapes de lancement de la fusée 
         printAndSendMessages(ROCKET_TOPIC, LAUNCH, rocketName, siteName)
