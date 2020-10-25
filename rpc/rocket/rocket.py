@@ -147,7 +147,7 @@ for msg in consumer:
                     'siteName' : siteName,
                     'rocketName' : rocketName,
                     'state': str(statesArray[index])}
-            producer.send('rocketTopic', value=data)
+                producer.send('rocketTopic', value=data)
             
 
         if stop is False:
