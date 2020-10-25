@@ -55,9 +55,9 @@ for msg in consumer:
 
     else:
         responseTory = message['response']
-        print(responseTory)
+        # print(responseTory)
         if(responseTory['wind'] < 10):
-            print(message['request'])
+            # print(message['request'])
             data = {'toryResponse' : 'GO', 'request': message['request']}
             rocketName = message['request']['rocketName']
             siteName = message['request']['siteName']
@@ -67,7 +67,7 @@ for msg in consumer:
                 elonResponse = queueresponse.get()
                 print(elonResponse)
                 
-                if(elonResponse['elonRespnse'] == 'GO'):
+                if(elonResponse['elonResponse'] == 'GO'):
                     print("The rocket can be launched")
                     launch(rocketName, siteName)
         

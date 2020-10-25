@@ -1,18 +1,18 @@
-from xmlrpc.server import SimpleXMLRPCServer
+# from xmlrpc.server import SimpleXMLRPCServer
 import requests
 import json
 import time
-import socket
+# import socket
 import pymongo
 from pymongo import MongoClient
 from bson.json_util import dumps, loads
-from xmlrpc.client import ServerProxy
+# from xmlrpc.client import ServerProxy
 from kafka import KafkaConsumer
 from kafka import KafkaProducer
 
 
-HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
-PORT = 9490  # Port to listen on (non-privileged ports are > 1023)
+# HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
+# PORT = 9490  # Port to listen on (non-privileged ports are > 1023)
 ROCKETS_STATES_BASE_URL = "http://localhost:5000"
 PAYLOAD_STATES_BASE_URL = "http://localhost:8282"
 BASE_URL_ROCKET_INVENTORY = "http://localhost:8000"
@@ -45,7 +45,7 @@ destroy = False
 stop = False
 
 
-rocket = SimpleXMLRPCServer(('localhost', 8888), logRequests=True, allow_none=True)
+# rocket = SimpleXMLRPCServer(('localhost', 8888), logRequests=True, allow_none=True)
 
 client = pymongo.MongoClient(
     "mongodb+srv://flo:Azerty123@cluster0.ibhol.mongodb.net/blueOrigin?retryWrites=true&w=majority")
