@@ -13,7 +13,7 @@ COPY resources/requirements.txt .
 RUN pip install -r requirements.txt
 
 # copy the content of the local src directory to the working directory
-COPY resources/socketPayloadTelemetriesServer.py .
+COPY resources/payloadTelemetriesServer.py .
 
 # Creating an health check verification to check rocket status
 # HEALTHCHECK --interval=30s --timeout=30s CMD curl --fail http://localhost:9292/ || exit 1
