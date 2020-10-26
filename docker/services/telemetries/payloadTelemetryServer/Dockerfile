@@ -22,5 +22,6 @@ COPY resources/payloadTelemetriesServer.py .
 EXPOSE 9292
 
 # command to run on container start
-CMD [ "python", "./payloadTelemetriesServer.py" ]
+CMD [ "/bin/bash" ]
+# CMD [ "python", "./payloadTelemetriesServer.py" ]
 # ENTRYPOINT [ "python", "./run.py" ]
