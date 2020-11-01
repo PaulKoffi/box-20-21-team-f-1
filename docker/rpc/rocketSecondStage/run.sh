@@ -3,8 +3,8 @@
 # Running the image as
 #  - removing the container after exit,
 #  - detached (-d),
-#  - binding localhost:9292 to container:9292
-docker run --name payload_telemetry_server --rm -d -p 9292:9292 djotiham/payload_telemetry_server
+#  - binding localhost:8888 to container:8888
+docker run --name rocketSecondStage_rpc --rm -d -p 8889:8889 djotiham/rocketSecondStage_rpc
 
 # to stop: docker stop ID
 # to start a new shell in the container: docker exec -it ID bash

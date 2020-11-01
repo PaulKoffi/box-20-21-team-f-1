@@ -1,6 +1,6 @@
 #!/bin/bash
 # The goal of this file is to Load dependencies, compile if necessary, prepare the environment and starts the docker images
-# To resume, prepare.sh = build.sh + launch.sh
+# To resume, prepare.sh = build.sh + 5nch.sh
 
 cd docker/services
 ## >>>>> Building services <<<<<
@@ -48,10 +48,17 @@ cd ../../rpc
 cd pollCreator
 # echo "Building pollCreator docker image"
 ./build.sh
+
 cd ..
-cd rocket
-# echo "Building rocket docker image"
+cd rocketFirstStage
+# echo "Building rocket firstStage docker image"
 ./build.sh
+
+cd ..
+cd rocketSecondStage
+# echo "Building rocket secondStage docker image"
+./build.sh
+
 cd ..
 cd payload
 # echo "Building payload docker image"
@@ -70,18 +77,18 @@ cd ..
 cd gwynne
 # echo "Building tory docker image"
 ./build.sh
-cd ..
-
-cd kafka
-cd consumer1
-./build.sh
-cd ..
-cd producer
-./build.sh
-
 cd ../..
 
-cd ../CLIs
+# cd kafka
+# cd consumer1
+# ./build.sh
+# cd ..
+# cd producer
+# ./build.sh
+
+# cd ../..
+
+cd CLIs
 ## >>>>> Building CLIs <<<<<
 
 ## elon

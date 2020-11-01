@@ -1,10 +1,10 @@
 #!/bin/bash
 
-echo "Building richardcli docker image"
+echo "Building rocket_rpc docker image"
 mkdir resources
 cp ../../../requirements.txt resources
-cp -R ../../../CLIs/richard/richardcli.py resources
-docker build -t djotiham/richardcli .
+cp ../../../rpc/rocket/firstStage.py resources
+docker build -t djotiham/rocketFirstStage_rpc .
 rm -R resources
 # to remove old images
 # docker rmi $(docker images -qa -f 'dangling=true')

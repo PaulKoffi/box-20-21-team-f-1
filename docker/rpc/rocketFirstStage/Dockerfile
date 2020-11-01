@@ -13,15 +13,13 @@ COPY resources/requirements.txt .
 RUN pip install -r requirements.txt
 
 # copy the content of the local src directory to the working directory
-COPY resources/payloadTelemetriesServer.py .
+COPY resources/firstStage.py .
 
-# Creating an health check verification to check rocket status
-# HEALTHCHECK --interval=30s --timeout=30s CMD curl --fail http://localhost:9292/ || exit 1
+# Creating an health check verification to check pollcreator status
+# HEALTHCHECK --interval=30s --timeout=30s CMD curl --fail http://localhost:8888/ || exit 1
 
 # port
-EXPOSE 9292
+EXPOSE 8888
 
 # command to run on container start
 CMD [ "/bin/bash" ]
-# CMD [ "python", "./payloadTelemetriesServer.py" ]
-# ENTRYPOINT [ "python", "./run.py" ]
