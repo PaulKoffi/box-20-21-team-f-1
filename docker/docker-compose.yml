@@ -110,17 +110,31 @@ services:
 
 
   # rocket (Python)
-  rocket_rpc:
-    image: djotiham/rocket_rpc
-    container_name: rocket_rpc
+  rocket_first_stage_rpc:
+    image: djotiham/rocket_first_stage_rpc
+    container_name: rocket_first_stage_rpc
     network_mode: host
     expose:
       - "8888"
     ports:
       - "8888:8888"
     depends_on:
-      - launcher_service
-      - delivery_service
+      - pollsystem_service
+    stdin_open: true
+    tty: true
+
+  # rocket (Python)
+  rocket_second_stage_rpc:
+    image: djotiham/rocket_second_stage_rpc
+    container_name: rocket_second_stage_rpc
+    network_mode: host
+    expose:
+      - "8889"
+    ports:
+      - "8889:8889"
+    depends_on:
+      - pollsystem_service
+      - rocket_first_stage_rpc
     stdin_open: true
     tty: true
 
@@ -257,7 +271,8 @@ services:
     depends_on:
       - rocket_inventory_service
       - pollcreator_rpc
-      - rocket_rpc
+      - rocket_first_stage_rpc
+      - rocket_second_stage_rpc
       - payload_rpc
       - payload_telemetry_server
       - rocket_telemetry_server
@@ -276,7 +291,8 @@ services:
     depends_on:
       - rocket_inventory_service
       - pollcreator_rpc
-      - rocket_rpc
+      - rocket_first_stage_rpc
+      - rocket_second_stage_rpc
       - payload_rpc
       - payload_telemetry_server
       - rocket_telemetry_server
@@ -300,30 +316,30 @@ services:
   #   tty: true
 
     # gwynne dashboard
-  producer:
-    image: djotiham/producer
-    container_name: producer
-    network_mode: host
-    volumes:
-      - .:/host-producer
-    depends_on:
-      # - admin
-      - zookeeper
-      - kafka
-    stdin_open: true
-    tty: true
+  # producer:
+  #   image: djotiham/producer
+  #   container_name: producer
+  #   network_mode: host
+  #   volumes:
+  #     - .:/host-producer
+  #   depends_on:
+  #     # - admin
+  #     - zookeeper
+  #     - kafka
+  #   stdin_open: true
+  #   tty: true
 
-  # jeff dashboard
-  consumer1:
-    image: djotiham/consumer1
-    container_name: consumer1
-    network_mode: host
-    volumes:
-      - .:/host-consumer1
-    depends_on:
-      # - admin
-      - zookeeper
-      - kafka
-      - producer
-    stdin_open: true
-    tty: true
+  # # jeff dashboard
+  # consumer1:
+  #   image: djotiham/consumer1
+  #   container_name: consumer1
+  #   network_mode: host
+  #   volumes:
+  #     - .:/host-consumer1
+  #   depends_on:
+  #     # - admin
+  #     - zookeeper
+  #     - kafka
+  #     - producer
+  #   stdin_open: true
+  #   tty: true

@@ -13,7 +13,7 @@ COPY resources/requirements.txt .
 RUN pip install -r requirements.txt
 
 # copy the content of the local src directory to the working directory
-COPY resources/rocketSecondStage.py .
+COPY resources/secondStage.py .
 
 # Creating an health check verification to check pollcreator status
 # HEALTHCHECK --interval=30s --timeout=30s CMD curl --fail http://localhost:8889/ || exit 1

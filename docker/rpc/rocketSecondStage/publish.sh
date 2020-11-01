@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker push djotiham/rocketSecondStage_rpc
+docker push djotiham/rocket_second_stage_rpc
