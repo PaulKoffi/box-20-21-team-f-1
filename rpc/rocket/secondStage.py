@@ -40,7 +40,7 @@ consumerDestruction = KafkaConsumer(
     group_id='secondstage-destruction-group',
     value_deserializer=lambda x: loads(x.decode('utf-8')))
 
-consumer.subscribe([const.LAUNCHER_TOPIC])
+consumer.subscribe('launcherTopic')
 
 consumerDestruction.subscribe([const.LAUNCHER_TOPIC])
 
@@ -74,9 +74,9 @@ for msg in consumer:
             if index == 0:
                 printAndSendMessages(const.LAUNCHER_TOPIC, const.ROCKET_SECOND_ENGINE_START, rocketName, siteName)
 
-            if index == 1:
-                # print(const.STAGE_SEPARATION)
-                printAndSendMessages(const.LAUNCHER_TOPIC, const.ROCKET_SECOND_STAGE_SEPARATION, rocketName, siteName)
+            # if index == 1:
+            #     # print(const.STAGE_SEPARATION)
+            #     printAndSendMessages(const.LAUNCHER_TOPIC, const.ROCKET_SECOND_STAGE_SEPARATION, rocketName, siteName)
 
             if index == 2:
                 printAndSendMessages(const.LAUNCHER_TOPIC, const.ROCKET_SECOND_ENGINE_START, rocketName, siteName)

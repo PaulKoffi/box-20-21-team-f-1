@@ -39,7 +39,7 @@ consumerDestruction = KafkaConsumer(
     group_id='rocket-destruction-group',
     value_deserializer=lambda x: loads(x.decode('utf-8')))
 
-consumer.subscribe([const.LAUNCHER_TOPIC])
+consumer.subscribe('launcherTopic')
 
 consumerDestruction.subscribe([const.LAUNCHER_TOPIC])
 
@@ -54,7 +54,6 @@ def printAndSendMessages(TOPIC, MESSAGE, rocketNameToSend, siteNameToSend):
 
 
 for msg in consumer:
-    print("OK")
     message = msg.value
     if (msg.topic == 'launcherTopic' and message['action'] == const.LAUNCH):
         siteName = message['siteName']
@@ -109,7 +108,7 @@ for msg in consumer:
                     print("Returning to initial speed")
                     result = requests.put(
                         "{}//rocket/setRocketSpeed/{}/{}".format(const.BASE_URL_ROCKET_INVENTORY, rocketName, 10))
-                    printAndSendMessages(const.LAUNCHER_TOPIC, const.ROCKET_MAIN_ENGIE_CUT_OFF, rocketName, siteName)
+                    printAndSendMessages(const.LAUNCHER_TOPIC, const.ROCKET_MAIN_ENGINE_CUT_OFF, rocketName, siteName)
 
             if index == 10:
                 print(const.ROCKET_SECOND_STAGE_SEPARATION)
