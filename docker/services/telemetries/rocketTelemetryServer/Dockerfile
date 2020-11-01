@@ -1,7 +1,7 @@
 # set base image (host OS)
 FROM python:3.8
 
-MAINTAINER djotiham (SOA 2020)
+LABEL djotiham (SOA 2020)
 
 # set the working directory in the container
 WORKDIR /code
@@ -22,5 +22,6 @@ COPY resources/rocketTelemetriesServer.py .
 EXPOSE 9490
 
 # command to run on container start
-CMD [ "python", "./rocketTelemetriesServer.py" ]
+CMD [ "/bin/bash" ]
+# CMD [ "python", "./rocketTelemetriesServer.py" ]
 # ENTRYPOINT [ "python", "./run.py" ]

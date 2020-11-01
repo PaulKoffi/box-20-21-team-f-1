@@ -1,6 +1,6 @@
 #!/bin/bash
 # The goal of this file is to Load dependencies, compile if necessary, prepare the environment and starts the docker images
-# To resume, prepare.sh = build.sh + launch.sh
+# To resume, prepare.sh = build.sh + 5nch.sh
 
 cd docker/services
 ## >>>>> Building services <<<<<
@@ -48,10 +48,17 @@ cd ../../rpc
 cd pollCreator
 # echo "Building pollCreator docker image"
 ./build.sh
+
 cd ..
-cd rocket
-# echo "Building rocket docker image"
+cd rocketFirstStage
+# echo "Building rocket firstStage docker image"
 ./build.sh
+
+cd ..
+cd rocketSecondStage
+# echo "Building rocket secondStage docker image"
+./build.sh
+
 cd ..
 cd payload
 # echo "Building payload docker image"
@@ -70,18 +77,18 @@ cd ..
 cd gwynne
 # echo "Building tory docker image"
 ./build.sh
-cd ..
-
-cd kafka
-cd consumer1
-./build.sh
-cd ..
-cd producer
-./build.sh
-
 cd ../..
 
-cd ../CLIs
+# cd kafka
+# cd consumer1
+# ./build.sh
+# cd ..
+# cd producer
+# ./build.sh
+
+# cd ../..
+
+cd CLIs
 ## >>>>> Building CLIs <<<<<
 
 ## elon
@@ -111,6 +118,9 @@ cd ../tests
 # echo "Building tests docker image"
 ./build.sh
 cd ..
+cd unitTests
+./build.sh
+cd ..
 
 ## >>>>> Running all servers
 docker-compose up -d
@@ -131,5 +141,11 @@ echo "Done"
 docker exec -it -d pollcreator_rpc python pollcreator.py
 docker exec -it -d rocket_inventory_service python run.py
 docker exec -it -d weather_service python run.py
-docker exec -it pollsystem_service python pollsystem.py
+docker exec -it -d rocket_telemetry_server python rocketTelemetriesServer.py
+docker exec -it -d payload_telemetry_server python payloadTelemetriesServer.py
+docker exec -it -d jeff_dashboard python jeffdashboard.py
+docker exec -it -d gwynne_dashboard python gwinedashboard.py
+docker exec -it -d pollsystem_service python pollsystem.py
+docker exec -it -d rocket_first_stage_rpc python firstStage.py
+docker exec -it -d rocket_second_stage_rpc python secondStage.py
 #read -n 1 -s -r -p "Press any key to continue"

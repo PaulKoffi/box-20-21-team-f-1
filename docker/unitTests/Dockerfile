@@ -13,13 +13,8 @@ COPY resources/requirements.txt .
 RUN pip install -r requirements.txt
 
 # copy the content of the local src directory to the working directory
-COPY resources/rocket.py .
+COPY resources/pollTest.py .
 
-# Creating an health check verification to check pollcreator status
-# HEALTHCHECK --interval=30s --timeout=30s CMD curl --fail http://localhost:8888/ || exit 1
-
-# port
-EXPOSE 8888
-
-# command to run on container start
-CMD [ "/bin/bash" ]
+# # command to run on container start
+CMD [ "/bin/bash"]
+# # ENTRYPOINT [ "python", "./run.py" ]
