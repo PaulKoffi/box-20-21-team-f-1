@@ -138,14 +138,14 @@ cd ..
 
 
 echo "Done"
-docker exec -it -d pollcreator_rpc python pollcreator.py
-docker exec -it -d rocket_inventory_service python run.py
-docker exec -it -d weather_service python run.py
-docker exec -it -d rocket_telemetry_server python rocketTelemetriesServer.py
-docker exec -it -d payload_telemetry_server python payloadTelemetriesServer.py
-docker exec -it -d jeff_dashboard python jeffdashboard.py
-docker exec -it -d gwynne_dashboard python gwinedashboard.py
-docker exec -it -d pollsystem_service python pollsystem.py
-docker exec -it -d rocket_first_stage_rpc python firstStage.py
-docker exec -it -d rocket_second_stage_rpc python secondStage.py
+#docker exec -it -d pollcreator_rpc python pollcreator.py
+#docker exec -it -d rocket_inventory_service python run.py
+#docker exec -it -d weather_service python run.py
+#docker exec -it -d rocket_telemetry_server python rocketTelemetriesServer.py
+#docker exec -it -d payload_telemetry_server python payloadTelemetriesServer.py
+#docker exec -it -d jeff_dashboard python jeffdashboard.py
+#docker exec -it -d gwynne_dashboard python gwinedashboard.py
+#docker exec -it -d pollsystem_service python pollsystem.py
+#docker exec -it -d rocket_first_stage_rpc python firstStage.py
+#docker exec -it -d rocket_second_stage_rpc python secondStage.py
 #read -n 1 -s -r -p "Press any key to continue"

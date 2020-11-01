@@ -21,7 +21,11 @@ def addPayload():
 
 @deliveryControllerBlueprint.route('/payload/setPastMissionValue', methods=['POST'])
 def setPastMissionValue():
+    print("________________________________________________")
+
     body = request.get_json()
+    print("________________________________________________")
+
     # print(body["customerName"])
     return deliveryService.setPastMissionValue(body["rocketName"])
 

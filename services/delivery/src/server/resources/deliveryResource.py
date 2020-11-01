@@ -31,6 +31,7 @@ class DeliveryResource():
             {'satellite': satelliteName})))
 
     def setPastMissionValue(self, rocketName):
+        print("________________________________________________")
         db.payloads.update_one(
             {"rocketName": rocketName},
             {'$set': {"past": True}})

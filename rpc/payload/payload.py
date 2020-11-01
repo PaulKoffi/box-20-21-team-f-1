@@ -16,6 +16,7 @@ BASE_URL = "http://localhost:7000/payload"
 ROCKET_DESTRUCTION = "destroy"
 STAGE_SEPARATION = "Stage separation"
 PAYLOAD_TOPIC = "payloadTopic"
+PAYLOAD_SEPARATION = "Payload separation"
 RUNNING = "running"
 destroy = False
 isStarted = False
@@ -72,7 +73,7 @@ for msg in consumer:
         producer.send(PAYLOAD_TOPIC, value=data)
         destroy = False
 
-    if msg.topic == 'launcherTopic' and message['action'] == STAGE_SEPARATION:
+    if msg.topic == 'launcherTopic' and message['action'] == PAYLOAD_SEPARATION:
         print(message['action'])
         isStarted = True
         siteName = message['siteName']
