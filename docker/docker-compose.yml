@@ -160,26 +160,26 @@ services:
     image: djotiham/payload_telemetry_server
     container_name: payload_telemetry_server
     network_mode: host
-    expose:
-      - "9292"
-    ports:
-      - "9292:9292"
+    volumes:
+      - .:/host-payload_telemetry_server
     depends_on:
-      - delivery_service
       - launcher_service
+      - delivery_service
+    stdin_open: true
+    tty: true
 
   # rocket telemetry socket (Python)
   rocket_telemetry_server:
     image: djotiham/rocket_telemetry_server
     container_name: rocket_telemetry_server
     network_mode: host
-    expose:
-      - "9490"
-    ports:
-      - "9490:9490"
+    volumes:
+      - .:/host-rocket_telemetry_server
     depends_on:
       - delivery_service
       - launcher_service
+    stdin_open: true
+    tty: true
 
   ########## Dashboards ##########
   
