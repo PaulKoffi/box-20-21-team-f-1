@@ -73,6 +73,19 @@ consumerDestruction.subscribe(['launcherTopic'])
 print("ok")
 
 
+def verifyDestruction(siteName, rocketName):
+    if destroy:
+        print("Rocket destruction!!!!")
+        data = {'action': ROCKET_DESTRUCTION,
+                'siteName': siteName,
+                'rocketName': rocketName,
+                }
+        producer.send(ROCKET_TOPIC, value=data)
+        producer.send(LAUNCHER_TOPIC, value=data)
+        return True
+    return False
+
+
 def printAndSendMessages(TOPIC, MESSAGE, rocketNameToSend, siteNameToSend):
     print(MESSAGE)
     data = {'action': MESSAGE,
@@ -90,7 +103,7 @@ for msg in consumer:
         rocketName = message['rocketName']
         # Recuperation de la mission actuelle de la Rocket (PAST == FALSE)
         currentPayload = requests.get("{}/payload/payloadByRocketName/{}".format(DELIVERY_STATES_BASE_URL, rocketName))
-        print(currentPayload)
+        # print(currentPayload)
         someRocketStates = json.loads(dumps(db.rocketsStates.find_one(
             {"rocketName": rocketName, "siteName": siteName, "satelliteName": currentPayload.json()["satellite"]})))
         statesArray = someRocketStates["rocketStatesHe"]
@@ -99,26 +112,37 @@ for msg in consumer:
         # Envoi des étapes de lancement de la fusée 
         printAndSendMessages(ROCKET_TOPIC, LAUNCH, rocketName, siteName)
 
+        if verifyDestruction(siteName, rocketName):
+            break
+
         printAndSendMessages(LAUNCHER_TOPIC, ROCKET_PREPARATION, rocketName, siteName)
+
+        if verifyDestruction(siteName, rocketName):
+            break
 
         printAndSendMessages(LAUNCHER_TOPIC, ROCKET_ON_INTERNAL_POWER, rocketName, siteName)
 
+        if verifyDestruction(siteName, rocketName):
+            break
+
         printAndSendMessages(LAUNCHER_TOPIC, ROCKET_STARTUP, rocketName, siteName)
+
+        if verifyDestruction(siteName, rocketName):
+            break
 
         printAndSendMessages(LAUNCHER_TOPIC, ROCKET_MAIN_ENGINE_START, rocketName, siteName)
 
+        if verifyDestruction(siteName, rocketName):
+            break
+
         printAndSendMessages(LAUNCHER_TOPIC, ROCKET_LIFTOFF, rocketName, siteName)
+
+        if verifyDestruction(siteName, rocketName):
+            break
 
         length = len(statesArray)
         for index in range(0, length):
             if destroy is True:
-                print("Rocket destruction!!!!")
-                data = {'action': ROCKET_DESTRUCTION,
-                        'siteName': siteName,
-                        'rocketName': rocketName,
-                        }
-                producer.send(ROCKET_TOPIC, value=data)
-                producer.send(LAUNCHER_TOPIC, value=data)
                 stop = True
                 break
 

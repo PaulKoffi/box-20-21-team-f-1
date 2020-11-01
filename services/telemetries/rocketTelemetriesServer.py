@@ -57,6 +57,8 @@ for msg in consumer:
 
     # if destruction
     if message['action'] == "destroy":
+        print("DESTRUCTION")
+
         rocketName = message['rocketName']
         index = 0
         myobj = {

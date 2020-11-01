@@ -54,7 +54,7 @@ def getCurrentSatelliteName(rocketName):
     # Recuperation de la mission actuelle de la Rocket (PAST == FALSE)
     currentPayload = requests.get("{}/payload/payloadByRocketName/{}".format(DELIVERY_STATES_BASE_URL, rocketName))
     print("\n-----------------\n")
-    print(currentPayload)
+    # print(currentPayload)
     print("\n-----------------\n")
     return currentPayload.json()["satellite"]
 

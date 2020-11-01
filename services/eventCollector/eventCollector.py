@@ -64,6 +64,7 @@ for msg in consumer:
         logEventAndSendMessage(message['request']['rocketName'], message['request']['siteName'],
                                "TORY response POLL : " + str(message['response']['wind'] < 10))
     elif msg.topic == 'launcherTopic' and message['action'] == ROCKET_DESTRUCTION:
+        print("DESTRUCTION")
         logEventAndSendMessage(message['rocketName'], message['siteName'],
                                "DESTRUCTION ACTIVATE")
     elif topic_retrieve == 'launcherTopic':
@@ -75,5 +76,6 @@ for msg in consumer:
         logEventAndSendMessage(message['rocketName'], message['siteName'],
                                message['payloadName'] + " at position " + message['state'])
     elif msg.topic == 'payloadTopic' and message['action'] == ROCKET_DESTRUCTION:
+        print("DESTRUCTION")
         logEventAndSendMessage(message['rocketName'], message['siteName'],
                                "DESTRUCTION DU SATELLITE")
