@@ -267,6 +267,25 @@ services:
     stdin_open: true
     tty: true
 
+  unit_tests:
+    image: djotiham/unit_tests
+    container_name: unit_tests
+    network_mode: host
+    volumes:
+      - .:/host-unit_tests
+    depends_on:
+      - rocket_inventory_service
+      - pollcreator_rpc
+      - rocket_rpc
+      - payload_rpc
+      - payload_telemetry_server
+      - rocket_telemetry_server
+      - delivery_service
+      - launcher_service 
+      - weather_service
+    stdin_open: true
+    tty: true
+
       # gwynne dashboard
   # admin:
   #   image: djotiham/admin

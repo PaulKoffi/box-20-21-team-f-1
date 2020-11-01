@@ -111,6 +111,9 @@ cd ../tests
 # echo "Building tests docker image"
 ./build.sh
 cd ..
+cd unitTests
+./build.sh
+cd ..
 
 ## >>>>> Running all servers
 docker-compose up -d
