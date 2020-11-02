@@ -103,11 +103,11 @@ for msg in consumer:
                     printAndSendMessages(const.LAUNCHER_TOPIC, const.ROCKET_MAX_Q, rocketName, siteName)
                     print("Max Q making us reduce the speed to 9")
                     response = requests.put(
-                        "{}//rocket/setRocketSpeed/{}/{}".format(const.BASE_URL_ROCKET_INVENTORY, rocketName, 9))
+                        "{}/rocket/setRocketSpeed/{}/{}".format(const.BASE_URL_ROCKET_INVENTORY, rocketName, 9))
                     time.sleep(5)
                     print("Returning to initial speed")
                     result = requests.put(
-                        "{}//rocket/setRocketSpeed/{}/{}".format(const.BASE_URL_ROCKET_INVENTORY, rocketName, 10))
+                        "{}/rocket/setRocketSpeed/{}/{}".format(const.BASE_URL_ROCKET_INVENTORY, rocketName, 10))
                     printAndSendMessages(const.LAUNCHER_TOPIC, const.ROCKET_MAIN_ENGINE_CUT_OFF, rocketName, siteName)
 
             if index == 10:

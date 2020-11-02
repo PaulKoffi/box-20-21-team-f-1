@@ -13,14 +13,14 @@ COPY resources/requirements.txt .
 RUN pip install -r requirements.txt
 
 # copy the content of the local src directory to the working directory
-COPY resources/secondStage.py .
-COPY resources/constants.py .
+COPY resources/src/ .
 
-# Creating an health check verification to check pollcreator status
-# HEALTHCHECK --interval=30s --timeout=30s CMD curl --fail http://localhost:8889/ || exit 1
+# Creating an health check verification to check rocket status
+# HEALTHCHECK --interval=30s --timeout=30s CMD curl --fail http://localhost:7000/ || exit 1
 
 # port
-EXPOSE 8889
+EXPOSE 8000
 
 # command to run on container start
-CMD [ "/bin/bash" ]
+CMD [ "python", "./run.py" ]
+# ENTRYPOINT [ "python", "./run.py" ]

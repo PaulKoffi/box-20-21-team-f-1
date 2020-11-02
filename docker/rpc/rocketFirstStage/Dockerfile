@@ -14,6 +14,7 @@ RUN pip install -r requirements.txt
 
 # copy the content of the local src directory to the working directory
 COPY resources/firstStage.py .
+COPY resources/constants.py .
 
 # Creating an health check verification to check pollcreator status
 # HEALTHCHECK --interval=30s --timeout=30s CMD curl --fail http://localhost:8888/ || exit 1
