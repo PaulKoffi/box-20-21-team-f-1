@@ -60,7 +60,7 @@ def printAndSendMessages(TOPIC, MESSAGE, rocketNameToSend, siteNameToSend):
 
 
 for msg in consumer:
-    print("Okay")
+    # print("Okay")
     message = msg.value
     if (msg.topic == 'launcherTopic' and message['action'] == const.LAUNCH):
         siteName = message['siteName']
