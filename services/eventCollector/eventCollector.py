@@ -33,7 +33,7 @@ consumer = KafkaConsumer(
 consumer.subscribe(
     ['launcherTopic', 'pollelonresponsetopic', 'polltoryresponsetopic', 'Pollrequesttopic', 'rocketTopic',
      'rocketSTopic',
-     'payloadTopic'])
+     'payloadTopic', 'anomalyTopic'])
 
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
                          value_serializer=lambda x:
@@ -85,7 +85,14 @@ for msg in consumer:
     elif topic_retrieve == 'payloadTopic' and message['action'] == "running":
         logEventAndSendMessage(message['rocketName'], message['siteName'],
                                message['payloadName'] + " at position " + message['state'])
+    elif topic_retrieve == 'payloadTopic' and message['action'] == "end":
+        logEventAndSendMessage(message['rocketName'], message['siteName'],
+                               message['payloadName'] + " END at position " + message['state'])
     elif msg.topic == 'payloadTopic' and message['action'] == ROCKET_DESTRUCTION:
         print("DESTRUCTION")
         logEventAndSendMessage(message['rocketName'], message['siteName'],
                                "DESTRUCTION DU SATELLITE")
+    elif msg.topic == 'anomalyTopic':
+        # print("DESTRUCTION")
+        logEventAndSendMessage(message['rocketName'], message['siteName'],
+                               message['action'])

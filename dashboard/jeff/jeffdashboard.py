@@ -16,6 +16,6 @@ for msg in consumer:
     topic_retrieve = msg.topic
 
     if message['action'] == "running" and topic_retrieve == "rocketTopic":
-        print(message['rocketName'] + "FIRST STAGE || " + " at position " + message['state'])
-    elif message['action'] == "running" and topic_retrieve == "rocketSSTopic":
-        print(message['rocketName'] + "SECOND STAGE || " + " at position " + message['state'])
+        print(message['rocketName'] + " FIRST STAGE || " + " at position " + message['state'])
+    elif message['action'] == "running" and topic_retrieve == "rocketSTopic":
+        print(message['rocketName'] + " SECOND STAGE || " + " at position " + message['state'])
