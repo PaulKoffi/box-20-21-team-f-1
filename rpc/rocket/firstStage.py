@@ -11,8 +11,7 @@ from kafka import KafkaConsumer
 from kafka import KafkaProducer
 import constants as const
 
-
-destroy = False
+# destroy = False
 stop = False
 
 rocket = SimpleXMLRPCServer(('localhost', 8888), logRequests=True, allow_none=True)
@@ -36,12 +35,20 @@ consumerDestruction = KafkaConsumer(
     bootstrap_servers=['localhost:9092'],
     auto_offset_reset='earliest',
     enable_auto_commit=True,
-    group_id='rocket-destruction-group',
+    group_id='rocket-simulation-group',
     value_deserializer=lambda x: loads(x.decode('utf-8')))
 
 consumer.subscribe('launcherTopic')
 
-consumerDestruction.subscribe([const.LAUNCHER_TOPIC])
+
+# consumerDestruction.subscribe(["launcherTopic"])
+
+
+# def setDestructionValue():
+#     print("_____SET_________")
+#     global destroy
+#     destroy = True
+
 
 def printAndSendMessages(TOPIC, MESSAGE, rocketNameToSend, siteNameToSend):
     print(MESSAGE)
@@ -59,19 +66,22 @@ for msg in consumer:
         siteName = message['siteName']
         rocketName = message['rocketName']
         # Recuperation de la mission actuelle de la Rocket (PAST == FALSE)
-        currentPayload = requests.get("{}/payload/payloadByRocketName/{}".format(const.DELIVERY_STATES_BASE_URL, rocketName))
-        print(currentPayload)
+        currentPayload = requests.get(
+            "{}/payload/payloadByRocketName/{}".format(const.DELIVERY_STATES_BASE_URL, rocketName))
+        # print(currentPayload)
         someRocketStates = json.loads(dumps(db.rocketsStates.find_one(
             {"rocketName": rocketName, "siteName": siteName, "satelliteName": currentPayload.json()["satellite"]})))
         statesArray = someRocketStates["rocketStatesHe"]
         # s = ServerProxy(PAYLOAD_STATES_BASE_URL)
 
-        # Envoi des étapes de lancement de la fusée 
+        # Envoi des étapes de lancement de la fusée
         printAndSendMessages(const.LAUNCHER_TOPIC, const.ROCKET_PREPARATION, rocketName, siteName)
-
 
         length = len(statesArray)
         for index in range(0, length):
+            # destroy = const.DESTROY
+            # print("destroy ======= ")
+            # print(len(const.my_variable))
             if destroy is True:
                 print("Rocket destruction!!!!")
                 data = {'action': const.ROCKET_DESRUCTION,
@@ -82,21 +92,19 @@ for msg in consumer:
                 producer.send(const.LAUNCHER_TOPIC, value=data)
                 stop = True
                 break
-            
-            if index == 0 and destroy is False: 
+
+            if index == 0 and destroy is False:
                 printAndSendMessages(const.LAUNCHER_TOPIC, const.ROCKET_ON_INTERNAL_POWER, rocketName, siteName)
 
             if index == 1 and destroy is False:
                 printAndSendMessages(const.LAUNCHER_TOPIC, const.ROCKET_STARTUP, rocketName, siteName)
-            
+
             if index == 2 and destroy is False:
                 printAndSendMessages(const.LAUNCHER_TOPIC, const.ROCKET_MAIN_ENGINE_START, rocketName, siteName)
 
             if index == 4 and destroy is False:
                 printAndSendMessages(const.LAUNCHER_TOPIC, const.ROCKET_LIFTOFF, rocketName, siteName)
                 printAndSendMessages(const.ROCKET_TOPIC, const.LAUNCH, rocketName, siteName)
-
-
 
             if index == 7:
                 if destroy is False:
@@ -115,7 +123,7 @@ for msg in consumer:
                 printAndSendMessages(const.LAUNCHER_TOPIC, const.ROCKET_SECOND_STAGE_SEPARATION, rocketName, siteName)
 
             time.sleep(4)
-            
+
             if index > 4 and index != length - 1:
                 data = {'action': const.RUNNING,
                         'siteName': siteName,
@@ -144,7 +152,9 @@ for msg in consumer:
     # if (msg.topic == LAUNCHER_TOPIC and message['action'] == ROCKET_DESTRUCTION):
     #     destroy = True
 
-for msg in consumerDestruction:
-    message = msg.value
-    if (msg.topic == 'launcherTopic' and message['action'] == const.ROCKET_DESTRUCTION):
-        destroy = True
+# for msg in consumerDestruction:
+#     print("OK")
+#     message = msg.value
+#     if message['action'] == "destroy":
+#         print("__________________ DESTRUCTION________________________")
+#         destroy = True
