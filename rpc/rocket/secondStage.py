@@ -105,7 +105,7 @@ for msg in consumer:
                         'rocketName': rocketName,
                         # 'secondStageName': secondStageName,
                         'state': str(statesArray[index])}
-                producer.send('rocketTopic', value=data)
+                producer.send('rocketSTopic', value=data)
 
         stop = False
         destroy = False

@@ -9,9 +9,13 @@ consumer = KafkaConsumer(
     group_id='jeff-group',
     value_deserializer=lambda x: loads(x.decode('utf-8')))
 
-consumer.subscribe(['rocketTopic'])
+consumer.subscribe(['rocketTopic', 'rocketSTopic'])
 
 for msg in consumer:
     message = msg.value
-    if (message['action'] == "running"):
-        print(message['rocketName'] + " at position " + message['state'])
+    topic_retrieve = msg.topic
+
+    if message['action'] == "running" and topic_retrieve == "rocketTopic":
+        print(message['rocketName'] + "FIRST STAGE || " + " at position " + message['state'])
+    elif message['action'] == "running" and topic_retrieve == "rocketSSTopic":
+        print(message['rocketName'] + "SECOND STAGE || " + " at position " + message['state'])

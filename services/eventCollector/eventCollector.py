@@ -32,6 +32,7 @@ consumer = KafkaConsumer(
 
 consumer.subscribe(
     ['launcherTopic', 'pollelonresponsetopic', 'polltoryresponsetopic', 'Pollrequesttopic', 'rocketTopic',
+     'rocketSTopic',
      'payloadTopic'])
 
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
@@ -71,7 +72,10 @@ for msg in consumer:
         logEventAndSendMessage(message['rocketName'], message['siteName'], message['action'])
     elif topic_retrieve == 'rocketTopic' and message['action'] == "running":
         logEventAndSendMessage(message['rocketName'], message['siteName'],
-                               message['rocketName'] + " at position " + message['state'])
+                               message['rocketName'] + " FIRST STAGE || at position " + message['state'])
+    elif topic_retrieve == 'rocketSTopic' and message['action'] == "running":
+        logEventAndSendMessage(message['rocketName'], message['siteName'],
+                               message['rocketName'] + " SECOND STAGE || at position " + message['state'])
     elif topic_retrieve == 'payloadTopic' and message['action'] == "running":
         logEventAndSendMessage(message['rocketName'], message['siteName'],
                                message['payloadName'] + " at position " + message['state'])
