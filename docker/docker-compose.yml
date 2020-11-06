@@ -82,6 +82,21 @@ services:
     stdin_open: true
     tty: true
 
+
+  #eventCollector
+
+  event_collector:
+    image: djotiham/event_collector
+    container_name: event_collector
+    network_mode: host
+    volumes:
+      - .:/host-event_collector
+    depends_on:
+      - zookeeper
+      - kafka
+    stdin_open: true
+    tty: true
+
   # delivery service (NodeJs)
   delivery_service:
     image: djotiham/delivery_service
@@ -99,6 +114,14 @@ services:
     ports:
       - "8000:8000"
 
+  event_registration_service:
+    image: djotiham/event_registration_service
+    container_name: event_registration_service
+    expose:
+      - "2000"
+    ports:
+      - "2000:2000"
+
   ########## rpc ##########
   
   # poll creator (Python)
@@ -115,6 +138,7 @@ services:
       - kafka
     stdin_open: true
     tty: true
+
 
 
   # rocket (Python)

@@ -11,11 +11,8 @@ from kafka import KafkaConsumer
 from kafka import KafkaProducer
 import constants as const
 
-
 destroy = False
 stop = False
-
-rocket = SimpleXMLRPCServer(('localhost', 8888), logRequests=True, allow_none=True)
 
 client = pymongo.MongoClient(
     "mongodb+srv://flo:Azerty123@cluster0.ibhol.mongodb.net/blueOrigin?retryWrites=true&w=majority")
@@ -43,6 +40,7 @@ consumer.subscribe('launcherTopic')
 
 consumerDestruction.subscribe([const.LAUNCHER_TOPIC])
 
+
 def printAndSendMessages(TOPIC, MESSAGE, rocketNameToSend, siteNameToSend):
     print(MESSAGE)
     data = {'action': MESSAGE,
@@ -54,24 +52,29 @@ def printAndSendMessages(TOPIC, MESSAGE, rocketNameToSend, siteNameToSend):
 
 
 for msg in consumer:
+    print("Okay")
     message = msg.value
     if (msg.topic == 'launcherTopic' and message['action'] == const.LAUNCH):
         siteName = message['siteName']
         rocketName = message['rocketName']
         # Recuperation de la mission actuelle de la Rocket (PAST == FALSE)
-        currentPayload = requests.get("{}/payload/payloadByRocketName/{}".format(const.DELIVERY_STATES_BASE_URL, rocketName))
+        currentPayload = requests.get(
+            "{}/payload/payloadByRocketName/{}".format(const.DELIVERY_STATES_BASE_URL, rocketName))
         print(currentPayload)
         someRocketStates = json.loads(dumps(db.rocketsStates.find_one(
             {"rocketName": rocketName, "siteName": siteName, "satelliteName": currentPayload.json()["satellite"]})))
         statesArray = someRocketStates["rocketStatesHe"]
         # s = ServerProxy(PAYLOAD_STATES_BASE_URL)
 
-        # Envoi des étapes de lancement de la fusée 
+        # Envoi des étapes de lancement de la fusée
         printAndSendMessages(const.LAUNCHER_TOPIC, const.ROCKET_PREPARATION, rocketName, siteName)
-
 
         length = len(statesArray)
         for index in range(0, length):
+            responseDestruction = requests.get(
+                "{}/rocketsStates/destruction/{}/{}".format(const.ROCKETS_STATES_BASE_URL, siteName, rocketName))
+            if responseDestruction.text == "True":
+                destroy = True
             if destroy is True:
                 print("Rocket destruction!!!!")
                 data = {'action': const.ROCKET_DESRUCTION,
@@ -82,21 +85,19 @@ for msg in consumer:
                 producer.send(const.LAUNCHER_TOPIC, value=data)
                 stop = True
                 break
-            
-            if index == 0 and destroy is False: 
+
+            if index == 0 and destroy is False:
                 printAndSendMessages(const.LAUNCHER_TOPIC, const.ROCKET_ON_INTERNAL_POWER, rocketName, siteName)
 
             if index == 1 and destroy is False:
                 printAndSendMessages(const.LAUNCHER_TOPIC, const.ROCKET_STARTUP, rocketName, siteName)
-            
+
             if index == 2 and destroy is False:
                 printAndSendMessages(const.LAUNCHER_TOPIC, const.ROCKET_MAIN_ENGINE_START, rocketName, siteName)
 
             if index == 4 and destroy is False:
                 printAndSendMessages(const.LAUNCHER_TOPIC, const.ROCKET_LIFTOFF, rocketName, siteName)
                 printAndSendMessages(const.ROCKET_TOPIC, const.LAUNCH, rocketName, siteName)
-
-
 
             if index == 7:
                 if destroy is False:
@@ -115,7 +116,7 @@ for msg in consumer:
                 printAndSendMessages(const.LAUNCHER_TOPIC, const.ROCKET_SECOND_STAGE_SEPARATION, rocketName, siteName)
 
             time.sleep(4)
-            
+
             if index > 4 and index != length - 1:
                 data = {'action': const.RUNNING,
                         'siteName': siteName,
@@ -146,5 +147,5 @@ for msg in consumer:
 
 for msg in consumerDestruction:
     message = msg.value
-    if (msg.topic == 'launcherTopic' and message['action'] == const.ROCKET_DESTRUCTION):
+    if msg.topic == 'launcherTopic' and message['action'] == const.ROCKET_DESTRUCTION:
         destroy = True

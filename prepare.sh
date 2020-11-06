@@ -20,12 +20,23 @@ cd rocketInventory
 # echo "Building rocketInventory service docker image"
 ./build.sh
 cd ..
+
+cd eventCollector
+# echo "Building rocketInventory service docker image"
+./build.sh
+cd ..
+
 cd delivery
 # echo "Building delivery service docker image"
 ./build.sh
 cd ..
 
 cd rocketInventory_REST
+./build.sh
+cd ..
+
+cd eventRegistration
+# echo "Building delivery service docker image"
 ./build.sh
 cd ..
 
@@ -44,6 +55,8 @@ cd rocketTelemetryServer
 # echo "Building delivery service docker image"
 ./build.sh
 cd ..
+
+
 
 cd ../../rpc
 ## >>>>> Building rpc <<<<<
@@ -152,4 +165,5 @@ docker exec -it -d gwynne_dashboard python gwinedashboard.py
 docker exec -it -d pollsystem_service python pollsystem.py
 docker exec -it -d rocket_first_stage_rpc python firstStage.py
 docker exec -it -d rocket_second_stage_rpc python secondStage.py
+docker exec -it -d event_collector python eventCollector.py
 #read -n 1 -s -r -p "Press any key to continue"

@@ -23,7 +23,10 @@ if __name__ == "__main__":
             print("The rocket {} at {} : {}".format(command[3],command[2],command[1]))
         if(command[0] == "destroy"):
             print(command[1] + "\n" + command[2])
-            data = {'action' : "destroy", 
-                'siteName' : command[1],
-                    'rocketName' : command[2]}
-            producer.send('launcherTopic', value=data)
+            # data = {'action' : "destroy",
+            #     'siteName' : command[1],
+            #         'rocketName' : command[2]}
+            # producer.send('launcherTopic', value=data)
+            responseDestruction = requests.put("{}/rocketsStates/destruction/{}/{}/{}".format(ROCKETS_STATES_BASE_URL, command[1], command[2], 1))
+            responseDestruction = requests.put("{}/rocketsStates/destruction/{}/{}/{}".format(ROCKETS_STATES_BASE_URL, command[1], command[2], 0))
+
