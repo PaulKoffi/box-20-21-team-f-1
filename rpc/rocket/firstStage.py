@@ -11,7 +11,7 @@ from kafka import KafkaConsumer
 from kafka import KafkaProducer
 import constants as const
 
-# destroy = False
+destroy = False
 stop = False
 
 rocket = SimpleXMLRPCServer(('localhost', 8888), logRequests=True, allow_none=True)
