@@ -85,9 +85,10 @@ for msg in consumer:
                 "{}/rocketsStates/destruction/{}/{}".format(const.ROCKETS_STATES_BASE_URL, siteName, rocketName))
             if responseDestruction.text == "True":
                 destroy = True
+                print("DESTRUCTION")
             if destroy is True:
                 print("Rocket destruction!!!!")
-                data = {'action': const.ROCKET_DESRUCTION,
+                data = {'action': "destroy",
                         'siteName': siteName,
                         'rocketName': rocketName,
                         }
@@ -155,7 +156,3 @@ for msg in consumer:
     # if (msg.topic == LAUNCHER_TOPIC and message['action'] == ROCKET_DESTRUCTION):
     #     destroy = True
 
-for msg in consumerDestruction:
-    message = msg.value
-    if msg.topic == 'launcherTopic' and message['action'] == const.ROCKET_DESTRUCTION:
-        destroy = True

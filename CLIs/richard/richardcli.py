@@ -28,5 +28,5 @@ if __name__ == "__main__":
             #         'rocketName' : command[2]}
             # producer.send('launcherTopic', value=data)
             responseDestruction = requests.put("{}/rocketsStates/destruction/{}/{}/{}".format(ROCKETS_STATES_BASE_URL, command[1], command[2], 1))
-            responseDestruction = requests.put("{}/rocketsStates/destruction/{}/{}/{}".format(ROCKETS_STATES_BASE_URL, command[1], command[2], 0))
+            # responseDestruction = requests.put("{}/rocketsStates/destruction/{}/{}/{}".format(ROCKETS_STATES_BASE_URL, command[1], command[2], 0))
 
