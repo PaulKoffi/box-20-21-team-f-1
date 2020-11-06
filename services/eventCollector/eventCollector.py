@@ -73,9 +73,15 @@ for msg in consumer:
     elif topic_retrieve == 'rocketTopic' and message['action'] == "running":
         logEventAndSendMessage(message['rocketName'], message['siteName'],
                                message['rocketName'] + " FIRST STAGE || at position " + message['state'])
+    elif topic_retrieve == 'rocketTopic' and message['action'] == "end":
+        logEventAndSendMessage(message['rocketName'], message['siteName'],
+                               message['rocketName'] + " FIRST STAGE END  || at position " + message['state'])
     elif topic_retrieve == 'rocketSTopic' and message['action'] == "running":
         logEventAndSendMessage(message['rocketName'], message['siteName'],
                                message['rocketName'] + " SECOND STAGE || at position " + message['state'])
+    elif topic_retrieve == 'rocketSTopic' and message['action'] == "end":
+        logEventAndSendMessage(message['rocketName'], message['siteName'],
+                               message['rocketName'] + " SECOND STAGE END || at position " + message['state'])
     elif topic_retrieve == 'payloadTopic' and message['action'] == "running":
         logEventAndSendMessage(message['rocketName'], message['siteName'],
                                message['payloadName'] + " at position " + message['state'])
