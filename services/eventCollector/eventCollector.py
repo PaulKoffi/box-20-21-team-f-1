@@ -32,7 +32,8 @@ consumer = KafkaConsumer(
 
 consumer.subscribe(
     ['launcherTopic', 'pollelonresponsetopic', 'polltoryresponsetopic', 'Pollrequesttopic', 'rocketTopic',
-     'payloadTopic'])
+     'rocketSTopic',
+     'payloadTopic', 'anomalyTopic'])
 
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
                          value_serializer=lambda x:
@@ -71,11 +72,27 @@ for msg in consumer:
         logEventAndSendMessage(message['rocketName'], message['siteName'], message['action'])
     elif topic_retrieve == 'rocketTopic' and message['action'] == "running":
         logEventAndSendMessage(message['rocketName'], message['siteName'],
-                               message['rocketName'] + " at position " + message['state'])
+                               message['rocketName'] + " FIRST STAGE || at position " + message['state'])
+    elif topic_retrieve == 'rocketTopic' and message['action'] == "end":
+        logEventAndSendMessage(message['rocketName'], message['siteName'],
+                               message['rocketName'] + " FIRST STAGE END  || at position " + message['state'])
+    elif topic_retrieve == 'rocketSTopic' and message['action'] == "running":
+        logEventAndSendMessage(message['rocketName'], message['siteName'],
+                               message['rocketName'] + " SECOND STAGE || at position " + message['state'])
+    elif topic_retrieve == 'rocketSTopic' and message['action'] == "end":
+        logEventAndSendMessage(message['rocketName'], message['siteName'],
+                               message['rocketName'] + " SECOND STAGE END || at position " + message['state'])
     elif topic_retrieve == 'payloadTopic' and message['action'] == "running":
         logEventAndSendMessage(message['rocketName'], message['siteName'],
                                message['payloadName'] + " at position " + message['state'])
+    elif topic_retrieve == 'payloadTopic' and message['action'] == "end":
+        logEventAndSendMessage(message['rocketName'], message['siteName'],
+                               message['payloadName'] + " END at position " + message['state'])
     elif msg.topic == 'payloadTopic' and message['action'] == ROCKET_DESTRUCTION:
         print("DESTRUCTION")
         logEventAndSendMessage(message['rocketName'], message['siteName'],
                                "DESTRUCTION DU SATELLITE")
+    elif msg.topic == 'anomalyTopic':
+        # print("DESTRUCTION")
+        logEventAndSendMessage(message['rocketName'], message['siteName'],
+                               message['action'])

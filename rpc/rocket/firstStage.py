@@ -33,12 +33,20 @@ consumerDestruction = KafkaConsumer(
     bootstrap_servers=['localhost:9092'],
     auto_offset_reset='earliest',
     enable_auto_commit=True,
-    group_id='rocket-destruction-group',
+    group_id='rocket-simulation-group',
     value_deserializer=lambda x: loads(x.decode('utf-8')))
 
 consumer.subscribe('launcherTopic')
 
-consumerDestruction.subscribe([const.LAUNCHER_TOPIC])
+
+# consumerDestruction.subscribe(["launcherTopic"])
+
+
+# def setDestructionValue():
+#     print("_____SET_________")
+#     global destroy
+#     destroy = True
+
 
 
 def printAndSendMessages(TOPIC, MESSAGE, rocketNameToSend, siteNameToSend):
@@ -60,7 +68,9 @@ for msg in consumer:
         # Recuperation de la mission actuelle de la Rocket (PAST == FALSE)
         currentPayload = requests.get(
             "{}/payload/payloadByRocketName/{}".format(const.DELIVERY_STATES_BASE_URL, rocketName))
+
         print(currentPayload)
+
         someRocketStates = json.loads(dumps(db.rocketsStates.find_one(
             {"rocketName": rocketName, "siteName": siteName, "satelliteName": currentPayload.json()["satellite"]})))
         statesArray = someRocketStates["rocketStatesHe"]

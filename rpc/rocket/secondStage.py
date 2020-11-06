@@ -97,15 +97,15 @@ for msg in consumer:
                     # 'secondStageName': secondStageName,
                     'rocketName': rocketName,
                     'state': str(statesArray[index])}
-            producer.send('rocketTopic', value=data)
+            producer.send('rocketSTopic', value=data)
 
             if index == length - 1:
-                data = {'action': "Seconde Stage destruction",
+                data = {'action': "end",
                         'siteName': siteName,
                         'rocketName': rocketName,
                         # 'secondStageName': secondStageName,
                         'state': str(statesArray[index])}
-                producer.send('rocketTopic', value=data)
+                producer.send('rocketSTopic', value=data)
 
         stop = False
         destroy = False
