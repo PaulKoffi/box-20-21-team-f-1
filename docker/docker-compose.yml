@@ -91,6 +91,14 @@ services:
     ports:
       - "7000:7000"
 
+  rocket_inventory_rest_service:
+    image: djotiham/rocket_inventory_rest_service
+    container_name: rocket_inventory_rest_service
+    expose:
+        - "8000"
+    ports:
+      - "8000:8000"
+
   ########## rpc ##########
   
   # poll creator (Python)
