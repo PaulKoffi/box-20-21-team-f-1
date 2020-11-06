@@ -33,16 +33,8 @@ consumer = KafkaConsumer(
     group_id='secondstage-simulation-group',
     value_deserializer=lambda x: loads(x.decode('utf-8')))
 
-consumerDestruction = KafkaConsumer(
-    bootstrap_servers=['localhost:9092'],
-    auto_offset_reset='earliest',
-    enable_auto_commit=True,
-    group_id='secondstage-destruction-group',
-    value_deserializer=lambda x: loads(x.decode('utf-8')))
-
 consumer.subscribe('launcherTopic')
 
-consumerDestruction.subscribe([const.LAUNCHER_TOPIC])
 
 
 def printAndSendMessages(TOPIC, MESSAGE, rocketNameToSend, siteNameToSend):
@@ -108,7 +100,6 @@ for msg in consumer:
                 producer.send('rocketSTopic', value=data)
 
         stop = False
-        destroy = False
         # MAJ du statut de la mission (PAST)
         myobj = {
             "rocketName": rocketName
@@ -117,8 +108,3 @@ for msg in consumer:
 
     # if (msg.topic == LAUNCHER_TOPIC and message['action'] == ROCKET_DESTRUCTION):
     #     destroy = True
-
-for msg in consumerDestruction:
-    message = msg.value
-    if (msg.topic == 'launcherTopic' and message['action'] == const.ROCKET_DESTRUCTION):
-        destroy = True

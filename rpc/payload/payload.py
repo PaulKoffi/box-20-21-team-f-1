@@ -39,15 +39,8 @@ consumer = KafkaConsumer(
     group_id='payload-simulation-group',
     value_deserializer=lambda x: loads(x.decode('utf-8')))
 
-consumerDestruction = KafkaConsumer(
-    bootstrap_servers=['localhost:9092'],
-    auto_offset_reset='earliest',
-    enable_auto_commit=True,
-    group_id='payload-destruction-group',
-    value_deserializer=lambda x: loads(x.decode('utf-8')))
 
 consumer.subscribe(['launcherTopic'])
-consumerDestruction.subscribe(['launcherTopic'])
 
 
 def getCurrentSatelliteName(rocketName):
