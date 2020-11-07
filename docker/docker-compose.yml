@@ -238,6 +238,19 @@ services:
       - rocket_telemetry_server
     stdin_open: true
     tty: true
+
+  # mary dashboard
+  mary_dashboard:
+    image: djotiham/mary_dashboard
+    container_name: mary_dashboard
+    network_mode: host
+    volumes:
+      - .:/host-marydashboard
+    depends_on:
+      - kafka
+      - zookeeper
+    stdin_open: true
+    tty: true
       
   ########## CLIs ##########
   

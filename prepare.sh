@@ -94,6 +94,9 @@ cd ..
 cd gwynne
 # echo "Building tory docker image"
 ./build.sh
+cd ..
+cd mary
+./build.sh
 cd ../..
 
 cd CLIs
