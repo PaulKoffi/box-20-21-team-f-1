@@ -44,6 +44,10 @@ cd pollSystem
 ./build.sh
 cd ..
 
+cd supplier_REST
+./build.sh
+cd .. 
+
 cd telemetries
 ## >>>>> Building servers socket <<<<<
 

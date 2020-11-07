@@ -97,7 +97,7 @@ services:
     stdin_open: true
     tty: true
 
-  # delivery service (NodeJs)
+  # delivery service (Python)
   delivery_service:
     image: djotiham/delivery_service
     container_name: delivery_service
@@ -105,6 +105,15 @@ services:
         - "7000"
     ports:
       - "7000:7000"
+
+  # delivery service (Python)
+  supplier_rest_service:
+    image: djotiham/supplier_rest_service
+    container_name: supplier_rest_service
+    expose:
+        - "2650"
+    ports:
+      - "2650:2650"
 
   rocket_inventory_rest_service:
     image: djotiham/rocket_inventory_rest_service
@@ -189,6 +198,7 @@ services:
     depends_on:
       - launcher_service
       - delivery_service
+      - supplier_rest_service
     stdin_open: true
     tty: true
 
