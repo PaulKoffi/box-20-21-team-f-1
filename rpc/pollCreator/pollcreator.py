@@ -23,6 +23,7 @@ pollServer = SimpleXMLRPCServer(('0.0.0.0', 9000), logRequests=True, allow_none=
 
 
 def getResponsesPoll(siteName, rocketName):
+    print("-----------------------------------")
     print(siteName + "\n" + rocketName)
     data = {'siteName': siteName,
             'rocketName': rocketName}
