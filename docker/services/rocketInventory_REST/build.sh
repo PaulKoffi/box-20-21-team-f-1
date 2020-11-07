@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Building delivery_service docker image"
+echo "Building rocket_inventory_rest_service docker image"
 mkdir resources
 cp ../../../requirements.txt resources
 cp -R ../../../services/rocketInventory_REST/. resources

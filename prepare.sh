@@ -48,6 +48,10 @@ cd supplier_REST
 ./build.sh
 cd .. 
 
+cd triggerAnomaly
+./build.sh
+cd ..
+
 cd telemetries
 ## >>>>> Building servers socket <<<<<
 

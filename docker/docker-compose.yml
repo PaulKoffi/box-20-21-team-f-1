@@ -82,9 +82,22 @@ services:
     stdin_open: true
     tty: true
 
+  # trigger anomaly service (Python)
+  trigger_anomaly_service:
+    image: djotiham/trigger_anomaly_service
+    container_name: trigger_anomaly_service
+    network_mode: host
+    volumes:
+      - .:/host-trigger_anomaly_service
+    depends_on: 
+      - launcher_service
+      - rocket_first_stage_rpc
+      - rocket_second_stage_rpc
+    stdin_open: true
+    tty: true
+
 
   #eventCollector
-
   event_collector:
     image: djotiham/event_collector
     container_name: event_collector

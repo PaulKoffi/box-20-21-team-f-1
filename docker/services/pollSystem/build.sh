@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Building pollcreator_rpc docker image"
+echo "Building pollsystem_rpc docker image"
 mkdir resources
 cp ../../../requirements.txt resources
 cp ../../../services/pollSystem/pollsystem.py resources
