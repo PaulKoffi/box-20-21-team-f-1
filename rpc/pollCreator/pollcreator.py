@@ -29,6 +29,15 @@ def getResponsesPoll(siteName, rocketName):
     producer.send('Pollrequesttopic', value=data)
 
 
+def launchSupplier(supplierName, satelliteName):
+    print(supplierName + "\n" + satelliteName)
+    data = {'action': 'launchSupplier',
+            'supplierName': supplierName,
+            'satelliteName': satelliteName}
+    producer.send('supplierTopic', value=data)
+
+pollServer.register_function(getResponsesPoll)
+pollServer.register_function(launchSupplier)
 #     # responseElon = requests.get("{}rocket/{}".format(ELON_URL, rocketName))
 #     # responseTory = requests.get("{}siteByName/{}".format(TORY_URL, siteName))
 #     # wind = responseTory.json()[0]['wind']
@@ -70,7 +79,6 @@ def getResponsesPoll(siteName, rocketName):
 #     #     }
 
 
-pollServer.register_function(getResponsesPoll)
 if __name__ == '__main__':
     try:
         print('Poll serving ....')
