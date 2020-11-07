@@ -140,9 +140,9 @@ services:
     image: djotiham/event_registration_service
     container_name: event_registration_service
     expose:
-      - "2000"
+      - "4000"
     ports:
-      - "2000:2000"
+      - "4000:4000"
 
   ########## rpc ##########
   

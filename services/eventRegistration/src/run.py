@@ -4,4 +4,4 @@ app = create_app()
 
 if __name__ == '__main__':
     print("eventRegistration API serving ...")
-    app.run(host="0.0.0.0", port=2000, debug=True)
+    app.run(host="0.0.0.0", port=4000, debug=True)
