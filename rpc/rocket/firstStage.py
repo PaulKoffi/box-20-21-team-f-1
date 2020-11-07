@@ -48,7 +48,6 @@ consumer.subscribe('launcherTopic')
 #     destroy = True
 
 
-
 def printAndSendMessages(TOPIC, MESSAGE, rocketNameToSend, siteNameToSend):
     print(MESSAGE)
     data = {'action': MESSAGE,
@@ -88,12 +87,24 @@ for msg in consumer:
                 print("DESTRUCTION")
             if destroy is True:
                 print("Rocket destruction!!!!")
+                msg = ''
+                if index > 10:
+                    msg = 'rocket first Stage destruction'
+
+                elif index < 4:
+                    msg = 'aborted rocket launching'
+                else:
+                    msg = 'rocket first Stage , second Stage and payload Destruction'
                 data = {'action': "destroy",
                         'siteName': siteName,
                         'rocketName': rocketName,
+                        'msg': msg
                         }
-                producer.send(const.ROCKET_TOPIC, value=data)
+                # producer.send(const.ROCKET_TOPIC, value=data)
                 producer.send(const.LAUNCHER_TOPIC, value=data)
+                producer.send('payloadTopic', value=data)
+                producer.send('rocketTopic', value=data)
+
                 stop = True
                 break
 
@@ -155,4 +166,3 @@ for msg in consumer:
 
     # if (msg.topic == LAUNCHER_TOPIC and message['action'] == ROCKET_DESTRUCTION):
     #     destroy = True
-

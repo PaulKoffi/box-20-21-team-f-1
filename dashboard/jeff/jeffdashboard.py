@@ -17,5 +17,7 @@ for msg in consumer:
 
     if message['action'] == "running" and topic_retrieve == "rocketTopic":
         print(message['rocketName'] + " FIRST STAGE || " + " at position " + message['state'])
+    elif message['action'] == "destroy" and topic_retrieve == "rocketTopic":
+        print(message['msg'])
     elif message['action'] == "running" and topic_retrieve == "rocketSTopic":
         print(message['rocketName'] + " SECOND STAGE || " + " at position " + message['state'])

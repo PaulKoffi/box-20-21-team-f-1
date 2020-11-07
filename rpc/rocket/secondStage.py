@@ -108,3 +108,4 @@ for msg in consumer:
 
     # if (msg.topic == LAUNCHER_TOPIC and message['action'] == ROCKET_DESTRUCTION):
     #     destroy = True
+

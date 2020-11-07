@@ -55,16 +55,16 @@ def getCurrentSatelliteName(rocketName):
 
 for msg in consumer:
     message = msg.value
-
-    if destroy and not isStarted:
-        print("destruction possible")
-        data = {'action': ROCKET_DESTRUCTION,
-                'siteName': siteN,
-                'rocketName': rocketN
-                # 'payloadName': getCurrentSatelliteName(rocketName),
-                }
-        producer.send(PAYLOAD_TOPIC, value=data)
-        destroy = False
+    #
+    # if destroy and not isStarted:
+    #     print("destruction possible")
+    #     data = {'action': ROCKET_DESTRUCTION,
+    #             'siteName': siteN,
+    #             'rocketName': rocketN
+    #             # 'payloadName': getCurrentSatelliteName(rocketName),
+    #             }
+    #     producer.send(PAYLOAD_TOPIC, value=data)
+    #     destroy = False
 
     if msg.topic == 'launcherTopic' and message['action'] == PAYLOAD_SEPARATION:
         print(message['action'])
@@ -95,11 +95,3 @@ for msg in consumer:
                 producer.send(PAYLOAD_TOPIC, value=data)
 
         isStarted = False
-        destroy = False
-
-for msg in consumerDestruction:
-    message = msg.value
-    if msg.topic == 'launcherTopic' and message['action'] == ROCKET_DESTRUCTION:
-        siteN = message['siteName']
-        rocketN = message['rocketName']
-        destroy = True

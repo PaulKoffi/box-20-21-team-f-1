@@ -67,7 +67,7 @@ for msg in consumer:
     elif msg.topic == 'launcherTopic' and message['action'] == ROCKET_DESTRUCTION:
         print("DESTRUCTION")
         logEventAndSendMessage(message['rocketName'], message['siteName'],
-                               "DESTRUCTION ACTIVATE")
+                               message['msg'])
     elif topic_retrieve == 'launcherTopic':
         logEventAndSendMessage(message['rocketName'], message['siteName'], message['action'])
     elif topic_retrieve == 'rocketTopic' and message['action'] == "running":
@@ -88,10 +88,10 @@ for msg in consumer:
     elif topic_retrieve == 'payloadTopic' and message['action'] == "end":
         logEventAndSendMessage(message['rocketName'], message['siteName'],
                                message['payloadName'] + " END at position " + message['state'])
-    elif msg.topic == 'payloadTopic' and message['action'] == ROCKET_DESTRUCTION:
-        print("DESTRUCTION")
-        logEventAndSendMessage(message['rocketName'], message['siteName'],
-                               "DESTRUCTION DU SATELLITE")
+    # elif msg.topic == 'payloadTopic' and message['action'] == ROCKET_DESTRUCTION:
+    #     print("DESTRUCTION")
+    #     logEventAndSendMessage(message['rocketName'], message['siteName'],
+    #                            "DESTRUCTION DU SATELLITE")
     elif msg.topic == 'anomalyTopic':
         # print("DESTRUCTION")
         logEventAndSendMessage(message['rocketName'], message['siteName'],
