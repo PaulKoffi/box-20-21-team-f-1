@@ -19,7 +19,7 @@ COPY resources/payload.py .
 # HEALTHCHECK --interval=30s --timeout=30s CMD curl --fail http://localhost:8282/ || exit 1
 
 # port
-EXPOSE 8282
+# EXPOSE 8282
 
 # command to run on container start
 CMD [ "/bin/bash" ]

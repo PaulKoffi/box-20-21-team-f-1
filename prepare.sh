@@ -81,6 +81,9 @@ cd payload
 # echo "Building payload docker image"
 ./build.sh
 cd ..
+cd supplier 
+./build.sh
+cd ..
 
 cd ../dashboards
 ## >>>>> Building dashboards <<<<<

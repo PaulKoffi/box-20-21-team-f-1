@@ -16,8 +16,6 @@ stop = False
 
 # secondStageStatesHe
 
-rocket = SimpleXMLRPCServer(('localhost', 8888), logRequests=True, allow_none=True)
-
 client = pymongo.MongoClient(
     "mongodb+srv://flo:Azerty123@cluster0.ibhol.mongodb.net/blueOrigin?retryWrites=true&w=majority")
 db = client.get_database('blueOrigin')
