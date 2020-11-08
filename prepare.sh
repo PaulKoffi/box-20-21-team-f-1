@@ -177,9 +177,9 @@ nohup ./gwynneDashboard.sh &
 nohup ./maryDashboard.sh &
 nohup ./victorDashboard.sh &
 
-nohup ./delivery.sh &
+#nohup ./delivery.sh &
 
-nohup ./eventRegistration.sh &
+#nohup ./eventRegistration.sh &
 nohup ./eventCollector.sh &
 
 
@@ -188,12 +188,12 @@ nohup ./rocketTelemetriesServer.sh &
 nohup ./pollCreator.sh &
 
 nohup ./rockerInventory.sh &
-nohup ./rocketInventoryREST.sh &
+#nohup ./rocketInventoryREST.sh &
 
-nohup ./satellite.sh &
+#nohup ./satellite.sh &
 
 nohup ./supplierRpc.sh &
-nohup ./supplierREST.sh &
+#nohup ./supplierREST.sh &
 
 nohup ./triggerAnomaly.sh &
 
