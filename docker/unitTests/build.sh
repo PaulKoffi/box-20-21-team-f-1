@@ -4,6 +4,7 @@ echo "Building rocket_service docker image"
 mkdir resources
 cp ../../requirements.txt resources
 cp -R ../../tests/unitTests/pollTest.py resources
+cp -R ../../tests/unitTests/pollsystemTest.py resources
 docker build -t djotiham/unit_tests .
 rm -R resources
 # to remove old images

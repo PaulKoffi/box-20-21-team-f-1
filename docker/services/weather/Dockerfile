@@ -22,5 +22,5 @@ COPY resources/src/ .
 # EXPOSE 8000
 
 # command to run on container start
-CMD [ "/bin/bash" ]
+CMD [ "python","./run.py" ]
 # ENTRYPOINT [ "python", "./run.py" ]

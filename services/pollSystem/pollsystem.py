@@ -23,6 +23,7 @@ launchTory = True
 siteName = ""
 rocketName = ""
 
+
 # 'localhost:9092' is where producer is running
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
                          value_serializer=lambda x:

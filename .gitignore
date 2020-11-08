@@ -25,3 +25,6 @@ hs_err_pid*
 lib
 
 __pycache__
+
+logs/scripts/nohup.out
+logs/*.log

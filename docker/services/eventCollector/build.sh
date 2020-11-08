@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Building pollcreator_rpc docker image"
+echo "Building event collector docker image"
 mkdir resources
 cp ../../../requirements.txt resources
 cp ../../../services/eventCollector/eventCollector.py resources

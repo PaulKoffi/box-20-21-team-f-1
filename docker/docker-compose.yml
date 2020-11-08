@@ -28,7 +28,7 @@ services:
 
   ########## Services ##########
   
-  # weather service (Node JS)
+  # weather service (Python)
   weather_service:
     image: djotiham/weather_service
     container_name: weather_service
@@ -82,9 +82,24 @@ services:
     stdin_open: true
     tty: true
 
+  # trigger anomaly service (Python)
+  trigger_anomaly_service:
+    image: djotiham/trigger_anomaly_service
+    container_name: trigger_anomaly_service
+    network_mode: host
+    volumes:
+      - .:/host-trigger_anomaly_service
+    depends_on: 
+      - zookeeper
+      - kafka
+      - launcher_service
+      - rocket_first_stage_rpc
+      - rocket_second_stage_rpc
+    stdin_open: true
+    tty: true
+
 
   #eventCollector
-
   event_collector:
     image: djotiham/event_collector
     container_name: event_collector
@@ -97,7 +112,7 @@ services:
     stdin_open: true
     tty: true
 
-  # delivery service (NodeJs)
+  # delivery service (Python)
   delivery_service:
     image: djotiham/delivery_service
     container_name: delivery_service
@@ -105,6 +120,15 @@ services:
         - "7000"
     ports:
       - "7000:7000"
+
+  # delivery service (Python)
+  supplier_rest_service:
+    image: djotiham/supplier_rest_service
+    container_name: supplier_rest_service
+    expose:
+        - "2650"
+    ports:
+      - "2650:2650"
 
   rocket_inventory_rest_service:
     image: djotiham/rocket_inventory_rest_service
@@ -118,9 +142,17 @@ services:
     image: djotiham/event_registration_service
     container_name: event_registration_service
     expose:
-      - "2000"
+      - "4000"
     ports:
-      - "2000:2000"
+      - "4000:4000"
+
+  satellite_service:
+    image: djotiham/satellite_service
+    container_name: satellite_service
+    expose:
+      - "3550"
+    ports:
+      - "3550:3550"
 
   ########## rpc ##########
   
@@ -136,8 +168,6 @@ services:
     depends_on:
       - zookeeper
       - kafka
-    stdin_open: true
-    tty: true
 
 
 
@@ -146,11 +176,11 @@ services:
     image: djotiham/rocket_first_stage_rpc
     container_name: rocket_first_stage_rpc
     network_mode: host
-    expose:
-      - "8888"
-    ports:
-      - "8888:8888"
+    volumes:
+      - .:/host-rocket_first_stage_rpc
     depends_on:
+      - zookeeper
+      - kafka
       - pollsystem_service
     stdin_open: true
     tty: true
@@ -160,11 +190,11 @@ services:
     image: djotiham/rocket_second_stage_rpc
     container_name: rocket_second_stage_rpc
     network_mode: host
-    expose:
-      - "8889"
-    ports:
-      - "8889:8889"
+    volumes:
+      - .:/host-rocket_second_stage_rpc
     depends_on:
+      - zookeeper
+      - kafka
       - pollsystem_service
       - rocket_first_stage_rpc
     stdin_open: true
@@ -175,13 +205,29 @@ services:
     image: djotiham/payload_rpc
     container_name: payload_rpc
     network_mode: host
-    expose:
-      - "8282"
-    ports:
-      - "8282:8282"
+    volumes:
+      - .:/host-payload_rpc
     depends_on:
+      - zookeeper
+      - kafka
       - launcher_service
       - delivery_service
+    stdin_open: true
+    tty: true
+
+  # supplier (Python)
+  supplier_rpc_service:
+    image: djotiham/supplier_rpc_service
+    container_name: supplier_rpc_service
+    network_mode: host
+    volumes:
+      - .:/host-supplier_rpc_service
+    depends_on:
+      - zookeeper
+      - kafka
+      - launcher_service
+      - delivery_service
+      - supplier_rest_service
     stdin_open: true
     tty: true
 
@@ -195,6 +241,8 @@ services:
     volumes:
       - .:/host-payload_telemetry_server
     depends_on:
+      - zookeeper
+      - kafka
       - launcher_service
       - delivery_service
     stdin_open: true
@@ -208,6 +256,8 @@ services:
     volumes:
       - .:/host-rocket_telemetry_server
     depends_on:
+      - zookeeper
+      - kafka
       - delivery_service
       - launcher_service
     stdin_open: true
@@ -223,6 +273,8 @@ services:
     volumes:
       - .:/host-gwynnedashboard
     depends_on:
+      - zookeeper
+      - kafka
       - payload_telemetry_server
     stdin_open: true
     tty: true
@@ -235,7 +287,35 @@ services:
     volumes:
       - .:/host-jeffdashboard
     depends_on:
+      - zookeeper
+      - kafka
       - rocket_telemetry_server
+    stdin_open: true
+    tty: true
+
+  # mary dashboard
+  mary_dashboard:
+    image: djotiham/mary_dashboard
+    container_name: mary_dashboard
+    network_mode: host
+    volumes:
+      - .:/host-marydashboard
+    depends_on:
+      - kafka
+      - zookeeper
+    stdin_open: true
+    tty: true
+
+    # victor dashboard
+  victor_dashboard:
+    image: djotiham/victor_dashboard
+    container_name: victor_dashboard
+    network_mode: host
+    volumes:
+      - .:/host-victordashboard
+    depends_on:
+      - kafka
+      - zookeeper
     stdin_open: true
     tty: true
       
@@ -314,6 +394,7 @@ services:
     stdin_open: true
     tty: true
 
+  # Unit tests (Python)
   unit_tests:
     image: djotiham/unit_tests
     container_name: unit_tests
@@ -333,45 +414,3 @@ services:
       - weather_service
     stdin_open: true
     tty: true
-
-      # gwynne dashboard
-  # admin:
-  #   image: djotiham/admin
-  #   container_name: admin
-  #   network_mode: host
-  #   volumes:
-  #     - .:/host-admin
-  #   depends_on:
-  #     - zookeeper
-  #     - kafka
-  #   stdin_open: true
-  #   tty: true
-
-    # gwynne dashboard
-  # producer:
-  #   image: djotiham/producer
-  #   container_name: producer
-  #   network_mode: host
-  #   volumes:
-  #     - .:/host-producer
-  #   depends_on:
-  #     # - admin
-  #     - zookeeper
-  #     - kafka
-  #   stdin_open: true
-  #   tty: true
-
-  # # jeff dashboard
-  # consumer1:
-  #   image: djotiham/consumer1
-  #   container_name: consumer1
-  #   network_mode: host
-  #   volumes:
-  #     - .:/host-consumer1
-  #   depends_on:
-  #     # - admin
-  #     - zookeeper
-  #     - kafka
-  #     - producer
-  #   stdin_open: true
-  #   tty: true

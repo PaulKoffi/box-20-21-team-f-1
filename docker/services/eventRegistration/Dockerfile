@@ -19,7 +19,7 @@ COPY resources/src/ .
 # HEALTHCHECK --interval=30s --timeout=30s CMD curl --fail http://localhost:7000/ || exit 1
 
 # port
-EXPOSE 2000
+EXPOSE 4000
 
 # command to run on container start
 CMD [ "python", "./run.py" ]

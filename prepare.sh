@@ -31,6 +31,11 @@ cd delivery
 ./build.sh
 cd ..
 
+cd satellite
+# echo "Building delivery service docker image"
+./build.sh
+cd ..
+
 cd rocketInventory_REST
 ./build.sh
 cd ..
@@ -41,6 +46,14 @@ cd eventRegistration
 cd ..
 
 cd pollSystem
+./build.sh
+cd ..
+
+cd supplier_REST
+./build.sh
+cd .. 
+
+cd triggerAnomaly
 ./build.sh
 cd ..
 
@@ -81,6 +94,9 @@ cd payload
 # echo "Building payload docker image"
 ./build.sh
 cd ..
+cd supplier 
+./build.sh
+cd ..
 
 cd ../dashboards
 ## >>>>> Building dashboards <<<<<
@@ -94,7 +110,16 @@ cd ..
 cd gwynne
 # echo "Building tory docker image"
 ./build.sh
+cd ..
+
+cd victor
+./build.sh
+cd ..
+
+cd mary
+./build.sh
 cd ../..
+
 
 cd CLIs
 ## >>>>> Building CLIs <<<<<
@@ -134,28 +159,45 @@ cd ..
 docker-compose up -d
 
 cd ..
-## Displaying dashboards
-#echo "Displaying dashboards"
-#if [[ "$OSTYPE" == "linux-gnu"* || "$OSTYPE" == "darwin"* ]]; then
-#        sudo apt install gnome-terminal
-#        gnome-terminal -- ./jeff.sh
-#        gnome-terminal -- ./gwynne.sh
-#else
-#		echo "Go to docker desktop to see appropriate logs."
-#fi
 
 
 echo "Done"
-docker exec -it -d pollcreator_rpc python pollcreator.py
-docker exec -it -d rocket_inventory_service python run.py
-docker exec -it -d weather_service python run.py
-docker exec -it -d payload_rpc python payload.py
-docker exec -it -d rocket_first_stage_rpc python firstStage.py
-docker exec -it -d rocket_second_stage_rpc python secondStage.py
-docker exec -it -d rocket_telemetry_server python rocketTelemetriesServer.py
-docker exec -it -d payload_telemetry_server python payloadTelemetriesServer.py
-docker exec -it -d jeff_dashboard python jeffdashboard.py
-docker exec -it -d gwynne_dashboard python gwinedashboard.py
-docker exec -it -d pollsystem_service python pollsystem.py
-docker exec -it -d event_collector python eventCollector.py
+
+echo "Containers started ..."
+
+cd logs/scripts
+nohup ./pollSystem.sh &
+
+nohup ./firstStage.sh &
+nohup ./secondStage.sh &
+nohup ./payload.sh &
+
+nohup ./jeffDashboard.sh &
+nohup ./gwynneDashboard.sh &
+nohup ./maryDashboard.sh &
+nohup ./victorDashboard.sh &
+
+nohup ./delivery.sh &
+
+nohup ./eventRegistration.sh &
+nohup ./eventCollector.sh &
+
+
+nohup ./payloadTelemetriesServer.sh &
+nohup ./rocketTelemetryServer.sh &
+nohup ./pollCreator.sh &
+
+nohup ./rocketInventory.sh &
+nohup ./rocketInventoryREST.sh &
+
+nohup ./satellite.sh &
+
+nohup ./supplier.sh &
+nohup ./supplierREST.sh &
+
+nohup ./triggerAnomaly.sh &
+
+nohup ./weather.sh &
+
+nohup ./launcher.sh &
 #read -n 1 -s -r -p "Press any key to continue"

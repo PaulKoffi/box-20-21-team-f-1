@@ -20,7 +20,7 @@ COPY resources/constants.py .
 # HEALTHCHECK --interval=30s --timeout=30s CMD curl --fail http://localhost:8888/ || exit 1
 
 # port
-EXPOSE 8888
+# EXPOSE 8888
 
 # command to run on container start
-CMD [ "/bin/bash" ]
+CMD [ "python","./firstStage.py" ]

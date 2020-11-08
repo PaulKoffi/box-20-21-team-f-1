@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Building rocket_rpc docker image"
+echo "Building rocket_first_stage_rpc docker image"
 mkdir resources
 cp ../../../requirements.txt resources
 cp ../../../rpc/rocket/firstStage.py resources

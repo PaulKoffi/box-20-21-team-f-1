@@ -5,6 +5,9 @@ import pymongo
 from kafka import KafkaProducer
 from bson.json_util import dumps, loads
 import json
+from time import sleep
+
+sleep(10)
 
 consumer = KafkaConsumer(
     bootstrap_servers=['localhost:9092'],
@@ -33,6 +36,7 @@ def getCurrentSatelliteName(rocketName):
     currentPayload = requests.get("{}/payload/payloadByRocketName/{}".format(DELIVERY_STATES_BASE_URL, rocketName))
     return currentPayload.json()["satellite"]
 
+sleep(5)
 
 for msg in consumer:
     message = msg.value

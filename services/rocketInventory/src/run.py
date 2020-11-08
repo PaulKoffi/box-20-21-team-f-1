@@ -1,10 +1,13 @@
 from kafka import KafkaConsumer
 from kafka import KafkaProducer
 from json import loads, dumps
+from time import sleep
 
 from server.services.rocketService import RocketService
 
 rocketService = RocketService()
+
+sleep(10)
 
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
                          value_serializer=lambda x: 
