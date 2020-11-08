@@ -167,9 +167,37 @@ echo "Containers started ..."
 
 cd logs/scripts
 nohup ./pollSystem.sh &
+
 nohup ./firstStage.sh &
 nohup ./secondStage.sh &
+nohup ./payload.sh &
+
 nohup ./jeffDashboard.sh &
 nohup ./gwynneDashboard.sh &
 nohup ./maryDashboard.sh &
+nohup ./victorDashboard.sh &
+
+nohup ./delivery.sh &
+
+nohup ./eventRegistration.sh &
+nohup ./eventCollector.sh &
+
+
+nohup ./payloadTelemetriesServer.sh &
+nohup ./rocketTelemetryServer.sh &
+nohup ./pollCreator.sh &
+
+nohup ./rocketInventory.sh &
+nohup ./rocketInventoryREST.sh &
+
+nohup ./satellite.sh &
+
+nohup ./supplier.sh &
+nohup ./supplierREST.sh &
+
+nohup ./triggerAnomaly.sh &
+
+nohup ./weather.sh &
+
+nohup ./launcher.sh &
 #read -n 1 -s -r -p "Press any key to continue"
