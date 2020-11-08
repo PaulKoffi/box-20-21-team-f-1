@@ -184,15 +184,15 @@ nohup ./eventCollector.sh &
 
 
 nohup ./payloadTelemetriesServer.sh &
-nohup ./rocketTelemetryServer.sh &
+nohup ./rocketTelemetriesServer.sh &
 nohup ./pollCreator.sh &
 
-nohup ./rocketInventory.sh &
+nohup ./rockerInventory.sh &
 nohup ./rocketInventoryREST.sh &
 
 nohup ./satellite.sh &
 
-nohup ./supplier.sh &
+nohup ./supplierRpc.sh &
 nohup ./supplierREST.sh &
 
 nohup ./triggerAnomaly.sh &

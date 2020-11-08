@@ -7,6 +7,7 @@ import queue
 
 queueresponse = queue.Queue()
 
+sleep(10)
 
 def launch(rocket, site):
     print("Launching " + rocket + " from " + site)
