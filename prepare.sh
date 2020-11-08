@@ -172,5 +172,4 @@ nohup ./secondStage.sh &
 nohup ./jeffDashboard.sh &
 nohup ./gwynneDashboard.sh &
 nohup ./maryDashboard.sh &
-nohup ./payload.sh &
 #read -n 1 -s -r -p "Press any key to continue"

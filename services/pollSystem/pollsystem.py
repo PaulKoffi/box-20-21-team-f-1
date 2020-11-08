@@ -5,7 +5,7 @@ from time import sleep
 from json import dumps
 import queue
 
-sleep(5)
+sleep(10)
 
 
 def launch(rocket, site):

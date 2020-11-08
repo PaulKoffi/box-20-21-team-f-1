@@ -7,7 +7,7 @@ from server.services.weatherService import WeatherService
 
 weatherService = WeatherService()
 
-sleep(5)
+sleep(10)
 
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
                          value_serializer=lambda x: 

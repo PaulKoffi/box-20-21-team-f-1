@@ -90,6 +90,8 @@ services:
     volumes:
       - .:/host-trigger_anomaly_service
     depends_on: 
+      - zookeeper
+      - kafka
       - launcher_service
       - rocket_first_stage_rpc
       - rocket_second_stage_rpc
@@ -177,6 +179,8 @@ services:
     volumes:
       - .:/host-rocket_first_stage_rpc
     depends_on:
+      - zookeeper
+      - kafka
       - pollsystem_service
     stdin_open: true
     tty: true
@@ -189,6 +193,8 @@ services:
     volumes:
       - .:/host-rocket_second_stage_rpc
     depends_on:
+      - zookeeper
+      - kafka
       - pollsystem_service
       - rocket_first_stage_rpc
     stdin_open: true
@@ -202,6 +208,8 @@ services:
     volumes:
       - .:/host-payload_rpc
     depends_on:
+      - zookeeper
+      - kafka
       - launcher_service
       - delivery_service
     stdin_open: true
@@ -215,6 +223,8 @@ services:
     volumes:
       - .:/host-supplier_rpc_service
     depends_on:
+      - zookeeper
+      - kafka
       - launcher_service
       - delivery_service
       - supplier_rest_service
@@ -231,6 +241,8 @@ services:
     volumes:
       - .:/host-payload_telemetry_server
     depends_on:
+      - zookeeper
+      - kafka
       - launcher_service
       - delivery_service
     stdin_open: true
@@ -244,6 +256,8 @@ services:
     volumes:
       - .:/host-rocket_telemetry_server
     depends_on:
+      - zookeeper
+      - kafka
       - delivery_service
       - launcher_service
     stdin_open: true
@@ -259,6 +273,8 @@ services:
     volumes:
       - .:/host-gwynnedashboard
     depends_on:
+      - zookeeper
+      - kafka
       - payload_telemetry_server
     stdin_open: true
     tty: true
@@ -271,6 +287,8 @@ services:
     volumes:
       - .:/host-jeffdashboard
     depends_on:
+      - zookeeper
+      - kafka
       - rocket_telemetry_server
     stdin_open: true
     tty: true

@@ -24,7 +24,7 @@ EVENT_REGISTRATION_BASE_URL = "http://localhost:4000/eventRegistration"
 queueresponse = queue.Queue()
 ROCKET_DESTRUCTION = "destroy"
 
-sleep(5)
+sleep(10)
 consumer = KafkaConsumer(
     bootstrap_servers=['localhost:9092'],
     auto_offset_reset='earliest',
