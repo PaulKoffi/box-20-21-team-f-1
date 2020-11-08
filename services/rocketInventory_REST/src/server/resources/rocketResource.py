@@ -18,10 +18,13 @@ class RocketResource():
     def getRocketById(self, id):
         return jsonify(json.loads(dumps(db.rocketinventories.find_one({"rocketName": id}))))
 
+    def getRocketByN(self, id):
+        return jsonify(json.loads(dumps(db.rocketinventories2.find_one({"rocketName": id}))))
+
     def setRocketStatus(self, id):
         myquery = {"rocketName": id}
         newvalues = {"$set": {"available": True}}
-        db.rocketinventories.update_one(myquery, newvalues)
+        db.rocketinventories2.update_one(myquery, newvalues)
         return jsonify(json.loads(dumps(db.rocketinventories.find_one({"rocketName": id}))))
 
     def setRocketSpeed(self, id, speed):

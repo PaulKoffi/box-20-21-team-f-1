@@ -55,9 +55,11 @@ for msg in consumer:
         response = requests.get("{}/payload/payloadBySatelliteName/{}".format(BASE_URL, satelliteName))
         if int(response.json()["finalPosition"]) == int(message['state']):
             myobj = {
-                "rocketName": str(response.json()["rocketName"])
+                "rocketName": str(response.json()["rocketName"]),
+                "satelitte": satelliteName
             }
-            x = requests.post("{}/payload/setStatus".format(BASE_URL), data=myobj)
+            print(satelliteName)
+            x = requests.post("{}/payload/setStatus".format(BASE_URL), json=myobj)
             if x.status_code != 403:
                 print("--------------< Satellite mis en Orbite avec succès >------------------")
         else:

@@ -68,7 +68,7 @@ for msg in consumer:
         currentPayload = requests.get(
             "{}/payload/payloadByRocketName/{}".format(const.DELIVERY_STATES_BASE_URL, rocketName))
 
-        print(currentPayload)
+        # print(currentPayload)
 
         someRocketStates = json.loads(dumps(db.rocketsStates.find_one(
             {"rocketName": rocketName, "siteName": siteName, "satelliteName": currentPayload.json()["satellite"]})))
@@ -146,6 +146,28 @@ for msg in consumer:
                         'state': str(statesArray[index])}
                 producer.send('rocketTopic', value=data)
 
+            if index == 11:
+                printAndSendMessages(const.LAUNCHER_TOPIC, "Flip maneuver", rocketName, siteName)
+                printAndSendMessages("testTopic", "Flip maneuver", rocketName, siteName)
+
+            if index == 12:
+                printAndSendMessages(const.LAUNCHER_TOPIC, "Entry burn", rocketName, siteName)
+                printAndSendMessages("testTopic", "Entry burn", rocketName, siteName)
+
+            if index == 13:
+                printAndSendMessages(const.LAUNCHER_TOPIC, "Guidance", rocketName, siteName)
+                printAndSendMessages("testTopic", "Guidance", rocketName, siteName)
+
+            if index == 14:
+                printAndSendMessages(const.LAUNCHER_TOPIC, "Landing burn", rocketName, siteName)
+                printAndSendMessages("testTopic", "Landing burn", rocketName, siteName)
+
+            if index == 15:
+                printAndSendMessages(const.LAUNCHER_TOPIC, "Landing legs deployed", rocketName, siteName)
+                printAndSendMessages("testTopic", "Landing legs deployed", rocketName, siteName)
+
+            # if index == 16:
+
             if index == length - 1:
                 data = {'action': "end",
                         'siteName': siteName,
@@ -162,7 +184,9 @@ for msg in consumer:
         myobj = {
             "rocketName": rocketName
         }
-        requests.post("{}/payload/setPastMissionValue".format(const.DELIVERY_STATES_BASE_URL), data=myobj)
+        requests.post("{}/payload/setPastMissionValue".format(const.DELIVERY_STATES_BASE_URL), json=myobj)
+        printAndSendMessages(const.LAUNCHER_TOPIC, "Landing", rocketName, siteName)
+        printAndSendMessages("testTopic", "Landing", rocketName, siteName)
 
     # if (msg.topic == LAUNCHER_TOPIC and message['action'] == ROCKET_DESTRUCTION):
     #     destroy = True

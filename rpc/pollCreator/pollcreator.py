@@ -37,6 +37,7 @@ def launchSupplier(supplierName, satelliteName):
             'satelliteName': satelliteName}
     producer.send('supplierTopic', value=data)
 
+
 pollServer.register_function(getResponsesPoll)
 pollServer.register_function(launchSupplier)
 #     # responseElon = requests.get("{}rocket/{}".format(ELON_URL, rocketName))

@@ -24,7 +24,7 @@ class DeliveryResource():
 
     def getPayloadByRocketName(self, rocketName):
         return json.loads(dumps(db.payloads.find_one(
-            {"rocketName": rocketName, "past": False})))
+            {"rocketName": rocketName})))
 
     def getPayloadBySatelliteName(self, satelliteName):
         return json.loads(dumps(db.payloads.find_one(
@@ -36,7 +36,6 @@ class DeliveryResource():
             {"rocketName": rocketName},
             {'$set': {"past": True}})
         return 'success', 200
-
 
     def addPayload(self, customerName, customerMail, finalPosition, x, y, satellite):
         rocketsAvailable = json.loads(dumps(db.rocketinventories2.find_one(
@@ -65,22 +64,24 @@ class DeliveryResource():
                 "past": False
             })
 
-            db.rocketinventories2.update_one(
-                {"rocketName": rocketsAvailable["rocketName"]},
-                {'$set': {"available": False}})
+            # db.rocketinventories2.update_one(
+            #     {"rocketName": rocketsAvailable["rocketName"]},
+            #     {'$set': {"available": False}})
 
             return json.loads(dumps(db.payloads.find_one(
                 {'satellite': satellite})))
 
         return 'failed', 403
 
-    def setStatus(self, rocketName):
+    def setStatus(self, rocketName, satellite):
         result = json.loads(dumps(db.payloads.find_one(
-            {"rocketName": rocketName, "past": False})))
+            {"rocketName": rocketName, "satellite": satellite})))
         success = result["success"]
         res = True
         if success:
             res = False
+        print("----------------")
+        print(res)
         db.payloads.update_one(
             {"rocketName": rocketName},
             {'$set': {"success": res}})

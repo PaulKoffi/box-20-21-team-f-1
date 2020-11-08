@@ -5,6 +5,8 @@ from time import sleep
 from json import dumps
 import queue
 
+queueresponse = queue.Queue()
+
 
 def launch(rocket, site):
     print("Launching " + rocket + " from " + site)
@@ -12,13 +14,14 @@ def launch(rocket, site):
             'siteName': site,
             'rocketName': rocket}
     producer.send('launcherTopic', value=data)
+    global queueresponse
+    queueresponse.queue.clear()
 
 
 launchElon = True
 launchTory = True
 siteName = ""
 rocketName = ""
-queueresponse = queue.Queue()
 
 # 'localhost:9092' is where producer is running
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
@@ -47,11 +50,17 @@ for msg in consumer:
                 queueresponse.put(data)
             else:
                 responseTory = queueresponse.get()
+                print("ici t")
+                print(responseTory)
                 if (responseTory['toryResponse'] == 'GO'):
                     print("The rocket can be launched")
                     launch(rocketName, siteName)
+
+                queueresponse.queue.clear()
+
         else:
             print("the rocket cannot be launched")
+            queueresponse.queue.clear()
 
     else:
         responseTory = message['response']
@@ -70,6 +79,9 @@ for msg in consumer:
                 if(elonResponse['elonResponse'] == 'GO'):
                     print("The rocket can be launched")
                     launch(rocketName, siteName)
+                queueresponse.queue.clear()
+
 
         else:
             print("the rocket cannot be launched")
+            queueresponse.queue.clear()

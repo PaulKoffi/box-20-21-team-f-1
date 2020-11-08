@@ -19,7 +19,7 @@ def getCurrentSatelliteName(rocketName):
     return currentPayload.json()["satellite"]
 
 
-EVENT_REGISTRATION_BASE_URL = "http://localhost:2000/eventRegistration"
+EVENT_REGISTRATION_BASE_URL = "http://localhost:4000/eventRegistration"
 queueresponse = queue.Queue()
 ROCKET_DESTRUCTION = "destroy"
 

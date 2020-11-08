@@ -14,8 +14,8 @@ class DeliveryService:
     def setPastMissionValue(self, rocketName):
         return self.deliveryResource.setPastMissionValue(rocketName)
 
-    def setStatus(self, rocketName):
-        return self.deliveryResource.setStatus(rocketName)
+    def setStatus(self, rocketName,satelitte):
+        return self.deliveryResource.setStatus(rocketName,satelitte)
 
     def addPayload(self, customerName, customerMail, finalPosition, x, y, satellite):
         return self.deliveryResource.addPayload(customerName, customerMail, finalPosition, x, y, satellite)
