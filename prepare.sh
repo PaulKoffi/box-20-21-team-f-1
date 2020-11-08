@@ -193,7 +193,7 @@ docker exec -it -d event_collector python eventCollector.py
 docker exec -it -d jeff_dashboard python jeffdashboard.py
 docker exec -it -d gwynne_dashboard python gwinedashboard.py
 docker exec -it -d mary_dashboard python maryDashboard.py 
-# docker exec -it -d victor_dashboard python victorDashboard.py
+docker exec -it -d victor_dashboard python victorDashboard.py
 
 echo "Containers started ..."
 #read -n 1 -s -r -p "Press any key to continue"
