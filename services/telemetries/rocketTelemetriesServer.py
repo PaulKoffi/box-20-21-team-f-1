@@ -3,12 +3,15 @@ import pymongo
 from kafka import KafkaConsumer
 import json
 from bson.json_util import dumps, loads
+from time import sleep
 
 BASE_URL = "http://localhost:8000"
 client = pymongo.MongoClient(
     "mongodb+srv://flo:Azerty123@cluster0.ibhol.mongodb.net/blueOrigin?retryWrites=true&w=majority")
 db = client.get_database('blueOrigin')
 rocketName = ""
+
+sleep(5)
 
 consumer = KafkaConsumer(
     bootstrap_servers=['localhost:9092'],

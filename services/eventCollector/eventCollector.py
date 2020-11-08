@@ -4,6 +4,7 @@ import queue
 import requests
 import pymongo
 from kafka import KafkaProducer
+from time import sleep
 
 
 # ROCKETS_STATES_BASE_URL = "http://localhost:2000/eventRegistration"
@@ -19,10 +20,11 @@ def getCurrentSatelliteName(rocketName):
     return currentPayload.json()["satellite"]
 
 
-EVENT_REGISTRATION_BASE_URL = "http://localhost:2000/eventRegistration"
+EVENT_REGISTRATION_BASE_URL = "http://localhost:4000/eventRegistration"
 queueresponse = queue.Queue()
 ROCKET_DESTRUCTION = "destroy"
 
+sleep(5)
 consumer = KafkaConsumer(
     bootstrap_servers=['localhost:9092'],
     auto_offset_reset='earliest',

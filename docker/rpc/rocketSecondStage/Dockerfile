@@ -19,8 +19,5 @@ COPY resources/constants.py .
 # Creating an health check verification to check pollcreator status
 # HEALTHCHECK --interval=30s --timeout=30s CMD curl --fail http://localhost:8889/ || exit 1
 
-# port
-# EXPOSE 8889
-
 # command to run on container start
-CMD [ "/bin/bash" ]
+CMD [ "python","./secondStage.py" ]

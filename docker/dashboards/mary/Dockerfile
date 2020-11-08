@@ -16,4 +16,4 @@ RUN pip install -r requirements.txt
 COPY resources/maryDashboard.py .
 
 # command to run on container start
-CMD [ "/bin/bash" ]
+CMD [ "python","./maryDashboard.py" ]

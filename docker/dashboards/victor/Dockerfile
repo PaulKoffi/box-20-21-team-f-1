@@ -16,4 +16,4 @@ RUN pip install -r requirements.txt
 COPY resources/victorDashboard.py .
 
 # command to run on container start
-CMD [ "/bin/bash" ]
+CMD [ "python","./victorDashboard.py" ]

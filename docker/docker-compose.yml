@@ -166,8 +166,6 @@ services:
     depends_on:
       - zookeeper
       - kafka
-    stdin_open: true
-    tty: true
 
 
 

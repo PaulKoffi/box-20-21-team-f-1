@@ -28,6 +28,8 @@ client = pymongo.MongoClient(
     "mongodb+srv://flo:Azerty123@cluster0.ibhol.mongodb.net/blueOrigin?retryWrites=true&w=majority")
 db = client.get_database('blueOrigin')
 
+time.sleep(5)
+
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
                          value_serializer=lambda x:
                          dumps(x).encode('utf-8'))

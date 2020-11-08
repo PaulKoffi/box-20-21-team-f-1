@@ -16,5 +16,5 @@ RUN pip install -r requirements.txt
 COPY resources/jeffdashboard.py .
 
 # command to run on container start
-# CMD [ "python", "./jeffdashboard.py" ]
-CMD [ "/bin/bash" ]
+CMD [ "python", "./jeffdashboard.py" ]
+# CMD [ "/bin/bash" ]

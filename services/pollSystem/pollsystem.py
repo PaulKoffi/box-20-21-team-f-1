@@ -5,6 +5,8 @@ from time import sleep
 from json import dumps
 import queue
 
+sleep(5)
+
 
 def launch(rocket, site):
     print("Launching " + rocket + " from " + site)

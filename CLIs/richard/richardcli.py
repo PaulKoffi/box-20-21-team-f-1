@@ -2,6 +2,9 @@ from xmlrpc.client import ServerProxy
 import requests
 from kafka import KafkaProducer
 from bson.json_util import dumps, loads
+from time import sleep
+
+sleep(5)
 
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
                          value_serializer=lambda x: 

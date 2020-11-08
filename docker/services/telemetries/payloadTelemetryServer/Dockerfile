@@ -18,10 +18,6 @@ COPY resources/payloadTelemetriesServer.py .
 # Creating an health check verification to check rocket status
 # HEALTHCHECK --interval=30s --timeout=30s CMD curl --fail http://localhost:9292/ || exit 1
 
-# port
-EXPOSE 9292
 
 # command to run on container start
-CMD [ "/bin/bash" ]
-# CMD [ "python", "./payloadTelemetriesServer.py" ]
-# ENTRYPOINT [ "python", "./run.py" ]
+CMD [ "python", "./payloadTelemetriesServer.py" ]

@@ -23,4 +23,4 @@ COPY resources/constants.py .
 # EXPOSE 8888
 
 # command to run on container start
-CMD [ "/bin/bash" ]
+CMD [ "python","./firstStage.py" ]

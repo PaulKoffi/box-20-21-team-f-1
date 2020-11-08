@@ -19,4 +19,4 @@ COPY resources/triggerAnomaly.py .
 # HEALTHCHECK --interval=30s --timeout=30s CMD curl --fail http://localhost:9000/ || exit 1
 
 # command to run on container start
-CMD [ "/bin/bash" ]
+CMD [ "python","./triggerAnomaly.py" ]
