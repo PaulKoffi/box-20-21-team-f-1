@@ -103,7 +103,7 @@ for msg in consumer:
         myobj = {
             "rocketName": rocketName
         }
-        requests.post("{}/payload/setPastMissionValue".format(const.DELIVERY_STATES_BASE_URL), data=myobj)
+        # requests.post("{}/payload/setPastMissionValue".format(const.DELIVERY_STATES_BASE_URL), data=myobj)
 
     # if (msg.topic == LAUNCHER_TOPIC and message['action'] == ROCKET_DESTRUCTION):
     #     destroy = True
