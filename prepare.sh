@@ -159,41 +159,18 @@ cd ..
 docker-compose up -d
 
 cd ..
-## Displaying dashboards
-#echo "Displaying dashboards"
-#if [[ "$OSTYPE" == "linux-gnu"* || "$OSTYPE" == "darwin"* ]]; then
-#        sudo apt install gnome-terminal
-#        gnome-terminal -- ./jeff.sh
-#        gnome-terminal -- ./gwynne.sh
-#else
-#		echo "Go to docker desktop to see appropriate logs."
-#fi
 
 
 echo "Done"
 
-# docker exec -it -d rocket_inventory_service python run.py
-# docker exec -it -d weather_service python run.py
-
-# docker exec -it -d pollcreator_rpc python pollcreator.py
-# docker exec -it -d pollsystem_service python pollsystem.py
-
-# docker exec -it -d rocket_first_stage_rpc python firstStage.py
-# docker exec -it -d rocket_second_stage_rpc python secondStage.py
-# docker exec -it -d payload_rpc python payload.py
-
-# docker exec -it -d trigger_anomaly_service python triggerAnomaly.py
-# docker exec -it -d supplier_rpc_service python fuelSupplier.py
-
-# docker exec -it -d rocket_telemetry_server python rocketTelemetriesServer.py
-# docker exec -it -d payload_telemetry_server python payloadTelemetriesServer.py
-
-# docker exec -it -d event_collector python eventCollector.py
-
-# docker exec -it -d jeff_dashboard python jeffdashboard.py
-# docker exec -it -d gwynne_dashboard python gwinedashboard.py
-# docker exec -it -d mary_dashboard python maryDashboard.py 
-# docker exec -it -d victor_dashboard python victorDashboard.py
-
 echo "Containers started ..."
+
+cd logs/scripts
+nohup ./pollSystem.sh &
+nohup ./firstStage.sh &
+nohup ./secondStage.sh &
+nohup ./jeffDashboard.sh &
+nohup ./gwynneDashboard.sh &
+nohup ./maryDashboard.sh &
+nohup ./payload.sh &
 #read -n 1 -s -r -p "Press any key to continue"
