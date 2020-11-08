@@ -1,10 +1,10 @@
 #!/bin/bash
 
-echo "Building mary_dashboard docker image"
+echo "Building victor_dashboard docker image"
 mkdir resources
 cp ../../../requirements.txt resources
-cp -R ../../../dashboard/Mary/maryDashboard.py resources
-docker build -t djotiham/mary_dashboard .
+cp -R ../../../dashboard/victor/victorDashboard.py resources
+docker build -t djotiham/victor_dashboard .
 rm -R resources
 # to remove old images
 # docker rmi $(docker images -qa -f 'dangling=true')

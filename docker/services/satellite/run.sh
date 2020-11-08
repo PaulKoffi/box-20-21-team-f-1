@@ -3,8 +3,8 @@
 # Running the image as
 #  - removing the container after exit,
 #  - detached (-d),
-#  - binding localhost:2650 to container:2650
-docker run --name supplier_rest_service --rm -d -p 2650:2650 djotiham/supplier_rest_service
+#  - binding localhost:7000 to container:7000
+docker run --name satellite_service --rm -d -p 3550:3550 djotiham/satellite_service
 # to stop: docker stop ID
 # to start a new shell in the container: docker exec -it ID bash
 # to attach to the container: docker attach ID (^P ^Q to detach)

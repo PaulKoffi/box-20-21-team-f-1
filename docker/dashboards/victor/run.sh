@@ -5,9 +5,9 @@
 #  - execute commands (-it)
 # echo $OSTYPE
 if [[ "$OSTYPE" == "linux-gnu"* || "$OSTYPE" == "darwin"* ]]; then
-        docker run --name mary_dashboard --rm -it -v `pwd`:/host-marydashboard djotiham/mary_dashboard
+        docker run --name victor_dashboard --rm -it -v `pwd`:/host-victordashboard djotiham/victor_dashboard
 else
-		winpty docker run --name mary_dashboard --rm -it -v `pwd`:/host-marydashboard djotiham/mary_dashboard
+		winpty docker run --name victor_dashboard --rm -it -v `pwd`:/host-victordashboard djotiham/victor_dashboard
 fi
 
 # to stop: docker stop ID

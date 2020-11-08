@@ -144,6 +144,14 @@ services:
     ports:
       - "4000:4000"
 
+  satellite_service:
+    image: djotiham/satellite_service
+    container_name: satellite_service
+    expose:
+      - "3550"
+    ports:
+      - "3550:3550"
+
   ########## rpc ##########
   
   # poll creator (Python)
@@ -276,6 +284,19 @@ services:
     network_mode: host
     volumes:
       - .:/host-marydashboard
+    depends_on:
+      - kafka
+      - zookeeper
+    stdin_open: true
+    tty: true
+
+    # victor dashboard
+  victor_dashboard:
+    image: djotiham/victor_dashboard
+    container_name: victor_dashboard
+    network_mode: host
+    volumes:
+      - .:/host-victordashboard
     depends_on:
       - kafka
       - zookeeper

@@ -31,6 +31,11 @@ cd delivery
 ./build.sh
 cd ..
 
+cd satellite
+# echo "Building delivery service docker image"
+./build.sh
+cd ..
+
 cd rocketInventory_REST
 ./build.sh
 cd ..
@@ -106,9 +111,15 @@ cd gwynne
 # echo "Building tory docker image"
 ./build.sh
 cd ..
+
+cd victor
+./build.sh
+cd ..
+
 cd mary
 ./build.sh
 cd ../..
+
 
 cd CLIs
 ## >>>>> Building CLIs <<<<<
@@ -182,6 +193,7 @@ docker exec -it -d event_collector python eventCollector.py
 docker exec -it -d jeff_dashboard python jeffdashboard.py
 docker exec -it -d gwynne_dashboard python gwinedashboard.py
 docker exec -it -d mary_dashboard python maryDashboard.py 
+# docker exec -it -d victor_dashboard python victorDashboard.py
 
 echo "Containers started ..."
 #read -n 1 -s -r -p "Press any key to continue"
