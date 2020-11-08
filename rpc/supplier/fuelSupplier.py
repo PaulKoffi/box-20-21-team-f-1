@@ -13,11 +13,14 @@ from kafka import KafkaProducer
 DELIVERY_STATES_BASE_URL = "http://localhost:7000"
 SUPPLIER_BASE_URL = "http://localhost:2650"
 SATELLITE_BASE_URL = "http://localhost:3550"
+
+time.sleep(5)
+
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
                          value_serializer=lambda x:
                          dumps(x).encode('utf-8'))
 
-time.sleep(5)
+
 consumer = KafkaConsumer(
     bootstrap_servers=['localhost:9092'],
     auto_offset_reset='earliest',

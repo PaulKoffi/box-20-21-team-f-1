@@ -1,6 +1,9 @@
 from bson.json_util import dumps, loads
 from xmlrpc.client import ServerProxy
 from kafka import KafkaConsumer
+from time import sleep
+
+sleep(5)
 
 consumer = KafkaConsumer(
     bootstrap_servers=['localhost:9092'],

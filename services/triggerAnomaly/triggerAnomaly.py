@@ -7,6 +7,8 @@ from bson.json_util import dumps, loads
 import json
 from time import sleep
 
+sleep(5)
+
 consumer = KafkaConsumer(
     bootstrap_servers=['localhost:9092'],
     auto_offset_reset='earliest',
