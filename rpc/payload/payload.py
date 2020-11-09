@@ -79,6 +79,11 @@ for msg in consumer:
         print("SecondState started: payload telemetry")
         l = len(paylaodStatesArray)
         for index in range(0, l):
+            responseDestruction = requests.get(
+                "{}/rocketsStates/destructionA/{}/{}".format("http://localhost:5000", siteName, rocketName))
+            if responseDestruction.text == "True":
+                print("--------------- ANOMALY DESTRUCTION ACTIVATED")
+                break
             time.sleep(5)
 
             data = {'action': RUNNING,

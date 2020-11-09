@@ -179,15 +179,16 @@ for msg in consumer:
         if stop is False:
             print("Rocket at the end of the launch")
 
-        stop = False
         destroy = False
         # MAJ du statut de la mission (PAST)
         myobj = {
             "rocketName": rocketName
         }
         requests.post("{}/payload/setPastMissionValue".format(const.DELIVERY_STATES_BASE_URL), json=myobj)
-        printAndSendMessages(const.LAUNCHER_TOPIC, "Landing", rocketName, siteName)
-        printAndSendMessages("testTopic", "Landing", rocketName, siteName)
+        if not stop:
+            printAndSendMessages(const.LAUNCHER_TOPIC, "Landing", rocketName, siteName)
+            printAndSendMessages("testTopic", "Landing", rocketName, siteName)
+        stop = False
 
     # if (msg.topic == LAUNCHER_TOPIC and message['action'] == ROCKET_DESTRUCTION):
     #     destroy = True

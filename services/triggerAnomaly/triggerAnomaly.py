@@ -55,13 +55,15 @@ for msg in consumer:
         print("PREVISION : " + str(previsions[i]))
         if int(previsions[i]) != int(message['state']):
             print("================ ANOMALY ====================")
-            data = {'action': "DANGER !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! : ANOMALY DETECTED IN FIRST STAGE, ++++ AUTOMATIC DESTRUCTION ACTIVED",
+            data = {'action': "DANGER !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! : ANOMALY DETECTED , ++++ AUTOMATIC DESTRUCTION ACTIVED",
                     'siteName': siteName,
                     'rocketName': rocketName,
                     }
             # SET STOP LAUNCHING
             requests.put(
                 "{}/rocketsStates/destruction/{}/{}/{}".format(ROCKETS_STATES_BASE_URL, siteName, rocketName, 1))
+            requests.put(
+                "{}/rocketsStates/destructionA/{}/{}/{}".format(ROCKETS_STATES_BASE_URL, siteName, rocketName, 1))
             producer.send("anomalyTopic", value=data)
     elif message['action'] == "running" and topic_retrieve == "rocketSTopic":
         print(message['rocketName'] + " SECOND STAGE || " + " at position " + message['state'])

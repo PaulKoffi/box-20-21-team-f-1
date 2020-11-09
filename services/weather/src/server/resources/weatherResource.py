@@ -1,6 +1,7 @@
 # import pymongo
 import json
 from json import dumps, loads
+
 # from pymongo import MongoClient
 # from bson.json_util import dumps, loads
 
@@ -9,6 +10,13 @@ from json import dumps, loads
 # db = client.get_database('blueOrigin')
 
 sites = [
+    {
+        "name": "Rennes",
+        "humidity": 9,
+        "rainPrecipitation": 3,
+        "temperature": 7,
+        "wind": 9
+    },
     {
         "name": "Nice",
         "humidity": 9,
@@ -41,9 +49,8 @@ class WeatherResource():
 
     def getSiteByName(self, siteName):
         for site in sites:
-            if site['name'] == siteName : 
+            if site['name'] == siteName:
                 return json.loads(dumps(site))
-                
 
     # def setRocketStatus(self, id):
     #     myquery = {"rocketName": id}

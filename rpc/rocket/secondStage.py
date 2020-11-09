@@ -62,6 +62,11 @@ for msg in consumer:
 
         length = len(statesArray)
         for index in range(0, length):
+            responseDestruction = requests.get(
+                "{}/rocketsStates/destructionA/{}/{}".format(const.ROCKETS_STATES_BASE_URL, siteName, rocketName))
+            if responseDestruction.text == "True":
+                print("--------------- ANOMALY DESTRUCTION ACTIVATED")
+                break
             if index == 0:
                 printAndSendMessages(const.LAUNCHER_TOPIC, const.ROCKET_SECOND_ENGINE_START, rocketName, siteName)
 

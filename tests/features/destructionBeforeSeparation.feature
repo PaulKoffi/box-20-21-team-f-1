@@ -1,7 +1,8 @@
 Feature: destruction before separation
   Ce scénario met en oeuvre la destruction du satellite avant séparation
+  La mission échoue car le premier stage , le second et le payload sont détruits
 
- Scenario: lancement de la fusée dans une zone sans risque dans notre cas Paris
+ Scenario: lancement de la fusée dans une zone sans risque dans notre cas Nice
     Given Nice un site où la pression du vent est actuellement normale
     When  richard décide de démarrer le poll
     Then On voit que Elon donne son GO

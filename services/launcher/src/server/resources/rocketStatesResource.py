@@ -39,6 +39,15 @@ class RocketStatesResource():
             {"rocketName": rocketName, "siteName": siteName, "satelliteName": satellite})))
         return str(rocketAction["stopLaunching"])
 
+    def getDestructionByNameAndSiteAnomalies(self, siteName, rocketName):
+        HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
+        PORT = 5353  # Port to listen on (non-privileged ports are > 1023)
+        satellite = getCurrentSatelliteName(rocketName)
+
+        rocketAction = json.loads(dumps(db.rocketActions.find_one(
+            {"rocketName": rocketName, "siteName": siteName, "satelliteName": satellite})))
+        return str(rocketAction["stopLaunchingByAnomalies"])
+
     def getLaunchingByNameAndSite(self, siteName, rocketName):
         HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
         PORT = 5353  # Port to listen on (non-privileged ports are > 1023)
@@ -65,6 +74,16 @@ class RocketStatesResource():
         db.rocketActions.update_one(
             {"rocketName": rocketName, "siteName": siteName, "satelliteName": satellite},
             {'$set': {'stopLaunching': bool(newState)}})
+        return "done"
+
+    def putDestructionByNameAndSiteAnomaly(self, siteName, rocketName, newState):
+        HOST = '127.0.0.1'  # Standard loopback interface address (localhost)
+        PORT = 5353  # Port to listen on (non-privileged ports are > 1023)
+        satellite = getCurrentSatelliteName(rocketName)
+
+        db.rocketActions.update_one(
+            {"rocketName": rocketName, "siteName": siteName, "satelliteName": satellite},
+            {'$set': {'stopLaunchingByAnomalies': bool(newState)}})
         return "done"
 
     def putLaunchingByNameAndSite(self, siteName, rocketName, newState):

@@ -39,3 +39,14 @@ def putDestructionByNameAndSite(siteName, rocketName, state):
                                        methods=['PUT'])
 def putLaunchingByNameAndSite(siteName, rocketName, state):
     return rocketStatesService.putLaunchingByNameAndSite(siteName, rocketName, state)
+
+@rocketStatesControllerBlueprint.route('/rocketsStates/destructionA/<string:siteName>/<string:rocketName>/<int:state>',
+                                       methods=['PUT'])
+def putDestructionByNameAndSiteAnomaly(siteName, rocketName, state):
+    return rocketStatesService.putDestructionByNameAndSiteAnomaly(siteName, rocketName, state)
+
+
+@rocketStatesControllerBlueprint.route('/rocketsStates/destructionA/<string:siteName>/<string:rocketName>',
+                                       methods=['GET'])
+def getDestructionByNameAndSiteAnomalies(siteName, rocketName):
+    return rocketStatesService.getDestructionByNameAndSiteAnomalies(siteName, rocketName)
