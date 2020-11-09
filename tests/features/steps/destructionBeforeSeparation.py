@@ -213,9 +213,10 @@ def step_impl(context):
 @then("il est quand à lui à False")
 def step_impl(context):
     assert context.payload.json()["success"] is False
-    myquery = {"satellite": "CATACOMBE"}
-    newvalues = {"$set": {"past": False, "success": False}}
-    db.payloads.update_one(myquery, newvalues)
-    myquery1 = {"satelliteName": "CATACOMBE"}
-    newvalues1 = {"$set": {"stopLaunching": False}}
-    db.rocketActions.update_one(myquery1, newvalues1)
+    # myquery = {"satellite": "CATACOMBE"}
+    # newvalues = {"$set": {"past": False, "success": False}}
+    # db.payloads.update_one(myquery, newvalues)
+    # myquery1 = {"satelliteName": "CATACOMBE"}
+    # newvalues1 = {"$set": {"stopLaunching": False}}
+    # db.rocketActions.update_one(myquery1, newvalues1)
+    db.payloads.delete_one({"satellite": "CATACOMBE"})
