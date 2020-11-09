@@ -65,8 +65,7 @@ client = pymongo.MongoClient(
     "mongodb+srv://flo:Azerty123@cluster0.ibhol.mongodb.net/blueOrigin?retryWrites=true&w=majority")
 db = client.get_database('blueOrigin')
 
-# db.payloads.delete_one({"satellite": "CATACOMBE"})
-
+db.payloads.delete_one({"satellite": "CATACOMBE"})
 
 
 @given('Nice un site où la pression du vent est actuellement normale')
@@ -201,22 +200,22 @@ def step_impl(context):
 
 @then("il est alors à True")
 def step_impl(context):
+    time.sleep(20)
     assert context.payload.json()["past"] is True
 
 
 @when("Quand on verifie le succès de cette mission")
 def step_impl(context):
-    time.sleep(20)
     context.payload = requests.get("{}/payloadBySatelliteName/{}".format(DELIVERY_STATES_BASE_URL, "CATACOMBE"))
 
 
 @then("il est quand à lui à False")
 def step_impl(context):
     assert context.payload.json()["success"] is False
-    # myquery = {"satellite": "CATACOMBE"}
-    # newvalues = {"$set": {"past": False, "success": False}}
-    # db.payloads.update_one(myquery, newvalues)
-    # myquery1 = {"satelliteName": "CATACOMBE"}
-    # newvalues1 = {"$set": {"stopLaunching": False}}
-    # db.rocketActions.update_one(myquery1, newvalues1)
+    myquery = {"satellite": "CATACOMBE"}
+    newvalues = {"$set": {"past": False, "success": False}}
+    db.payloads.update_one(myquery, newvalues)
+    myquery1 = {"satelliteName": "CATACOMBE", "siteName": "Nice"}
+    newvalues1 = {"$set": {"stopLaunching": False}}
+    db.rocketActions.update_one(myquery1, newvalues1)
     db.payloads.delete_one({"satellite": "CATACOMBE"})
