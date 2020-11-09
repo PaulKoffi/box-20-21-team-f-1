@@ -12,6 +12,7 @@ from json import loads
 from time import sleep
 from json import dumps
 import queue
+
 sleep(10)
 
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
@@ -64,6 +65,7 @@ client = pymongo.MongoClient(
     "mongodb+srv://flo:Azerty123@cluster0.ibhol.mongodb.net/blueOrigin?retryWrites=true&w=majority")
 db = client.get_database('blueOrigin')
 db.payloads.delete_one({"satellite": "CATACOMBE"})
+
 
 @given(
     'un client Francis et son adresse mail francis@gmail.com et une nouvelle fusée SPACE001 enrégistré dans notre BD')
@@ -137,7 +139,7 @@ def step_impl(context):
     for msg in consumer1:
         message = msg.value
         topic_retrieve = msg.topic
-        if (topic_retrieve == 'polltoryresponsetopic'):
+        if topic_retrieve == 'polltoryresponsetopic' and message['response']['name'] == 'Toulouse':
             responseTory = message['response']
             print(responseTory)
             assert responseTory['wind'] >= 10
@@ -212,13 +214,13 @@ def step_impl(context):
 
     for msg in consumer1:
         i = i + 1
-        print(i)
+        # print(i)
         # if i == 2:
         message = msg.value
         topic_retrieve = msg.topic
         # print("2")
-        # print(message['response'])
-        if (topic_retrieve == 'polltoryresponsetopic'):
+        print(message['response'])
+        if topic_retrieve == 'polltoryresponsetopic' and message['response']['name'] == 'Paris':
             responseTory = message['response']
             #     print(responseTory)
             assert responseTory['wind'] < 10
@@ -423,4 +425,7 @@ def step_impl(context):
 @then("il est bien à True")
 def step_impl(context):
     assert context.payload.json()["success"] is True
+    # myquery = {"satellite": "CATACOMBE"}
+    # newvalues = {"$set": {"past": False, "success": False}}
+    # db.payloads.update_one(myquery, newvalues)
     db.payloads.delete_one({"satellite": "CATACOMBE"})

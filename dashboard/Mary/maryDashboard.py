@@ -2,7 +2,7 @@ from kafka import KafkaConsumer
 from json import loads
 from time import sleep
 
-sleep(10)
+sleep(20)
 
 consumer = KafkaConsumer(
     'eventCollectortopic',

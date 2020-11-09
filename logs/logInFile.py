@@ -7,7 +7,8 @@ Dict = {"djotiham/rocket_inventory_rest_service": "rocketInventoryRestServiceLog
         "djotiham/event_registration_service": "eventRegistrationServiceLogs.log",
         "djotiham/satellite_service": "satelliteServiceLogs.log",
         "djotiham/supplier_rest_service": "supplierRestServiceLogs.log",
-        "djotiham/delivery_service": "deliveryServiceLogs.log"}
+        "djotiham/delivery_service": "deliveryServiceLogs.log",
+        "djotiham/launcher_service": "launcherServiceLogs.log"}
 
 # print(l)
 for e in containerList:

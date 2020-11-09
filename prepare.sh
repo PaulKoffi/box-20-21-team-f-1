@@ -199,5 +199,5 @@ nohup ./triggerAnomaly.sh &
 
 nohup ./weather.sh &
 
-nohup ./launcher.sh &
+#nohup ./launcher.sh &
 #read -n 1 -s -r -p "Press any key to continue"
