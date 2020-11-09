@@ -183,7 +183,7 @@ def step_impl(context):
 @when("Richard lance la destruction de la fusée")
 def step_impl(context):
     requests.put(
-        "{}/rocketsStates/destruction/{}/{}/{}".format(ROCKETS_STATES_BASE_URL, "Paris", "SPACE001", 1))
+        "{}/rocketsStates/destruction/{}/{}/{}".format(ROCKETS_STATES_BASE_URL, "Nice", "SPACE001", 1))
 
 
 @then("On voit que la fusée est bien détruite")
