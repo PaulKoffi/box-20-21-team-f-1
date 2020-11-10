@@ -66,9 +66,7 @@ client = pymongo.MongoClient(
 db = client.get_database('blueOrigin')
 
 db.payloads.delete_one({"satellite": "CATACOMBE"})
-myquery1 = {"satelliteName": "CATACOMBE"}
-newvalues1 = {"$set": {"telemetriesData": [0, 0, 0, 0, 5, 6, 7, 8, 10, 10, 10, 9, 8, 6, 6, 5, 4, 1, 0]}}
-db.anomalyRocketLaunchTelemetriesDataMocked.update_one(myquery1, newvalues1)
+
 
 
 @given('Marseille un site où la pression du vent est actuellement normale')
@@ -78,6 +76,9 @@ def step_impl(context):
 
 @when("richard démarre le poll de lancement")
 def step_impl(context):
+    myquery1 = {"satelliteName": "CATACOMBE"}
+    newvalues1 = {"$set": {"telemetriesData": [0, 0, 0, 0, 5, 6, 7, 8, 10, 10, 10, 9, 8, 6, 6, 5, 4, 1, 0]}}
+    db.anomalyRocketLaunchTelemetriesDataMocked.update_one(myquery1, newvalues1)
     myobj = {
         "customerName": "Francis",
         "customerMail": "francis@gmail.com",
