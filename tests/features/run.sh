@@ -5,3 +5,4 @@ behave triggerAnomaly.feature
 behave abortedLaunch.feature
 behave destructionBeforeLaunch.feature
 behave everythingIsGoingWell.feature
+behave destructionAfterLaunch.feature
