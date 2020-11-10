@@ -7,7 +7,7 @@ from server.services.rocketService import RocketService
 
 rocketService = RocketService()
 
-sleep(10)
+sleep(20)
 
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
                          value_serializer=lambda x: 

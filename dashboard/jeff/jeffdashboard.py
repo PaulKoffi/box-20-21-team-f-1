@@ -3,7 +3,7 @@ from xmlrpc.client import ServerProxy
 from kafka import KafkaConsumer
 from time import sleep
 
-sleep(10)
+sleep(20)
 
 consumer = KafkaConsumer(
     bootstrap_servers=['localhost:9092'],

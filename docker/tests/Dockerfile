@@ -16,5 +16,5 @@ RUN pip install -r requirements.txt
 COPY resources .
 
 # # command to run on container start
-CMD [ "/bin/bash"]
+CMD [ "./run.sh"]
 # # ENTRYPOINT [ "python", "./run.py" ]
