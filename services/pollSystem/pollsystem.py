@@ -7,7 +7,7 @@ import queue
 
 queueresponse = queue.Queue()
 
-sleep(10)
+sleep(20)
 
 # 'localhost:9092' is where producer is running
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'],

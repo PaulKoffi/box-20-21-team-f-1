@@ -11,7 +11,7 @@ client = pymongo.MongoClient(
 db = client.get_database('blueOrigin')
 rocketName = ""
 
-sleep(10)
+sleep(20)
 
 consumer = KafkaConsumer(
     bootstrap_servers=['localhost:9092'],

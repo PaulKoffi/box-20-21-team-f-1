@@ -14,7 +14,7 @@ DELIVERY_STATES_BASE_URL = "http://localhost:7000"
 SUPPLIER_BASE_URL = "http://localhost:2650"
 SATELLITE_BASE_URL = "http://localhost:3550"
 
-time.sleep(10)
+time.sleep(20)
 
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
                          value_serializer=lambda x:
