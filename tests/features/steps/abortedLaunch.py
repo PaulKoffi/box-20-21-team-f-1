@@ -83,6 +83,7 @@ def step_impl(context):
 
 @when("richard démarre le poll")
 def step_impl(context):
+    db.logEvent.drop()
     myobj = {
         "customerName": "Francis",
         "customerMail": "francis@gmail.com",

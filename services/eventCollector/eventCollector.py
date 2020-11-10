@@ -109,3 +109,23 @@ for msg in consumer:
         # print("DESTRUCTION")
         logEventAndSendMessage(message['rocketName'], message['siteName'],
                                message['action'])
+    elif msg.topic == 'supplierTopic':
+        # print("DESTRUCTION")
+        if message['action'] == "launchSupplier":
+            m = {
+                'value': "__________________________________________________________________________________________________________________________________"}
+            producer.send('eventCollectortopic', value=m)
+            m = {'value': "\n"}
+            producer.send('eventCollectortopic', value=m)
+            logEventAndSendMessage2(message['satelliteName'], "Ordre de ravitaillement lancé par Richard")
+        elif message['action'] == "notLaunchedYet":
+            logEventAndSendMessage2(message['satelliteName'],
+                                    "L'ordre de ravitaillement a échouer car le satellite n'a pas encore été mis en Orbite")
+        elif message['action'] == "supplied":
+            logEventAndSendMessage2(message['satelliteName'],
+                                    "Le satellite a été bien revitaillé, capsule chargé de la mission : " + message[
+                                        'supplierName'])
+        elif message['action'] == "back":
+            logEventAndSendMessage2(message['satelliteName'],
+                                    "Fin de la mission de ravitaillement du satellite  par la capsule " + message[
+                                        'supplierName'] + " qui est de retour sur terre !")

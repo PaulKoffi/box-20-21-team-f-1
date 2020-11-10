@@ -6,3 +6,5 @@ behave abortedLaunch.feature
 behave destructionBeforeSeparation.feature
 behave everythingIsGoingWell.feature
 behave destructionAfterSeparation.feature
+behave supplierInFuel.feature
+exit

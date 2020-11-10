@@ -39,7 +39,7 @@ for msg in consumer:
         currentPayload = requests.get("{}/payload/payloadBySatelliteName/{}".format(DELIVERY_STATES_BASE_URL, satelliteName))
         satellite=requests.get("{}/satellite/{}".format(SATELLITE_BASE_URL, satelliteName))
         supplier = requests.get("{}/payload/payloadBySatelliteName/{}".format(DELIVERY_STATES_BASE_URL, satelliteName))
-        if currentPayload.json()["past"]==False:
+        if currentPayload.json()["success"]==False:
             data = {'action': 'notLaunchedYet',
             'supplierName': supplierName,
             'satelliteName': satelliteName}

@@ -21,7 +21,7 @@ for msg in consumer:
         print(message['supplierName'] + " is asked to supply the satellite " + message['satelliteName'])
 
     if message['action'] == "notLaunchedYet":
-        print("Satellite "+ message['satelliteName'] + " is not launched yet", end='')
+        print("Satellite "+ message['satelliteName'] + " is not launched yet")
 
     if message['action'] == "supplied":
         print(message['supplierName'] + " have supplied the satellite " + message['satelliteName'])
