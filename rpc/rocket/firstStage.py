@@ -189,6 +189,9 @@ for msg in consumer:
             printAndSendMessages(const.LAUNCHER_TOPIC, "Landing", rocketName, siteName)
             printAndSendMessages("testTopic", "Landing", rocketName, siteName)
         stop = False
+        print(
+            "_______________________________________________________________________________________________________________________")
+        print("\n")
 
     # if (msg.topic == LAUNCHER_TOPIC and message['action'] == ROCKET_DESTRUCTION):
     #     destroy = True

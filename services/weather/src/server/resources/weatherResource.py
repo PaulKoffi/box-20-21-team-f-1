@@ -11,6 +11,20 @@ from json import dumps, loads
 
 sites = [
     {
+        "name": "Marseille",
+        "humidity": 9,
+        "rainPrecipitation": 3,
+        "temperature": 7,
+        "wind": 9
+    },
+    {
+        "name": "Monaco",
+        "humidity": 9,
+        "rainPrecipitation": 3,
+        "temperature": 7,
+        "wind": 9
+    },
+    {
         "name": "Rennes",
         "humidity": 9,
         "rainPrecipitation": 3,

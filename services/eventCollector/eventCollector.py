@@ -34,8 +34,7 @@ consumer = KafkaConsumer(
 
 consumer.subscribe(
     ['launcherTopic', 'pollelonresponsetopic', 'polltoryresponsetopic', 'Pollrequesttopic', 'rocketTopic',
-     'rocketSTopic',
-     'payloadTopic', 'anomalyTopic'])
+     'rocketSTopic', 'supplierTopic', 'payloadTopic', 'anomalyTopic'])
 
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
                          value_serializer=lambda x:
@@ -52,6 +51,18 @@ def logEventAndSendMessage(rocketName, siteName, message):
     m = {'value': "ROCKET : " + rocketName + ", SATELLITE : " + getCurrentSatelliteName(
         rocketName) + ", LAUNCH SITE : " + siteName + " ||| " + message}
     producer.send('eventCollectortopic', value=m)
+
+
+def logEventAndSendMessage2(satellite, message):
+    x = requests.post(EVENT_REGISTRATION_BASE_URL, json={"rocketName": "XXXXXXX",
+                                                         "siteName": "XXXXXXX",
+                                                         "satelliteName": satellite,
+                                                         "message": message})
+
+    # SEND TO MARY DASHBOARD
+    m = {'value': satellite + " ||| " + message}
+    producer.send('eventCollectortopic', value=m)
+    # producer.send('eventCollectortopic', value=m)
 
 
 for msg in consumer:

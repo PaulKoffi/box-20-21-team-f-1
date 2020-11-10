@@ -13,7 +13,7 @@ from time import sleep
 from json import dumps
 import queue
 
-sleep(10)
+# sleep(10)
 
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
                          value_serializer=lambda x:

@@ -13,7 +13,7 @@ from time import sleep
 from json import dumps
 import queue
 
-# sleep(10)
+sleep(10)
 
 producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
                          value_serializer=lambda x:
@@ -68,7 +68,7 @@ db = client.get_database('blueOrigin')
 db.payloads.delete_one({"satellite": "CATACOMBE"})
 
 
-@given('Nice un site où la pression du vent est actuellement normale')
+@given('Monaco un site où la pression du vent est actuellement normale')
 def step_impl(context):
     pass
 
@@ -81,7 +81,7 @@ def step_impl(context):
 # consumer2.seek_to_end()
 
 
-@when("richard décide de démarrer le poll")
+@when("richard démarre le poll")
 def step_impl(context):
     myobj = {
         "customerName": "Francis",
@@ -92,10 +92,10 @@ def step_impl(context):
         "satellite": "CATACOMBE"
     }
     requests.post(DELIVERY_STATES_BASE_URL, json=myobj)
-    r = s.getResponsesPoll("Nice", "SPACE001")
+    r = s.getResponsesPoll("Monaco", "SPACE001")
 
 
-@then("On voit que Elon donne son GO")
+@then("Elon répond par GO")
 def step_impl(context):
     i = 0
     for msg in consumer:
@@ -112,7 +112,7 @@ def step_impl(context):
         break
 
 
-@then("On voit que la réponse de Tory est GO")
+@then("Tory répond par GO")
 def step_impl(context):
     i = 0
 
@@ -124,14 +124,14 @@ def step_impl(context):
         topic_retrieve = msg.topic
         # print("2")
         print(message['response'])
-        if topic_retrieve == 'polltoryresponsetopic' and message['response']['name'] == 'Nice':
+        if topic_retrieve == 'polltoryresponsetopic' and message['response']['name'] == 'Monaco':
             responseTory = message['response']
             print(responseTory)
             assert responseTory['wind'] < 10
             break
 
 
-@then("et que la réponse de Richard est GO")
+@then("Richard répond ensuite par GO")
 def step_impl(context):
     for msg in consumer2:
         message = msg.value
@@ -139,83 +139,27 @@ def step_impl(context):
             break
 
 
-@then("Rocket Preparation step")
+@then("step : Rocket Preparation step")
 def step_impl(context):
+    requests.put(
+        "{}/rocketsStates/destruction/{}/{}/{}".format(ROCKETS_STATES_BASE_URL, "Monaco", "SPACE001", 1))
     for msg in consumer2:
         message = msg.value
         if msg.topic == 'launcherTopic' and message['action'] == "Rocket preparation":
             break
 
 
-@then("Rocket on internal power step")
+@when("Richard lance l'ordre de destruction")
 def step_impl(context):
-    for msg in consumer2:
-        message = msg.value
-        if msg.topic == 'launcherTopic' and message['action'] == "Rocket on internal power":
-            break
+    pass
 
 
-@then("Startup step")
-def step_impl(context):
-    for msg in consumer2:
-        message = msg.value
-        if msg.topic == 'launcherTopic' and message['action'] == "Startup":
-            break
-
-
-@then("Main engine start step")
-def step_impl(context):
-    for msg in consumer2:
-        message = msg.value
-        if msg.topic == 'launcherTopic' and message['action'] == "Main engine start":
-            break
-
-
-@then("Liftoff/Launch step")
-def step_impl(context):
-    for msg in consumer2:
-        message = msg.value
-        if msg.topic == 'launcherTopic' and message['action'] == "Liftoff":
-            break
-
-
-@when("Richard lance la destruction de la fusée")
-def step_impl(context):
-    requests.put(
-        "{}/rocketsStates/destruction/{}/{}/{}".format(ROCKETS_STATES_BASE_URL, "Nice", "SPACE001", 1))
-
-
-@then("On voit que la fusée est bien détruite")
+@then("on voit que la mission est bien annulée")
 def step_impl(context):
     for msg in consumer2:
         message = msg.value
         if msg.topic == 'launcherTopic' and message['action'] == "destroy":
             break
-
-
-@when("Quand on verifie le statut Past de cette mission")
-def step_impl(context):
-    time.sleep(20)
-    context.payload = requests.get("{}/payloadBySatelliteName/{}".format(DELIVERY_STATES_BASE_URL, "CATACOMBE"))
-
-
-@then("il est alors à True")
-def step_impl(context):
-    assert context.payload.json()["past"] is True
-
-
-@when("Quand on verifie le succès de cette mission")
-def step_impl(context):
-    context.payload = requests.get("{}/payloadBySatelliteName/{}".format(DELIVERY_STATES_BASE_URL, "CATACOMBE"))
-
-
-@then("il est quand à lui à False")
-def step_impl(context):
-    assert context.payload.json()["success"] is False
-    # myquery = {"satellite": "CATACOMBE"}
-    # newvalues = {"$set": {"past": False, "success": False}}
-    # db.payloads.update_one(myquery, newvalues)
-    myquery1 = {"satelliteName": "CATACOMBE", "siteName": "Nice"}
+    myquery1 = {"satelliteName": "CATACOMBE", "siteName": "Monaco"}
     newvalues1 = {"$set": {"stopLaunching": False}}
     db.rocketActions.update_one(myquery1, newvalues1)
-    db.payloads.delete_one({"satellite": "CATACOMBE"})

@@ -1,4 +1,4 @@
-Feature: destruction before separation
+Feature: destruction after separation
   Ce scénario met en oeuvre la destruction du satellite après séparation du premier et du second stage
   La mission réussit car seul le premier stage sera impacté par la destruction
 
