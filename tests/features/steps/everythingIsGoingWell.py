@@ -85,6 +85,9 @@ def step_impl(context):
 
 @when('Gwynne enregistre cette nouvelle mission')
 def step_impl(context):
+    myquery = {"satelliteName": "CATACOMBE"}
+    newvalues = {"$set": {"telemetriesData": [0, 0, 0, 0, 5, 6, 7, 8, 10, 10, 10, 9, 8, 7, 6, 5, 4, 1, 0]}}
+    db.anomalyRocketLaunchTelemetriesDataMocked.update_one(myquery, newvalues)
     myobj = {
         "customerName": "Francis",
         "customerMail": "francis@gmail.com",
