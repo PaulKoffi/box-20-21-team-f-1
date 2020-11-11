@@ -227,7 +227,7 @@ def step_impl(context):
 
 @when("Quand on verifie alors le statut Past de notre mission")
 def step_impl(context):
-    time.sleep(20)
+    time.sleep(40)
     context.payload = requests.get("{}/payloadBySatelliteName/{}".format(DELIVERY_STATES_BASE_URL, "CATACOMBE"))
 
 
