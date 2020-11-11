@@ -67,6 +67,27 @@
   
   Vous pouvez vous rendre dans la partie github Actions pour voir en détail l'exécution du prépare et des tests.
   
+  ### Auto-évaluation du travail réalisé
+  
+  Avec une bonne base d'architecture dès les 2 premier scopes, nous avons démarré le projet sur les bons rails. Au fur et à mesure que nous
+  recevions de nouvelles User Story, nous avons toujours isolé les blocs de fonctionnalités dans des petits services pour éviter un fort couplage. Cette démarche 
+  nous a certes conduit à un grand nombre de microservices mais ce découpage très fin nous a permis d'intégrer kafka très facilement. Au final, nous n'avons pas vraiment eut
+  un gros blocage technique. Notre seul regret reste la migration de nos services nodeJS vers python dûe à la latence des consumers node. On aurait bien aimer continuer avec
+  les 2 technos. 
+  
+  Nous avons également tirer leçon des erreurs de notre premier rendu qui concernait plus l'exécution du projet lui même que la solution
+  proposée.
+    
+  Chaque membre du groupe s’est sérieusement impliqué dans ce projet. De ce fait, nous nous répartissons les 400 points de la façon suivante :
+    
+  Florian AINADOU : ```100 points```
+    
+  Djotiham NABAGOU : ```100 points```
+    
+  Paul KOFFI  : ```100 points```
+    
+  Paul-Marie DJEKINNOU : ```100 points```
+  
   ## Pile technologique
   
   <p align="center">
