@@ -11,4 +11,4 @@ jobs:
       - name: run prepare
         run: sh ./prepare.sh
       - name: run stop
-          run: sh ./stop.sh
+        run: sh ./stop.sh

@@ -200,6 +200,6 @@ nohup ./triggerAnomaly.sh &
 nohup ./weather.sh &
 
 docker exec -it -T tests ./run.sh
-
+export COMPOSE_INTERACTIVE_NO_CLI=1
 #nohup ./launcher.sh &
 #read -n 1 -s -r -p "Press any key to continue"
