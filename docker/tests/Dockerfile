@@ -15,7 +15,7 @@ RUN pip install -r requirements.txt
 # copy the content of the local src directory to the working directory
 COPY resources .
 
-RUN chmod chmod -R 777 .
+RUN chmod -R 777 .
 
 # # command to run on container start
 CMD [ "/bin/bash"]
