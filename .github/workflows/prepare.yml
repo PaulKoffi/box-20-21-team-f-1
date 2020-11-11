@@ -1,0 +1,17 @@
+name: CI
+on: push
+
+jobs:
+  linux:
+    name: Linux build on node ${{ matrix.node_version }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node_version: [8.x, 10.x]
+
+    steps:
+    - name: run prepare.sh
+      run: ./prepare.sh
+
+    - name: run stop.sh
+        run: ./stop.sh
