@@ -92,10 +92,15 @@
  Voici en détail les principaux fichiers de Log et leur signification:
  
  ```maryDashboardLogs``` : qui permet de suivre l'évolution de tous les scénarios déroulés dans le test (Poll, launch, destruction , etc ...)
+ 
  ```jeffDashboardLogs``` : qui permet de suivre l'évolution des données télémétriques du first et du secondStage ainsi que la destruction de ceux ci
+ 
  ```gwynneDashboardLogs``` : qui permet de suivre l'évolution des données télémétriques du payload ainsi que sa destruction 
+ 
  ```firstStageLogs``` : qui permet de suivre toutes les étapes de lancement du firstStage ainsi que son retour sur terre après séparation avec le secondStage
+ 
  ```triggerAnomalyServiceLogs``` : qui permet de suivre en détail la vérification des données télémétriques par le triggerAnomalies Service
+
  ```pollSystemLogs``` : qui permet de suivre en détail les poll lancés par Richard
   
 # Auto-évaluation du travail réalisé
