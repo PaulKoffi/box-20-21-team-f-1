@@ -5,13 +5,14 @@ jobs:
   linux:
     name: Linux build on node ${{ matrix.node_version }}
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node_version: [8.x, 10.x]
+
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./
 
     steps:
-    - name: run prepare.sh
-      shell: prepare.sh
-
-    - name: run stop.sh
-      shell: stop.sh
+      - uses: actions/checkout@v2
+      - name: run prepare
+      - run: sh ./prepare.sh
