@@ -39,15 +39,15 @@
  
  
   
-  ## Comment utiliser ce repository
+# Comment utiliser ce repository
   * La branche `master` (la branche par défaut) représente la dernière version stable du système.
   * La branche `develop` représente le système en cours de développement en parallèle des autres branches de développement spécifiques à des problématiques ou relatifs aux diverses tâches attribuées.
-  * Les issues peuvent être créés en utilisant le [système de ticket de Github](https://github.com/pns-si5-soa/blue-origin-x-20-21-soa-20-21-f/issues)
+  * Les issues peuvent être créées en utilisant le [système de ticket de Github](https://github.com/pns-si5-soa/blue-origin-x-20-21-soa-20-21-f/issues)
   
-  ### Récupération du projet
+  ## Récupération du projet
   Effectuer un clone classique du projet en faisant ```git clone https://github.com/pns-si5-soa/box-20-21-team-f.git``` ou en récupérant le zip depuis cette page.
   
-  ### Compilation & Exécution  
+  ## Compilation & Exécution  
   La compilation et l'exécution s'effectuent via des conteneurs *Docker* correspondants aux différents micro-services et autres acteurs du système.
   Le lancement et démarrage de ces conteneurs est automatisé grace à l'exécution de scripts.
      
@@ -55,9 +55,19 @@
   
   PS : 
     * La première fois, la compilation et exécution (prepare.sh) peut prendre du temps en raison du téléchargement des images docker.
-   
+    
+  <p align="center">
+    <img src="./docs/prepare.jpg"/>
+  </p>
+
+  <p align="center">
+    <img src="./docs/run.jpg"/>
+  </p>
+  
+  Vous pouvez vous rendre dans l'onglet [github Actions](https://github.com/pns-si5-soa/box-20-21-team-f/actions) pour voir en détail l'exécution du *prepare.sh* et des tests.
+  
   2- Exécuter le fichier [run.sh](./run.sh) pour lancer les scénarios et tests d'acceptance.
-  3- Exécuter le fichier [saveContainerLogsInFile.sh](./saveContainerLogsInFile.sh) pour sauvegarder les logs des services tournant sur les conteneurs Docker. Les logs sont conultables dans le dossier [logs](./logs) à la racine de ce projet.
+  3- Exécuter le fichier [saveContainerLogsInFile.sh](./saveContainerLogsInFile.sh) pour sauvegarder les logs des services tournant sur les conteneurs Docker. Les logs sont consultables dans le dossier [logs](./logs) à la racine de ce projet.
   4- Exécuter le fichier [displayLaunchLogInDatabase.sh](./displayLaunchLogInDatabase.sh) pour afficher les logs stockés dans la BD, qui décrivent le scénario de bout en bout.    
   
   ## Cas critique :rotating_light:
@@ -66,7 +76,28 @@
   Lien de la vidéo   [ici](https://drive.google.com/file/d/1vHauYIWHht1rhoXpZi8_TIbUXu31Foak/view?usp=sharing)
   PS: L'exécution du [run.sh](./run.sh) est automatisé (encapsulé dans le [prepare.sh](./prepare.sh)) au cours de cette vidéo. 
   
-  ## Pile technologique
+# Auto-évaluation du travail réalisé
+  
+  Avec une bonne base d'architecture dès les 2 premiers scopes, nous avons démarré le projet sur les bons rails. Au fur et à mesure que nous
+  recevions de nouvelles User Story, nous avons toujours isolé les blocs de fonctionnalités dans des petits services pour éviter un fort couplage. Cette démarche 
+  nous a certes conduit à un grand nombre de microservices mais ce découpage très fin nous a permis d'intégrer kafka très facilement. Finalement, nous n'avons pas vraiment eu
+  un gros blocage technique. Notre seul regret reste la migration de nos services nodeJS vers python dûe à la latence des consumers node. Nous aurions bien aimé continuer avec
+  les 2 technos. 
+  
+  Nous avons également tiré leçon des erreurs de notre premier rendu qui concernaient plus l'exécution du projet lui-même que la solution
+  proposée.
+    
+  Chaque membre du groupe s’est sérieusement impliqué dans ce projet. De ce fait, nous nous répartissons les 400 points de la façon suivante :
+    
+  Florian AINADOU : ```100 points```
+    
+  Djotiham NABAGOU : ```100 points```
+    
+  Paul KOFFI  : ```100 points```
+    
+  Paul-Marie DJEKINNOU : ```100 points```
+  
+# Pile technologique
   
   <p align="center">
     <img src="./docs/stack.jpg"/>
