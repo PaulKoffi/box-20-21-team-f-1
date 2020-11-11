@@ -80,9 +80,13 @@
   
   Dans le cas où la démo ne s'exécuterait pas comme prévu, nous avons aussi enregistré une vidéo montrant l'exécution du scénario de bout en bout depuis un clone du projet.
   
-  Lien de la vidéo  [ici](https://drive.google.com/file/d/1vHauYIWHht1rhoXpZi8_TIbUXu31Foak/view?usp=sharing).
+  Lien de la vidéo  [ici](https://drive.google.com/drive/folders/1CvdClWkCQ65hPNajppDsC0R8GYaWIAC4?usp=sharing).
   
-  PS: L'exécution du [run.sh](./run.sh) est automatisé (encapsulé dans le [prepare.sh](./prepare.sh)) au cours de cette vidéo. 
+  PS:
+  
+   * L'exécution du [run.sh](./run.sh) est automatisé (encapsulé dans le [prepare.sh](./prepare.sh)) au cours de cette vidéo.
+   * Les logs sont également disponibles dans le répertoire vers lequel mène le lien de la vidéo.
+     
   
 # Visualisation des logs
   
