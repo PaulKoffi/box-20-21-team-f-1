@@ -69,7 +69,7 @@
   
   2- Exécuter le fichier [run.sh](./run.sh) pour lancer les scénarios et tests d'acceptance.
   
-  3- Exécuter le fichier [saveContainerLogsInFile.sh](./saveContainerLogsInFile.sh) pour sauvegarder les logs des services tournant sur les conteneurs Docker. Les logs sont consultables dans le dossier [logs](./logs) à la racine de ce projet.
+  3- Exécuter le fichier [saveContainerLogsInFile.sh](./saveContainerLogsInFile.sh) pour sauvegarder les logs des services ```REST``` tournant sur les conteneurs Docker. Les logs sont consultables dans le dossier [logs](./logs) à la racine de ce projet.
  
   4- Exécuter le fichier [displayLaunchLogInDatabase.sh](./displayLaunchLogInDatabase.sh) pour afficher les logs stockés dans la BD, qui décrivent le scénario de bout en bout.    
   
@@ -89,7 +89,7 @@
   Les tests cucumber n'étant pas assez verbeux mais permettant de tester plus proprement les fonctionnalités du système, nous avons
   pris le soin de tenir à jour des logs de nos conteneurs Docker qui se trouvent tous dans le dossier [logs](./logs).
   Au fur et à mesure que les tests du *run.sh* s'exécutent, vous pouvez voir les logs de ces fichiers s'actualiser, excepté ceux de nos services REST
-  que l'on récupère à la fin de l'exécution de tous les tests grâce à un script python. 
+  que l'on récupère à la fin de l'exécution de tous les tests grâce à un script python [saveContainerLogsInFile.sh](./saveContainerLogsInFile.sh).
   
  Voici en détail les principaux fichiers de Logs et leur signification :
  
