@@ -8,7 +8,7 @@
 * Livrables :
     * [delivery-first](https://github.com/pns-si5-soa/box-20-21-team-f/releases/tag/delivery-first) : Première livraison
     * [delivery-final](https://github.com/pns-si5-soa/box-20-21-team-f/releases/tag/delivery-final) : Livraison finale
-* Statuts d'Intégration continue : [![Build Status](https://travis-ci.com/pns-si5-soa/box-20-21-team-f.svg?token=A689phqWFprpuzVyuqDk&branch=master)](https://travis-ci.com/pns-si5-soa/box-20-21-team-f)
+* Statuts d'Intégration continue : ![CI Build](https://github.com/pns-si5-soa/box-20-21-team-f/workflows/CI/badge.svg?branch=master)
   
 # Vue d'ensemble
  Cette étude de cas est utilisée pour illustrer les différentes technologies impliquées dans le cours d'Architecture Orienté Services (SOA) donné à Polytech Nice - Sophia Antipolis en 5e année. Ce code de démonstration nécessite les technologies suivantes pour fonctionner correctement :
@@ -49,10 +49,13 @@
   La compilation et l'exécution s'effectuent via des conteneurs *Docker* correspondants aux différents micro-services et autres acteurs du système.
   Le lancement et démarrage de ces conteneurs est automatisé grace à l'exécution de scripts.
      
-  *Compilation & Exécution :* Exécuter le fichier [prepare.sh](./prepare.sh) à la racine du projet afin de compiler et exécuter toutes les images docker.
+  1- Exécuter le fichier [prepare.sh](./prepare.sh) à la racine du projet afin de compiler et exécuter toutes les images docker.
+  
   PS : 
+  
     - La première fois, la compilation et exécution (prepare.sh) peut prendre du temps en raison du téléchargement des images docker.
-    - L'exécution du fichier [run.sh](./tests/features/run.sh) faisant tourner les scénarios et tests d'acceptance est automatisé et se fait directement pendant le *prepare.sh* après le téléchargement des images docker.  
+   
+  2- Exécuter le fichier [run.sh](./run.sh) pour lancer les scénarios et tests d'acceptance.  
   
   ## Pile technologique
   
