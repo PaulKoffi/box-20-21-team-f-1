@@ -74,7 +74,7 @@
   
   ## Cas critique :rotating_light:
   
-  Vous pouvez vous référer à l'onglet githubActions qui montre exactement les mêmes informations obtenues en local lorsqu'on exécute
+  Vous pouvez vous référer à l'onglet githubActions (on y visualise tous nos plan de build) qui montre  exactement les mêmes informations obtenues en local lorsqu'on exécute
   le prepare ainsi que le run. Les plans de build dans github Actions tournent avec Unbuntu 16.
   
   Dans le cas où la démo ne s'exécuterait pas comme prévu, nous avons aussi enregistré une vidéo montrant l'exécution du scénario de bout en bout depuis un clone du projet.
