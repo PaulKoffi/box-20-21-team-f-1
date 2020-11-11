@@ -3,7 +3,7 @@ language: generic
 jobs:
   include:
       - stage: "Building and Launching"
-        name: "Building all docker images and launching them"
+        name: "Building all docker images, launching and removing them"
         script: 
           - ./prepare.sh
           - ./stop.sh
