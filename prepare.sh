@@ -199,6 +199,5 @@ nohup ./triggerAnomaly.sh &
 
 nohup ./weather.sh &
 
-docker exec tests ./run.sh
 #nohup ./launcher.sh &
 #read -n 1 -s -r -p "Press any key to continue"
