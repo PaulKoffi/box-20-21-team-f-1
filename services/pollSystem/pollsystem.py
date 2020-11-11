@@ -57,7 +57,7 @@ for msg in consumer:
                 queueresponse.put(data)
             else:
                 responseTory = queueresponse.get()
-                print("ici t")
+                # print("ici t")
                 print(responseTory)
                 if (responseTory['toryResponse'] == 'GO'):
                     print("The rocket can be launched")
