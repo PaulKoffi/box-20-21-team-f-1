@@ -4,13 +4,6 @@ jobs:
   include:
       - stage: "Building and Launching"
         name: "Building all docker images and launching them"
-        before_install:
-          - chmod -R 777 .
-        install: 
-          - pip install -r requirements.txt
         script: 
           - ./prepare.sh
           - ./stop.sh
-          # - python services/rocketInventory/test/rocketApiTest.py
-          # - ./stop.sh
-          # - ./clean.sh
