@@ -54,7 +54,8 @@
   1- Exécuter le fichier [prepare.sh](./prepare.sh) à la racine du projet afin de compiler et exécuter toutes les images docker.
   
   PS : 
-    * La première fois, la compilation et exécution (prepare.sh) peut prendre du temps en raison du téléchargement des images docker.
+  
+  La première fois, la compilation et exécution (prepare.sh) peut prendre du temps en raison du téléchargement des images docker.
     
   <p align="center">
     <img src="./docs/prepare.jpg"/>
@@ -79,29 +80,30 @@
   
   Dans le cas où la démo ne s'exécuterait pas comme prévu, nous avons aussi enregistré une vidéo montrant l'exécution du scénario de bout en bout depuis un clone du projet.
   
-  Lien de la vidéo   [ici](https://drive.google.com/file/d/1vHauYIWHht1rhoXpZi8_TIbUXu31Foak/view?usp=sharing)
+  Lien de la vidéo  [ici](https://drive.google.com/file/d/1vHauYIWHht1rhoXpZi8_TIbUXu31Foak/view?usp=sharing).
+  
   PS: L'exécution du [run.sh](./run.sh) est automatisé (encapsulé dans le [prepare.sh](./prepare.sh)) au cours de cette vidéo. 
   
-  # Visualisation des logs
+# Visualisation des logs
   
-  Les test cucumber n'étant pas assez verbeux mais permettant de tester plus proprement les fonctionnalités du système, nous avons
-  pris le soin de tenir à jour des logs de nos containers docker qui se trouve tous dans le dossier ```logs```
-  Au fur et à mesure que les test du run.sh vous pouvez voir les logs de ces fichiers qui s'actualisent à part ceux de nos services REST
-  que l'on récupère à la fin de l'exécution de tous les tests grâce à  un script python. 
+  Les tests cucumber n'étant pas assez verbeux mais permettant de tester plus proprement les fonctionnalités du système, nous avons
+  pris le soin de tenir à jour des logs de nos conteneurs Docker qui se trouvent tous dans le dossier [logs](./logs).
+  Au fur et à mesure que les tests du *run.sh* s'exécutent, vous pouvez voir les logs de ces fichiers s'actualiser, excepté ceux de nos services REST
+  que l'on récupère à la fin de l'exécution de tous les tests grâce à un script python. 
   
- Voici en détail les principaux fichiers de Log et leur signification:
+ Voici en détail les principaux fichiers de Logs et leur signification :
  
- ```maryDashboardLogs``` : qui permet de suivre l'évolution de tous les scénarios déroulés dans le test (Poll, launch, destruction , etc ...)
+ ```maryDashboardLogs``` : qui permet de suivre l'évolution de tous les scénarios déroulés dans le test (Poll, launch, destruction , etc ...).
  
- ```jeffDashboardLogs``` : qui permet de suivre l'évolution des données télémétriques du first et du secondStage ainsi que la destruction de ceux ci
+ ```jeffDashboardLogs``` : qui permet de suivre l'évolution des données télémétriques du first et du secondStage ainsi que la destruction de ceux-ci.
  
- ```gwynneDashboardLogs``` : qui permet de suivre l'évolution des données télémétriques du payload ainsi que sa destruction 
+ ```gwynneDashboardLogs``` : qui permet de suivre l'évolution des données télémétriques du payload ainsi que sa destruction.
  
- ```firstStageLogs``` : qui permet de suivre toutes les étapes de lancement du firstStage ainsi que son retour sur terre après séparation avec le secondStage
+ ```firstStageLogs``` : qui permet de suivre toutes les étapes de lancement du firstStage ainsi que son retour sur terre après séparation avec le secondStage.
  
- ```triggerAnomalyServiceLogs``` : qui permet de suivre en détail la vérification des données télémétriques par le triggerAnomalies Service
+ ```triggerAnomalyServiceLogs``` : qui permet de suivre en détail la vérification des données télémétriques par le triggerAnomalies Service.
 
- ```pollSystemLogs``` : qui permet de suivre en détail les poll lancés par Richard
+ ```pollSystemLogs``` : qui permet de suivre en détail les *polls* lancés par Richard.
   
 # Auto-évaluation du travail réalisé
   
@@ -127,5 +129,5 @@
 # Pile technologique
   
   <p align="center">
-    <img src="./docs/stack.jpg"/>
+    <img src="./docs/stack.png"/>
   </p>
