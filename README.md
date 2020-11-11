@@ -54,6 +54,16 @@
     - La première fois, la compilation et exécution (prepare.sh) peut prendre du temps en raison du téléchargement des images docker.
     - L'exécution du fichier [run.sh](./tests/features/run.sh) faisant tourner les scénarios et tests d'acceptance est automatisé et se fait directement pendant le *prepare.sh* après le téléchargement des images docker.  
   
+  <p align="center">
+    <img src="./docs/prepare.jpg"/>
+  </p>
+
+  <p align="center">
+    <img src="./docs/run.jpg"/>
+  </p>
+  
+  Vous pouvez vous rendre dans la partie github Actions pour voir en détail l'exécution du prépare et des tests.
+  
   ## Pile technologique
   
   <p align="center">
