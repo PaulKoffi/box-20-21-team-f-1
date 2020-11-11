@@ -39,10 +39,10 @@
  
  
   
-# Comment utiliser ce repository
+  ## Comment utiliser ce repository
   * La branche `master` (la branche par défaut) représente la dernière version stable du système.
   * La branche `develop` représente le système en cours de développement en parallèle des autres branches de développement spécifiques à des problématiques ou relatifs aux diverses tâches attribuées.
-  * Les issues peuvent être créées en utilisant le [système de ticket de Github](https://github.com/pns-si5-soa/blue-origin-x-20-21-soa-20-21-f/issues)
+  * Les issues peuvent être créés en utilisant le [système de ticket de Github](https://github.com/pns-si5-soa/blue-origin-x-20-21-soa-20-21-f/issues)
   
   ## Récupération du projet
   Effectuer un clone classique du projet en faisant ```git clone https://github.com/pns-si5-soa/box-20-21-team-f.git``` ou en récupérant le zip depuis cette page.
@@ -67,14 +67,36 @@
   Vous pouvez vous rendre dans l'onglet [github Actions](https://github.com/pns-si5-soa/box-20-21-team-f/actions) pour voir en détail l'exécution du *prepare.sh* et des tests.
   
   2- Exécuter le fichier [run.sh](./run.sh) pour lancer les scénarios et tests d'acceptance.
+  
   3- Exécuter le fichier [saveContainerLogsInFile.sh](./saveContainerLogsInFile.sh) pour sauvegarder les logs des services tournant sur les conteneurs Docker. Les logs sont consultables dans le dossier [logs](./logs) à la racine de ce projet.
+ 
   4- Exécuter le fichier [displayLaunchLogInDatabase.sh](./displayLaunchLogInDatabase.sh) pour afficher les logs stockés dans la BD, qui décrivent le scénario de bout en bout.    
   
   ## Cas critique :rotating_light:
-  Dans le cas où la démo ne s'exécuterait pas comme prévu, nous avons enregistré une vidéo montrant l'exécution du scénario de bout en bout depuis un clone du projet.
+  
+  Vous pouvez vous référer à l'onglet githubActions qui montre exactement les mêmes informations obtenues en local lorsqu'on exécute
+  le prepare ainsi que le run. Les plans de build dans github Actions tournent avec Unbuntu 16.
+  
+  Dans le cas où la démo ne s'exécuterait pas comme prévu, nous avons aussi enregistré une vidéo montrant l'exécution du scénario de bout en bout depuis un clone du projet.
   
   Lien de la vidéo   [ici](https://drive.google.com/file/d/1vHauYIWHht1rhoXpZi8_TIbUXu31Foak/view?usp=sharing)
   PS: L'exécution du [run.sh](./run.sh) est automatisé (encapsulé dans le [prepare.sh](./prepare.sh)) au cours de cette vidéo. 
+  
+  # Visualisation des logs
+  
+  Les test cucumber n'étant pas assez verbeux mais permettant de tester plus proprement les fonctionnalités du système, nous avons
+  pris le soin de tenir à jour des logs de nos containers docker qui se trouve tous dans le dossier ```logs```
+  Au fur et à mesure que les test du run.sh vous pouvez voir les logs de ces fichiers qui s'actualisent à part ceux de nos services REST
+  que l'on récupère à la fin de l'exécution de tous les tests grâce à  un script python. 
+  
+ Voici en détail les principaux fichiers de Log et leur signification:
+ 
+ ```maryDashboardLogs``` : qui permet de suivre l'évolution de tous les scénarios déroulés dans le test (Poll, launch, destruction , etc ...)
+ ```jeffDashboardLogs``` : qui permet de suivre l'évolution des données télémétriques du first et du secondStage ainsi que la destruction de ceux ci
+ ```gwynneDashboardLogs``` : qui permet de suivre l'évolution des données télémétriques du payload ainsi que sa destruction 
+ ```firstStageLogs``` : qui permet de suivre toutes les étapes de lancement du firstStage ainsi que son retour sur terre après séparation avec le secondStage
+ ```triggerAnomalyServiceLogs``` : qui permet de suivre en détail la vérification des données télémétriques par le triggerAnomalies Service
+ ```pollSystemLogs``` : qui permet de suivre en détail les poll lancés par Richard
   
 # Auto-évaluation du travail réalisé
   
