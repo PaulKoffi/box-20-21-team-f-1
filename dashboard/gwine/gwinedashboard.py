@@ -1,11 +1,26 @@
-import socket
+from bson.json_util import dumps, loads
+from xmlrpc.client import ServerProxy
+from kafka import KafkaConsumer
+from time import sleep
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect(("127.0.0.1", 9292))
+sleep(20)
 
+consumer = KafkaConsumer(
+    bootstrap_servers=['localhost:9092'],
+    auto_offset_reset='earliest',
+    enable_auto_commit=True,
+    group_id='gwine-group',
+    value_deserializer=lambda x: loads(x.decode('utf-8')))
 
-while True:
-    msg = s.recv(1024)
-    if msg:
+consumer.subscribe(['payloadTopic'])
+
+for msg in consumer:
+    message = msg.value
+    print(message['action'])
+
+    if message['action'] == "running":
         print("Données telemetriques ==========> ", end='')
-        print(msg.decode("utf-8"))
+        print(message['payloadName'] + " at position " + message['state'])
+
+    if message['action'] == "destroy":
+        print("### DESTRUCTION DE LA ROCKET IMMINENTE , ECHEC DE LA MISSION  ###", end='')

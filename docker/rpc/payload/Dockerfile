@@ -18,8 +18,5 @@ COPY resources/payload.py .
 # Creating an health check verification to check pollcreator status
 # HEALTHCHECK --interval=30s --timeout=30s CMD curl --fail http://localhost:8282/ || exit 1
 
-# port
-EXPOSE 8282
-
 # command to run on container start
-CMD [ "python", "./payload.py" ]
+CMD [ "python","./payload.py" ]

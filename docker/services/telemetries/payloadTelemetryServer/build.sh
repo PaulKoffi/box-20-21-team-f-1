@@ -3,7 +3,7 @@
 echo "Building socket payload telemetry server docker image"
 mkdir resources
 cp ../../../../requirements.txt resources
-cp -R ../../../../services/telemetries/socketPayloadTelemetriesServer.py resources
+cp -R ../../../../services/telemetries/payloadTelemetriesServer.py resources
 docker build -t djotiham/payload_telemetry_server .
 rm -R resources
 # to remove old images

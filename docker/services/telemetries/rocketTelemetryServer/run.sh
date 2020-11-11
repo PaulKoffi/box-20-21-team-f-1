@@ -4,7 +4,11 @@
 #  - removing the container after exit,
 #  - detached (-d),
 #  - binding localhost:9490 to container:9490
-docker run --name rocket_telemetry_server --rm -d -p 9490:9490 djotiham/rocket_telemetry_server
+if [[ "$OSTYPE" == "linux-gnu"* || "$OSTYPE" == "darwin"* ]]; then
+        docker run --name payload_telemetry_server --rm -it -v `pwd`:/host-payload_telemetry_server djotiham/payload_telemetry_server
+else
+		winpty docker run --name payload_telemetry_server --rm -it -v `pwd`:/host-payload_telemetry_server djotiham/payload_telemetry_server
+fi
 
 # to stop: docker stop ID
 # to start a new shell in the container: docker exec -it ID bash

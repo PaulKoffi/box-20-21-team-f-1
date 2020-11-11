@@ -1,7 +1,7 @@
 # set base image (host OS)
 FROM python:3.8
 
-MAINTAINER djotiham (SOA 2020)
+LABEL djotiham (SOA 2020)
 
 # set the working directory in the container
 WORKDIR /code
@@ -13,14 +13,11 @@ COPY resources/requirements.txt .
 RUN pip install -r requirements.txt
 
 # copy the content of the local src directory to the working directory
-COPY resources/socketRocketTelemetriesServer.py .
+COPY resources/rocketTelemetriesServer.py .
 
 # Creating an health check verification to check rocket status
 # HEALTHCHECK --interval=30s --timeout=30s CMD curl --fail http://localhost:9490/ || exit 1
 
-# port
-EXPOSE 9490
 
 # command to run on container start
-CMD [ "python", "./socketRocketTelemetriesServer.py" ]
-# ENTRYPOINT [ "python", "./run.py" ]
+CMD [ "python", "./rocketTelemetriesServer.py" ]

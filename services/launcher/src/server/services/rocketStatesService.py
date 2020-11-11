@@ -21,3 +21,9 @@ class RocketStatesService:
 
     def putLaunchingByNameAndSite(self, siteName, rocketName, newState):
         return self.rocketStatesResource.putLaunchingByNameAndSite(siteName, rocketName, newState)
+
+    def putDestructionByNameAndSiteAnomaly(self, siteName, rocketName, newState):
+        return self.rocketStatesResource.putDestructionByNameAndSiteAnomaly(siteName, rocketName, newState)
+
+    def getDestructionByNameAndSiteAnomalies(self, siteName, rocketName):
+        return self.rocketStatesResource.getDestructionByNameAndSiteAnomalies(siteName, rocketName)

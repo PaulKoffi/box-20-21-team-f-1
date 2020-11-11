@@ -1,7 +1,31 @@
-from server.main import create_app
+from kafka import KafkaConsumer
+from kafka import KafkaProducer
+from json import loads, dumps
+from time import sleep
 
-app = create_app()
+from server.services.rocketService import RocketService
 
-if __name__ == '__main__':
-    print("Rocket API serving ...")
-    app.run(host="0.0.0.0", port=8000, debug=True)
+rocketService = RocketService()
+
+sleep(20)
+
+producer = KafkaProducer(bootstrap_servers=['localhost:9092'],
+                         value_serializer=lambda x: 
+                         dumps(x).encode('utf-8'))
+
+consumer = KafkaConsumer(
+    'Pollrequesttopic',
+     bootstrap_servers=['localhost:9092'],
+     auto_offset_reset='earliest',
+     enable_auto_commit=True,
+     group_id='rocketInventory-group',
+     value_deserializer=lambda x: loads(x.decode('utf-8')))
+
+for msg in consumer:
+    message = msg.value
+    topic_retrieve = msg.topic
+    print(message)
+    print (message['rocketName'])
+    rocket_request = {'response': rocketService.getRocketById(message['rocketName']), 'request': message}
+    print(rocket_request)
+    producer.send('pollelonresponsetopic',value=rocket_request)

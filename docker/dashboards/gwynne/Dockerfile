@@ -17,3 +17,4 @@ COPY resources/gwinedashboard.py .
 
 # command to run on container start
 CMD [ "python", "./gwinedashboard.py" ]
+# CMD [ "/bin/bash" ]
