@@ -79,6 +79,10 @@ def step_impl(context):
     myquery1 = {"satelliteName": "CATACOMBE"}
     newvalues1 = {"$set": {"telemetriesData": [0, 0, 0, 0, 5, 6, 7, 8, 10, 10, 10, 9, 8, 6, 6, 5, 4, 1, 0]}}
     db.anomalyRocketLaunchTelemetriesDataMocked.update_one(myquery1, newvalues1)
+    myquery2 = {"satelliteName": "CATACOMBE", "siteName": "Marseille"}
+    newvalues2 = {"$set": {"stopLaunching": False, "stopLaunchingByAnomalies": False}}
+    db.rocketActions.update_one(myquery2, newvalues2)
+
     myobj = {
         "customerName": "Francis",
         "customerMail": "francis@gmail.com",
