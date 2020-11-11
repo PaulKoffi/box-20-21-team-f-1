@@ -11,7 +11,9 @@
 * Statuts d'Intégration continue : ![CI Build](https://github.com/pns-si5-soa/box-20-21-team-f/workflows/CI/badge.svg?branch=master)
   
 # Vue d'ensemble
- Cette étude de cas est utilisée pour illustrer les différentes technologies impliquées dans le cours d'Architecture Orienté Services (SOA) donné à Polytech Nice - Sophia Antipolis en 5e année. Ce code de démonstration nécessite les technologies suivantes pour fonctionner correctement :
+ Cette étude de cas est utilisée pour illustrer les différentes technologies impliquées dans le cours d'Architecture Orienté Services (SOA) donné à Polytech Nice - Sophia Antipolis en 5e année.
+ 
+ Ce code de démonstration nécessite les technologies suivantes pour fonctionner correctement :
        
    * Environnement de déploiement : Docker 2.2.0.5 (Stable)
    * Langage d'implémentation Python & Pip : Python3 & Pip3
@@ -45,17 +47,24 @@
   ### Récupération du projet
   Effectuer un clone classique du projet en faisant ```git clone https://github.com/pns-si5-soa/box-20-21-team-f.git``` ou en récupérant le zip depuis cette page.
   
-  ## Compilation & Exécution  
+  ### Compilation & Exécution  
   La compilation et l'exécution s'effectuent via des conteneurs *Docker* correspondants aux différents micro-services et autres acteurs du système.
   Le lancement et démarrage de ces conteneurs est automatisé grace à l'exécution de scripts.
      
   1- Exécuter le fichier [prepare.sh](./prepare.sh) à la racine du projet afin de compiler et exécuter toutes les images docker.
   
   PS : 
-  
-    - La première fois, la compilation et exécution (prepare.sh) peut prendre du temps en raison du téléchargement des images docker.
+    * La première fois, la compilation et exécution (prepare.sh) peut prendre du temps en raison du téléchargement des images docker.
    
-  2- Exécuter le fichier [run.sh](./run.sh) pour lancer les scénarios et tests d'acceptance.  
+  2- Exécuter le fichier [run.sh](./run.sh) pour lancer les scénarios et tests d'acceptance.
+  3- Exécuter le fichier [saveContainerLogsInFile.sh](./saveContainerLogsInFile.sh) pour sauvegarder les logs des services tournant sur les conteneurs Docker. Les logs sont conultables dans le dossier [logs](./logs) à la racine de ce projet.
+  4- Exécuter le fichier [displayLaunchLogInDatabase.sh](./displayLaunchLogInDatabase.sh) pour afficher les logs stockés dans la BD, qui décrivent le scénario de bout en bout.    
+  
+  ## Cas critique :rotating_light:
+  Dans le cas où la démo ne s'exécuterait pas comme prévu, nous avons enregistré une vidéo montrant l'exécution du scénario de bout en bout depuis un clone du projet.
+  
+  Lien de la vidéo   [ici](https://drive.google.com/file/d/1vHauYIWHht1rhoXpZi8_TIbUXu31Foak/view?usp=sharing)
+  PS: L'exécution du [run.sh](./run.sh) est automatisé (encapsulé dans le [prepare.sh](./prepare.sh)) au cours de cette vidéo. 
   
   ## Pile technologique
   
